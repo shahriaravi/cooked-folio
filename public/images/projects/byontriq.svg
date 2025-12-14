@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <!-- The Smooth Leaf Body -->
+  <path d="M20.2 3.8a1 1 0 0 0-1.2-.2C13.5 5.1 9 9.1 7 14.1c-2 5 .5 8.5 1.5 9.5a1 1 0 0 0 1.2.2c5-2 9-6.5 10.5-12a1 1 0 0 0-.02-8.02z" />
+  
+  <!-- The Simple Diagonal Vein -->
+  <path d="M7 14s3-3 6-6" />
+</svg>
