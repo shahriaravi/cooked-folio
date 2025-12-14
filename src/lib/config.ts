@@ -172,7 +172,7 @@ export const EDUCATION: EducationItem[] = [
 export const PROJECTS: ProjectItem[] = [
    {
     name: "cooked-folio",
-    tagline: "A minimal, high-performance portfolio template aka .",
+    tagline: "A minimal, high-performance portfolio template aka this website.",
     url: "https://avi.byontriq.xyz",
     repo: "https://github.com/shahriaravi/cooked-portfolio",
     image: "/avatar/avatar.png",
