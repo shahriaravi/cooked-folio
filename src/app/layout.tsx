@@ -5,7 +5,7 @@ import { InitialSplash } from "@/components/ui/InitialSplash";
 import { constructMetadata } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 export const viewport: Viewport = {
   themeColor: [
@@ -26,9 +26,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const umamiScriptUrl = process.env.UMAMI_SCRIPT_URL;
-  const umamiWebsiteId = process.env.UMAMI_WEBSITE_ID;
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -37,14 +34,7 @@ export default function RootLayout({
         <Providers>
           <InitialSplash>{children}</InitialSplash>
         </Providers>
-
-        {umamiScriptUrl && umamiWebsiteId && (
-          <Script
-            src={umamiScriptUrl}
-            data-website-id={umamiWebsiteId}
-            strategy="afterInteractive"
-          />
-        )}
+        <Analytics />
       </body>
     </html>
   );

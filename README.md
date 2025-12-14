@@ -1,4 +1,5 @@
-```markdown
+---
+
 # 🍳 cooked-folio
 
 “monke brain code, premium developer vibes.”
@@ -14,7 +15,7 @@ A minimal, high-performance portfolio built with Next.js, Tailwind CSS, and Fram
 
 One‑click deploy on Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fshahriaravi%2Fcooked-folio&env=DISCORD_WEBHOOK_URL,NEXT_PUBLIC_DISCORD_USER_ID,SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN,NEXT_PUBLIC_URL,GITHUB_USERNAME,GITHUB_TOKEN,NEXT_PUBLIC_UMAMI_SCRIPT_URL,NEXT_PUBLIC_UMAMI_WEBSITE_ID)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fshahriaravi%2Fcooked-folio&env=DISCORD_WEBHOOK_URL,NEXT_PUBLIC_DISCORD_USER_ID,SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN,NEXT_PUBLIC_URL,GITHUB_USERNAME,GITHUB_TOKEN)
 
 ---
 
@@ -26,12 +27,11 @@ One‑click deploy on Vercel:
 - Slide to Vibe with audio + animations
 - Chat-style contact form (Discord webhook)
 - Dark/Light theme toggle
-- Umami analytics ready
+- Vercel Analytics support
 - Next.js App Router, TypeScript, Tailwind, Framer Motion
 
 ### 🔮 Roadmap
 
-- Deeper analytics dashboards
 - Trakt.tv activity integration
 - MyAnimeList watch history integration
 
@@ -45,7 +45,7 @@ One‑click deploy on Vercel:
 - Animations: Framer Motion
 - Theme: next-themes
 - Icons: lucide-react, react-icons
-- Analytics: Umami
+- Analytics: Vercel Analytics
 
 ---
 
@@ -95,43 +95,8 @@ Required variables:
 | `SPOTIFY_REFRESH_TOKEN` | Spotify refresh token to fetch now-playing |
 | `GITHUB_USERNAME` | Your GitHub username for contributions |
 | `GITHUB_TOKEN` | GitHub Personal Access Token (classic) with `read:user` |
-| `UMAMI_SCRIPT_URL` | Umami script URL (e.g. `https://analytics.your-domain.com/script.js`) |
-| `UMAMI_WEBSITE_ID` | Umami website ID (UUID from Umami dashboard) |
 
----
-
-## 📊 Analytics (Umami)
-
-This template is wired to work with **Umami**, a privacy‑friendly analytics platform.
-
-### 1. Create an Umami website
-
-1. Log in to your Umami instance  
-   - Umami Cloud: https://cloud.umami.is  
-   - or your self‑hosted Umami URL
-2. Go to **Websites → Add website**
-3. Set:
-   - **Name**: anything (e.g. `cooked-folio`)
-   - **Domain**: `yourdomain.xyz` (subdomains are fully supported)
-4. Save the website
-
-### 2. Get your script URL and website ID
-
-1. In the Umami dashboard, open the website you just created
-2. Find the **tracking code** snippet, which looks like:
-
-   ```html
-   <script
-     async
-     src="https://your-umami-instance.com/script.js"
-     data-website-id="0f5c7b2a-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
-   </script>
-   ```
-
-3. From that snippet:
-
-   - `src=".../script.js"` → use as `UMAMI_SCRIPT_URL`
-   - `data-website-id="..."` → use as `UMAMI_WEBSITE_ID`
+Analytics are handled by **Vercel Analytics**, enabled from your Vercel project settings (no extra env needed).
 
 ---
 
