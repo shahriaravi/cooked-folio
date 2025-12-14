@@ -26,7 +26,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const selineSiteId = process.env.NEXT_PUBLIC_SELINE_SITE_ID;
+  const umamiScriptUrl = process.env.UMAMI_SCRIPT_URL;
+  const umamiWebsiteId = process.env.UMAMI_WEBSITE_ID;
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -37,10 +38,10 @@ export default function RootLayout({
           <InitialSplash>{children}</InitialSplash>
         </Providers>
 
-        {selineSiteId && (
+        {umamiScriptUrl && umamiWebsiteId && (
           <Script
-            src="https://cdn.seline.com/seline.js"
-            data-site={selineSiteId}
+            src={umamiScriptUrl}
+            data-website-id={umamiWebsiteId}
             strategy="afterInteractive"
           />
         )}
