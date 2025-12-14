@@ -1,9 +1,11 @@
+import "./globals.css";
+
 import { Providers } from "@/components/layout/Providers";
 import { InitialSplash } from "@/components/ui/InitialSplash";
 import { constructMetadata } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
 import type { Metadata, Viewport } from "next";
-import "./globals.css";
+import Script from "next/script";
 
 export const viewport: Viewport = {
   themeColor: [
@@ -24,6 +26,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const selineSiteId = process.env.NEXT_PUBLIC_SELINE_SITE_ID;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -32,6 +36,14 @@ export default function RootLayout({
         <Providers>
           <InitialSplash>{children}</InitialSplash>
         </Providers>
+
+        {selineSiteId && (
+          <Script
+            src="https://cdn.seline.com/seline.js"
+            data-site={selineSiteId}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
