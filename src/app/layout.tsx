@@ -5,7 +5,7 @@ import { InitialSplash } from "@/components/ui/InitialSplash";
 import { constructMetadata } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next"
 
 export const viewport: Viewport = {
   themeColor: [
