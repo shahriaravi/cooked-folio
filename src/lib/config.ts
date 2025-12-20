@@ -25,6 +25,7 @@ export interface ExperienceItem {
   role: string;
   date: string;
   description: string;
+  logo: string;
 }
 
 export interface EducationItem {
@@ -116,30 +117,30 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     company: "Byontriq",
     role: "Founder & SWE",
-    date: "2025 - Eternity",
-    description:
-      "Building modern, minimal web & mobile apps that people actually use. My dream startup, powered by caffeine and chaos.",
+    date: "2025 - Present",
+    description: "Building modern, minimal web & mobile apps.",
+    logo: "/logos/byontriq.png", 
   },
   {
     company: "EXEAIO",
     role: "Project Manager",
     date: "2023 - 2024",
-    description:
-      "Led projects at a VR game studio. Shipped features, wrangled timelines, and tried not to break builds before demos.",
+    description: "Led projects at a VR game studio.",
+    logo: "/images/companies/exeaio.png",
   },
   {
     company: "Crisis Entertainment",
     role: "Game Ops",
     date: "2020 - 2023",
-    description:
-      "Handled live operations at a video game development & publishing MNC. Events, player experience, and firefighting.",
+    description: "Handled live operations at a video game development MNC.",
+    logo: "/images/companies/ce.png",
   },
   {
     company: "GameExp",
     role: "Editor",
     date: "2022",
-    description:
-      "Wrote and edited content about all things gaming — reviews, features, and deep dives into game design.",
+    description: "Wrote and edited content about all things gaming.",
+    logo: "/images/companies/gxp.png",
   },
 ];
 

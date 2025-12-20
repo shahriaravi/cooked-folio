@@ -51,7 +51,7 @@ export function GithubActivityCard() {
     { refreshInterval: 30000 }
   );
 
-  if (error || !calendar) {
+  if (error || !calendar || !calendar.weeks) {
     return (
       <section className="mb-6">
         <h2 className="text-sm font-mono text-muted-foreground mb-2 uppercase tracking-wider pl-1 md:pl-0">
