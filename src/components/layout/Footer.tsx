@@ -1,17 +1,16 @@
 "use client";
 
-import { Button } from "@/components/common/Button";
+import { Button } from "@/components/ui/Button";
 import { CAL_URL, FIVERR_URL } from "@/lib/config";
 import { getCalApi } from "@calcom/embed-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Mail, Paperclip, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { SiFiverr } from "react-icons/si";
 
 export function Footer() {
-  const scriptContainerRef = useRef<HTMLDivElement>(null);
   const [isCalLoading, setIsCalLoading] = useState(false);
 
   useEffect(() => {
@@ -31,18 +30,6 @@ export function Footer() {
         },
       });
     })();
-  }, []);
-
-  useEffect(() => {
-    if (!scriptContainerRef.current) return;
-    if (scriptContainerRef.current.innerHTML !== "") return;
-
-    const script = document.createElement("script");
-    script.src =
-      "https://avi.byontriq.xyz/api/c?color=3b82f6%3Affffff%3A3b82f6";
-    script.async = true;
-
-    scriptContainerRef.current.appendChild(script);
   }, []);
 
   const calLink = CAL_URL.replace(/^https?:\/\/(www\.)?cal\.com\//, "");
@@ -165,27 +152,21 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-4 mt-2">
-            <div className="flex items-center gap-6">
-              <a
-                href="mailto:avilovesburger@gmail.com"
-                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Mail className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
-                <span>send email</span>
-              </a>
-              <Link
-                href="/resume"
-                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Paperclip className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
-                <span>view resume</span>
-              </Link>
-            </div>
-            <div
-              ref={scriptContainerRef}
-              className="pt-2 opacity-80 hover:opacity-100 transition-opacity"
-            />
+          <div className="flex items-center gap-6 mt-2">
+            <a
+              href="mailto:avilovesburger@gmail.com"
+              className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
+              <span>send email</span>
+            </a>
+            <Link
+              href="/resume"
+              className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Paperclip className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
+              <span>view resume</span>
+            </Link>
           </div>
         </div>
       </footer>

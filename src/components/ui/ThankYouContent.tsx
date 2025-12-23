@@ -1,6 +1,6 @@
 "use client";
 
-import Return from "@/components/common/Return";
+import Return from "@/components/ui/Return";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

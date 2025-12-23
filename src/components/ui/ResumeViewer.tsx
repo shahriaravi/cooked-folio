@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/common/Button";
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/common/Container";
-import Return from "@/components/common/Return";
+import Return from "@/components/ui/Return";
 import { RESUME_URL } from "@/lib/config";
 import { motion } from "framer-motion";
 import { Download, ExternalLink, FileText } from "lucide-react";

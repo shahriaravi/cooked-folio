@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/common/Button";
+import { Button } from "@/components/ui/Button";
 import { STACK } from "@/lib/config";
 import { motion } from "framer-motion";
 

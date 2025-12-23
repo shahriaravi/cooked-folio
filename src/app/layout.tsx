@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import { Providers } from "@/components/layout/Providers";
-import { InitialSplash } from "@/components/ui/InitialSplash";
+import { InitialSplash } from "@/components/common/InitialSplash";
 import { constructMetadata } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
 import type { Metadata, Viewport } from "next";

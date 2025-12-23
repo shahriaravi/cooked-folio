@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomScrollArea } from "@/components/ui/CustomScrollArea";
+import { CustomScrollArea } from "@/components/common/CustomScrollArea";
 import { motion } from "framer-motion";
 import useSWR from "swr";
 

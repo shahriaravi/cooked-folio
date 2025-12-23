@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/common/Button";
-import { Input } from "@/components/common/Input";
-import Return from "@/components/common/Return";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import Return from "@/components/ui/Return";
 import { SlideToVibeButton } from "@/components/vibe/SlideToVibeButton";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";

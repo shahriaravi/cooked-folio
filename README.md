@@ -145,15 +145,6 @@ export function constructMetadata(/* overrides */) {
 }
 ```
 
-### 3. “Cooked by Avi” copyright
-
-The small footer badge is injected via a script route:
-
-- Code: `src/app/api/c/route.ts`
-- Used in the footer via a `<script>` element appended at runtime.
-
-You can remove or tweak this logic if you fork the template.
-
 ---
 
 ## 📂 Project Structure
@@ -162,7 +153,6 @@ You can remove or tweak this logic if you fork the template.
 src/
 ├─ app/
 │  ├─ api/
-│  │  ├─ c/route.ts                       # “Cooked by Avi” copyright script
 │  │  ├─ contact/route.ts                 # Discord webhook
 │  │  ├─ discord/current-activity/route.ts
 │  │  ├─ discord/presence/route.ts
@@ -177,13 +167,13 @@ src/
 │  ├─ not-found.tsx
 │  └─ page.tsx                            # home
 ├─ components/
-│  ├─ common/                             # Container, ThemeToggle, Buttom, Input, Return
+│  ├─ common/                             # Container, ThemeToggle, HelloLoader, CustomScrollArea, InitialSplash
 │  ├─ layout/                             # Hero, Footer, Providers
 │  ├─ sections/                           # ExperienceList, EducationList, ProjectList, StackList
 │  ├─ integrations/                       # DiscordPresenceDot, NowPlaying, GithubActivityCard
 │  ├─ vibe/                               # Vibing, SlideToVibeButton
 │  ├─ contact/                            # ContactForm
-│  └─ ui/                                 # HelloLoader, CustomScrollArea, InitialSplash, ResumeViewer, TimeDisplay, ThankYouContent
+│  └─ ui/                                 # Button, Input, Return, ResumeViewer, TimeDisplay, ThankYouContent
 ├─ hooks/
 │  └─ useDiscordPresence.ts
 └─ lib/

@@ -4,9 +4,9 @@ import { useState } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Send, Loader2, Mail } from "lucide-react"
-import Return from "@/components/common/Return"
-import { Input } from "@/components/common/Input"
-import { Button } from "@/components/common/Button"
+import Return from "@/components/ui/Return"
+import { Input } from "@/components/ui/Input"
+import { Button } from "@/components/ui/Button"
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
