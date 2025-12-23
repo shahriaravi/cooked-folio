@@ -4,7 +4,7 @@
 
 A minimal, high-performance portfolio built with **Next.js**, **Tailwind CSS**, and **Framer Motion**.
 <br/>
-Real-time Discord presence, Spotify integration, slide-to-vibe page, and a chat-style contact form.
+Real-time Discord presence, Spotify/Trakt.tv/MyAnimeList integration, useful gist, slide-to-vibe page, and a chat-style contact form.
 
 <br/>
 
@@ -23,8 +23,10 @@ One‑click deploy on Vercel:
 ## ✨ Features
 
 - Discord presence (via Lanyard)
+- Trakt.tv & MyAnimeList Stats
 - Spotify “Now Playing”
 - GitHub contributions heatmap
+- Useful curated /gist page
 - Slide to Vibe with audio + animations
 - Chat-style contact form (Discord webhook)
 - Dark/Light theme toggle
@@ -32,9 +34,7 @@ One‑click deploy on Vercel:
 
 ### 🔮 Roadmap
 
-- Trakt.tv activity integration
-- MyAnimeList watch history integration
-- A Useful gist
+- Suggestions are open, no new ideas in my mind rn 🙂
 
 ---
 
@@ -96,6 +96,9 @@ Required variables:
 | `SPOTIFY_REFRESH_TOKEN` | Spotify refresh token to fetch now-playing |
 | `GITHUB_USERNAME` | Your GitHub username for contributions |
 | `GITHUB_TOKEN` | GitHub Personal Access Token (classic) with `read:user` |
+| `NEXT_PUBLIC_TRAKT_USERNAME` | TRAKT.tv Username |
+| `TRAKT_CLIENT_ID` | TRAKT.tv Client ID |
+| `NEXT_PUBLIC_MAL_USERNAME` | MyAnimeList Username |
 
 Analytics are handled by **Vercel Analytics**, enabled from your Vercel project settings (no extra env needed).
 
@@ -124,6 +127,15 @@ Controls site-wide metadata:
 - Site name and description
 - Base URL and OG image
 - Twitter / X card settings
+
+### 3. Gists – `src/lib/gists.ts`
+
+- Gist list links
+
+### 4. Stuffs – `src/lib/stuffs.ts`
+
+- Spotify & Youtube Playlist
+- Games
 
 Example shape:
 
@@ -158,7 +170,7 @@ src/
 │  │  ├─ discord/presence/route.ts
 │  │  ├─ github/contributions/route.ts
 │  │  └─ spotify/now-playing/route.ts
-│  │  └─ stuffs/route.ts
+│  │  └─ stuffs/api.ts
 │  ├─ contact/page.tsx                    # wraps ContactForm
 │  ├─ resume/page.tsx                     # wraps ResumeViewer
 │  ├─ ty/page.tsx                         # thank-you screen

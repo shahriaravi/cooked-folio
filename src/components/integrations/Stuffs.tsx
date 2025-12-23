@@ -1,10 +1,20 @@
 "use client";
 
+import { MalData, TraktStats } from "@/app/api/stuffs/api";
 import Return from "@/components/ui/Return";
-import { MalData, TraktStats } from "@/app/api/stuffs/route";
 import { GAMES, SPOTIFY_PLAYLIST, YOUTUBE_PLAYLISTS } from "@/lib/stuffs";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Clapperboard, Clock, ExternalLink, Film, Gamepad2, Play, PlayCircle, Tv } from "lucide-react";
+import {
+  ArrowUpRight,
+  Clapperboard,
+  Clock,
+  ExternalLink,
+  Film,
+  Gamepad2,
+  Play,
+  PlayCircle,
+  Tv,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiMyanimelist, SiSpotify, SiYoutube } from "react-icons/si";
@@ -18,13 +28,13 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
+  show: { opacity: 1, y: 0 },
 };
 
 export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
@@ -33,8 +43,8 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
     return `${Math.floor(mins / 60 / 24)} Days`;
   };
 
-  const totalTraktDays = trakt 
-    ? Math.floor((trakt.movies.minutes + trakt.episodes.minutes) / 60 / 24) 
+  const totalTraktDays = trakt
+    ? Math.floor((trakt.movies.minutes + trakt.episodes.minutes) / 60 / 24)
     : 0;
 
   return (
@@ -50,7 +60,8 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
             stuffs
           </h1>
           <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
-            statistically proving i have no life. here is the data on how i fry my dopamine receptors.
+            statistically proving i have no life. here is the data on how i fry
+            my dopamine receptors.
           </p>
         </motion.div>
       </div>
@@ -72,7 +83,9 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
                   <Clapperboard className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-medium leading-none text-foreground">Trakt.tv</h3>
+                  <h3 className="text-base font-medium leading-none text-foreground">
+                    Trakt.tv
+                  </h3>
                   <div className="flex items-center gap-2 mt-1.5">
                     <Clock className="w-3 h-3 text-muted-foreground" />
                     <span className="text-xs font-medium text-primary">
@@ -86,7 +99,9 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
                 <div>
                   <div className="flex items-center gap-2 text-muted-foreground mb-2">
                     <Film className="w-4 h-4" />
-                    <span className="text-xs font-medium uppercase tracking-wider">Movies</span>
+                    <span className="text-xs font-medium uppercase tracking-wider">
+                      Movies
+                    </span>
                   </div>
                   <div className="text-4xl font-bold text-foreground tracking-tight">
                     {trakt.movies.watched.toLocaleString()}
@@ -99,7 +114,9 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
                 <div>
                   <div className="flex items-center gap-2 text-muted-foreground mb-2">
                     <Tv className="w-4 h-4" />
-                    <span className="text-xs font-medium uppercase tracking-wider">Shows</span>
+                    <span className="text-xs font-medium uppercase tracking-wider">
+                      Shows
+                    </span>
                   </div>
                   <div className="text-4xl font-bold text-foreground tracking-tight">
                     {trakt.shows.watched.toLocaleString()}
@@ -118,7 +135,11 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
         )}
 
         <motion.div variants={item} className="h-full">
-          <Link href={SPOTIFY_PLAYLIST.url} target="_blank" className="block h-full group">
+          <Link
+            href={SPOTIFY_PLAYLIST.url}
+            target="_blank"
+            className="block h-full group"
+          >
             <div className="relative h-full overflow-hidden rounded-xl border border-border/50 bg-card/40 p-6 flex flex-col justify-center min-h-[200px]">
               <div className="absolute inset-0 z-0">
                 <Image
@@ -139,25 +160,35 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                     <SiSpotify className="w-8 h-8 text-[#1DB954]" />
+                    <SiSpotify className="w-8 h-8 text-[#1DB954]" />
                   </div>
                 </div>
-                
+
                 <div className="flex-1 min-w-0 py-2">
                   <div className="flex items-center justify-between mb-1">
-                     <span className="text-[10px] font-bold text-[#1DB954] uppercase tracking-widest">On Repeat</span>
-                     <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <span className="text-[10px] font-bold text-[#1DB954] uppercase tracking-widest">
+                      On Repeat
+                    </span>
+                    <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-50 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-[#1DB954] transition-colors line-clamp-2">
                     {SPOTIFY_PLAYLIST.name}
                   </h3>
-                  
+
                   <div className="flex items-end gap-1 h-4 mt-3">
                     {[1, 2, 3, 4, 5].map((i) => (
                       <motion.div
                         key={i}
-                        animate={{ height: ["20%", "100%", "50%", "80%", "20%"] }}
-                        transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse", delay: i * 0.1, ease: "easeInOut" }}
+                        animate={{
+                          height: ["20%", "100%", "50%", "80%", "20%"],
+                        }}
+                        transition={{
+                          duration: 0.6,
+                          repeat: Infinity,
+                          repeatType: "reverse",
+                          delay: i * 0.1,
+                          ease: "easeInOut",
+                        }}
                         className="w-1.5 bg-foreground/30 rounded-full"
                       />
                     ))}
@@ -178,25 +209,41 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
                 <SiMyanimelist className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-medium leading-none">MyAnimeList</h3>
-                <p className="text-xs text-muted-foreground mt-1">Otaku stats</p>
+                <h3 className="text-base font-medium leading-none">
+                  MyAnimeList
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Otaku stats
+                </p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Entries</span>
-                <span className="text-xl font-bold text-foreground font-mono">{mal.stats.anime.total_entries}</span>
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Entries
+                </span>
+                <span className="text-xl font-bold text-foreground font-mono">
+                  {mal.stats.anime.total_entries}
+                </span>
               </div>
               <div className="w-full h-px bg-[#2e51a2]/10" />
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Arc Duration</span>
-                <span className="text-xl font-bold text-foreground font-mono">{mal.stats.anime.days_watched.toFixed(0)} Days</span>
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Arc Duration
+                </span>
+                <span className="text-xl font-bold text-foreground font-mono">
+                  {mal.stats.anime.days_watched.toFixed(0)} Days
+                </span>
               </div>
               <div className="w-full h-px bg-[#2e51a2]/10" />
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Mean Score</span>
-                <span className="text-2xl font-bold text-[#2e51a2] font-mono">{mal.stats.anime.mean_score}</span>
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Mean Score
+                </span>
+                <span className="text-2xl font-bold text-[#2e51a2] font-mono">
+                  {mal.stats.anime.mean_score}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -204,34 +251,35 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
 
         <motion.div variants={item} className="md:col-span-2 pt-8">
           <div className="flex items-center gap-3 mb-6 px-1">
-             <Gamepad2 className="w-5 h-5 text-primary" />
-             <div>
-               <h3 className="text-sm font-medium leading-none">Games I Play</h3>
-               <p className="text-xs text-muted-foreground mt-0.5">where my elo goes to die</p>
-             </div>
+            <Gamepad2 className="w-5 h-5 text-primary" />
+            <div>
+              <h3 className="text-sm font-medium leading-none">Games I Play</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                where my elo goes to die
+              </p>
+            </div>
           </div>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-             {GAMES.map((game) => (
-               <div 
-                 key={game.name} 
-                 className="flex items-center gap-3 p-4 rounded-lg border border-border/40 bg-card/20 hover:bg-card/40 transition-colors"
-               >
-                 <game.icon className="w-5 h-5 text-muted-foreground" />
-                 <span className="text-sm font-medium text-foreground">{game.name}</span>
-               </div>
-             ))}
+            {GAMES.map((game) => (
+              <div
+                key={game.name}
+                className="flex items-center gap-3 p-4 rounded-lg border border-border/40 bg-card/20 hover:bg-card/40 transition-colors"
+              >
+                <game.icon className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-foreground">
+                  {game.name}
+                </span>
+              </div>
+            ))}
           </div>
         </motion.div>
 
-        <motion.div
-          variants={item}
-          className="md:col-span-2 pt-8"
-        >
+        <motion.div variants={item} className="md:col-span-2 pt-8">
           <div className="flex items-center gap-3 mb-8 px-1">
             <SiYoutube className="w-5 h-5 text-[#FF0000]" />
             <span className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Playlists
+              Playlists
             </span>
           </div>
 
@@ -258,16 +306,16 @@ export function StuffsGrid({ trakt, mal }: StuffsGridProps) {
                 </div>
 
                 <div className="flex-1 min-w-0 flex flex-col gap-1">
-                   <h4 className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-                     {list.title}
-                   </h4>
-                   <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
-                     {list.description}
-                   </p>
+                  <h4 className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                    {list.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
+                    {list.description}
+                  </p>
                 </div>
 
                 <div className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full border border-transparent group-hover:border-border/50 group-hover:bg-card transition-all">
-                   <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-foreground" />
+                  <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-foreground" />
                 </div>
               </Link>
             ))}

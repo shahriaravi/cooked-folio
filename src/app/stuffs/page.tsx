@@ -1,5 +1,5 @@
+import { getMalData, getTraktData } from "@/app/api/stuffs/api";
 import { StuffsGrid } from "@/components/integrations/Stuffs";
-import { getMalData, getTraktData } from "@/app/api/stuffs/route";
 import { constructMetadata } from "@/lib/site-config";
 
 export const metadata = constructMetadata({
