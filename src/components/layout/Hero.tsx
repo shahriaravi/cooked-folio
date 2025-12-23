@@ -27,6 +27,12 @@ export function Hero() {
           <nav className="flex items-center gap-4 text-sm">
             <nav className="flex items-center gap-4 text-sm">
               <Link
+                href="/gist"
+                className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
+              >
+                /gist
+              </Link>
+              <Link
                 href="/what"
                 className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
               >

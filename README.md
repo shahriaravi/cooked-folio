@@ -173,12 +173,15 @@ src/
 │  ├─ integrations/                       # DiscordPresenceDot, NowPlaying, GithubActivityCard
 │  ├─ vibe/                               # Vibing, SlideToVibeButton
 │  ├─ contact/                            # ContactForm
+│  ├─ gist/                               # GistList
 │  └─ ui/                                 # Button, Input, Return, ResumeViewer, TimeDisplay, ThankYouContent
 ├─ hooks/
 │  └─ useDiscordPresence.ts
 └─ lib/
    ├─ config.ts                           # content & links
    ├─ site-config.ts                      # metadata/SEO
+   ├─ gist.ts                             # gist links
+   ├─ gist-contributor.ts                      # gist contributos
    └─ utils.ts
 ```
 
