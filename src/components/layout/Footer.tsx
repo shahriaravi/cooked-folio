@@ -1,14 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import { CAL_URL, FIVERR_URL } from "@/lib/config";
+import { CAL_URL } from "@/lib/config";
 import { getCalApi } from "@calcom/embed-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Mail, Paperclip, Plus } from "lucide-react";
+import { Mail, Paperclip, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SiFiverr } from "react-icons/si";
+import { SiGithub } from "react-icons/si";
 
 export function Footer() {
   const [isCalLoading, setIsCalLoading] = useState(false);
@@ -80,7 +79,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <motion.button
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
@@ -90,7 +89,7 @@ export function Footer() {
               whileTap="tap"
               className="
                 group relative flex items-center overflow-hidden
-                h-12 pl-2 pr-5
+                h-12 pl-2 pr-5 w-fit
                 bg-card hover:bg-primary/5 
                 border border-border hover:border-primary/50
                 rounded-lg 
@@ -138,17 +137,13 @@ export function Footer() {
               </div>
             </motion.button>
 
-            <Link href={FIVERR_URL} target="_blank" tabIndex={-1}>
-              <Button
-                variant="outline"
-                className="h-12 gap-3 pl-5 pr-4 rounded-lg bg-card border-border hover:border-[#1dbf73]/50 hover:bg-[#1dbf73]/5 group transition-all duration-300"
-              >
-                <SiFiverr className="w-5 h-5 text-muted-foreground group-hover:text-[#1dbf73] transition-colors duration-300" />
-                <span className="text-[15px] font-medium text-foreground group-hover:text-[#1dbf73] transition-colors duration-300">
-                  Hire on Fiverr
-                </span>
-                <ArrowUpRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-[#1dbf73] transition-colors duration-300" />
-              </Button>
+            <Link
+              href="https://github.com/shahriaravi/cooked-folio"
+              target="_blank"
+              className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
+            >
+              <span>Liked my portfolio? Please leave a star</span>
+              <SiGithub className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
             </Link>
           </div>
 
