@@ -69,7 +69,13 @@ export function Footer() {
 
       <footer className="mt-12 pb-8 pt-8 border-t border-border/40 text-sm text-muted-foreground font-mono">
         <div className="flex flex-col gap-6">
-          <div className="space-y-2">
+          <motion.div
+            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ type: "spring", stiffness: 100, damping: 18 }}
+            className="space-y-2"
+          >
             <h3 className="text-foreground font-medium text-base tracking-tight">
               Have a project in mind?
             </h3>
@@ -77,22 +83,28 @@ export function Footer() {
               I&apos;m always open to discussing new opportunities, crazy ideas,
               or just chatting about tech.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ type: "spring", stiffness: 100, damping: 18, delay: 0.08 }}
+            className="flex flex-col md:flex-row md:items-center justify-between gap-4"
+          >
             <motion.button
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
               data-cal-config='{"layout":"month_view","hideEventTypeDetails":true}'
               initial="initial"
               whileHover="hover"
-              whileTap="tap"
+              whileTap={{ scale: 0.97 }}
               className="
                 group relative flex items-center overflow-hidden
                 h-12 pl-2 pr-5 w-fit
-                bg-card hover:bg-primary/5 
+                bg-card hover:bg-primary/5
                 border border-border hover:border-primary/50
-                rounded-lg 
+                rounded-lg
                 transition-all duration-300
                 cursor-pointer
                 shadow-sm
@@ -137,32 +149,49 @@ export function Footer() {
               </div>
             </motion.button>
 
-            <Link
-              href="https://github.com/shahriaravi/cooked-folio"
-              target="_blank"
-              className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
+            <motion.div
+              whileHover={{ x: 3, transition: { type: "spring", stiffness: 300, damping: 20 } }}
             >
-              <span>Liked my portfolio? Please leave a star</span>
-              <SiGithub className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-            </Link>
-          </div>
+              <Link
+                href="https://github.com/shahriaravi/cooked-folio"
+                target="_blank"
+                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
+              >
+                <span>Liked my portfolio? Please leave a star</span>
+                <SiGithub className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+              </Link>
+            </motion.div>
+          </motion.div>
 
-          <div className="flex items-center gap-6 mt-2">
-            <a
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ type: "spring", stiffness: 100, damping: 18, delay: 0.15 }}
+            className="flex items-center gap-6 mt-2"
+          >
+            <motion.a
               href="mailto:avilovesburger@gmail.com"
               className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              whileHover={{ y: -2, transition: { type: "spring", stiffness: 300, damping: 15 } }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Mail className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
+              <Mail className="w-4 h-4" />
               <span>send email</span>
-            </a>
-            <Link
-              href="/resume"
-              className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+            </motion.a>
+            <motion.div
+              whileHover={{ y: -2, transition: { type: "spring", stiffness: 300, damping: 15 } }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Paperclip className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
-              <span>view resume</span>
-            </Link>
-          </div>
+              <Link
+                href="/resume"
+                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Paperclip className="w-4 h-4" />
+                <span>view resume</span>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </footer>
     </>

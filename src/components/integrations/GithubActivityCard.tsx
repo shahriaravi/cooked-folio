@@ -1,6 +1,7 @@
 "use client";
 
 import { CustomScrollArea } from "@/components/common/CustomScrollArea";
+import { viewport } from "@/lib/animations";
 import { motion } from "framer-motion";
 import useSWR from "swr";
 
@@ -38,6 +39,16 @@ const formatElapsedTime = (start: number): string => {
   const mm = String(minutes).padStart(2, "0");
   if (hours > 0) return `${hours}h ${mm}m`;
   return `${minutes}m`;
+};
+
+const sectionReveal = {
+  hidden: { opacity: 0, y: 16, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 80, damping: 20, mass: 0.8 },
+  },
 };
 
 export function GithubActivityCard() {
@@ -85,7 +96,13 @@ export function GithubActivityCard() {
       : null;
 
   return (
-    <section className="mb-0 w-full">
+    <motion.section
+      variants={sectionReveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
+      className="mb-0 w-full"
+    >
       <h2 className="text-sm font-mono text-muted-foreground mb-3 uppercase tracking-wider pl-1 md:pl-0">
         // github activity
       </h2>
@@ -122,10 +139,12 @@ export function GithubActivityCard() {
                 {week.contributionDays.map((day, dIdx) => (
                   <motion.div
                     key={day.date}
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
-                      duration: 0.2,
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 20,
                       delay: (wIdx * 7 + dIdx) * 0.002,
                     }}
                     className={`h-2.5 w-2.5 md:h-3 md:w-3 rounded-[2px] ${getIntensityClass(
@@ -160,6 +179,6 @@ export function GithubActivityCard() {
           <span>More</span>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

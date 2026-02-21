@@ -12,12 +12,45 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiDiscord } from "react-icons/si";
 
+const heroReveal = {
+  hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 80, damping: 20, mass: 0.8 },
+  },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+  },
+};
+
+const staggerChild = {
+  hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 100, damping: 18 },
+  },
+};
+
 export function Hero() {
   const discordStatus = useDiscordPresence();
 
   return (
     <section className="relative mb-10 font-mono">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 py-2 mb-6 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/40 pb-4">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 120, damping: 20 }}
+        className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 py-2 mb-6 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/40 pb-4"
+      >
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-primary" />
           <TimeDisplay />
@@ -26,40 +59,30 @@ export function Hero() {
         <div className="flex items-center justify-start sm:justify-end gap-4">
           <nav className="flex items-center gap-4 text-sm">
             <nav className="flex items-center gap-4 text-sm">
-              <Link
-                href="/stuffs"
-                className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
-              >
-                /stuffs
-              </Link>
-
-              <Link
-                href="/what"
-                className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
-              >
-                /what
-              </Link>
-              <Link
-                href="/contact"
-                className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
-              >
-                /contact
-              </Link>
-              <Link
-                target="blank"
-                href="/gist"
-                className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
-              >
-                /gist
-              </Link>
+              {["/stuffs", "/what", "/contact", "/gist"].map((href) => (
+                <motion.span key={href} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href={href}
+                    target={href === "/gist" ? "blank" : undefined}
+                    className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
+                  >
+                    {href}
+                  </Link>
+                </motion.span>
+              ))}
             </nav>
           </nav>
 
           <ThemeToggle className="bg-transparent hover:bg-primary/10 text-muted-foreground hover:text-primary w-8 h-8 rounded-md transition-colors" />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="h-40 md:h-56 w-full relative mb-12 select-none pointer-events-none">
+      <motion.div
+        variants={heroReveal}
+        initial="hidden"
+        animate="visible"
+        className="h-40 md:h-56 w-full relative mb-12 select-none pointer-events-none"
+      >
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-background/20 to-background" />
         <Image
           src={BANNER_IMAGE}
@@ -68,10 +91,15 @@ export function Hero() {
           className="object-cover transition-transform duration-700 hover:scale-105 opacity-90 grayscale-[0.1]"
           priority
         />
-      </div>
+      </motion.div>
 
       <div className="px-1">
-        <div className="relative -mt-24 mb-6 w-max">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.15 }}
+          className="relative -mt-24 mb-6 w-max"
+        >
           <div
             className="relative h-20 w-20 md:h-24 md:w-24 overflow-hidden shadow-2xl ring-4 ring-background bg-background z-10"
             style={{ borderRadius: "var(--radius-lg)" }}
@@ -91,21 +119,21 @@ export function Hero() {
               className="w-5 h-5 md:w-6 md:h-6 border-[3px] border-background"
             />
           </div>
-        </div>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
         >
-          <div className="flex items-center gap-3 mb-3">
+          <motion.div variants={staggerChild} className="flex items-center gap-3 mb-3">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
               Shahriar Avi
             </h1>
             <Leaf className="w-5 h-5 text-success fill-success/10 -rotate-12" />
-          </div>
+          </motion.div>
 
-          <div className="text-base md:text-lg text-muted-foreground mb-3 flex flex-wrap items-center gap-2">
+          <motion.div variants={staggerChild} className="text-base md:text-lg text-muted-foreground mb-3 flex flex-wrap items-center gap-2">
             <span>building things</span>
             <a
               href="https://byontriq.xyz"
@@ -114,29 +142,31 @@ export function Hero() {
             >
               @Byontriq
             </a>
-          </div>
+          </motion.div>
 
-          <div className="mb-6 mt-2">
+          <motion.div variants={staggerChild} className="mb-6 mt-2">
             <NowPlaying />
-          </div>
+          </motion.div>
 
-          <p className="text-sm md:text-base text-muted-foreground max-w-2xl leading-relaxed mb-8">
+          <motion.p variants={staggerChild} className="text-sm md:text-base text-muted-foreground max-w-2xl leading-relaxed mb-8">
             A code <span className="highlight-text">alchemist ⚗️</span> building
             things and turning ideas into products. I make apps, websites and
             extensions, <span className="highlight-text">experiment a lot</span>
-            , break stuff on purpose and ship what’s{" "}
+            , break stuff on purpose and ship what&apos;s{" "}
             <span className="highlight-text">actually useful</span>.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap items-center gap-5">
+          <motion.div variants={staggerChild} className="flex flex-wrap items-center gap-5">
             {SOCIALS.map((social) => (
-              <a
+              <motion.a
                 key={social.platform}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.platform}
-                className="text-muted-foreground transition-all duration-200 hover:-translate-y-1"
+                className="text-muted-foreground transition-all duration-200"
+                whileHover={{ y: -3, transition: { type: "spring", stiffness: 300, damping: 15 } }}
+                whileTap={{ scale: 0.9 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget.firstElementChild as HTMLElement;
                   if (el && (social as any).color)
@@ -148,24 +178,26 @@ export function Hero() {
                 }}
               >
                 <social.icon className="w-5 h-5 md:w-6 md:h-6" />
-              </a>
+              </motion.a>
             ))}
 
             <div className="hidden sm:block w-px h-6 bg-border" />
 
-            <a
+            <motion.a
               href={DISCORD_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 font-medium text-foreground hover:text-primary transition-colors text-xs md:text-sm"
+              whileHover={{ x: 2, transition: { type: "spring", stiffness: 300, damping: 15 } }}
+              whileTap={{ scale: 0.97 }}
             >
               <SiDiscord className="w-5 h-5 text-primary/80 group-hover:text-primary transition-colors" />
               <span>Join Community</span>
               <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary">
                 →
               </span>
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaGamepad } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export interface Activity {
   isActive: boolean;
@@ -30,6 +31,24 @@ const formatElapsedTime = (start: number): string => {
   const mm = String(minutes).padStart(2, "0");
   const ss = String(seconds).padStart(2, "0");
   return hours > 0 ? `${hours}:${mm}:${ss}` : `${minutes}:${ss}`;
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 100, damping: 18 },
+  },
 };
 
 export function ActivitySection({ initialActivity }: ActivitySectionProps) {
@@ -74,12 +93,24 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
   const data = activity.data;
 
   return (
-    <section className="mb-10">
-      <h2 className="text-sm font-mono text-muted-foreground mb-2 uppercase tracking-wider pl-1 md:pl-0">
+    <motion.section
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
+      className="mb-10"
+    >
+      <motion.h2
+        variants={staggerItem}
+        className="text-sm font-mono text-muted-foreground mb-2 uppercase tracking-wider pl-1 md:pl-0"
+      >
         activity
-      </h2>
+      </motion.h2>
 
-      <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-muted-foreground">
+      <motion.div
+        variants={staggerItem}
+        whileHover={{ y: -2, transition: { type: "spring", stiffness: 300, damping: 20 } }}
+        className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-muted-foreground"
+      >
         {data.largeImage && (
           <div className="relative h-9 w-9 md:h-10 md:w-10 overflow-hidden rounded-lg border border-white/10 flex-shrink-0">
             <Image
@@ -129,7 +160,7 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
             </div>
           )}
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

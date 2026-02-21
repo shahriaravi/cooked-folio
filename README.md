@@ -4,7 +4,7 @@
 
 A minimal, high-performance portfolio built with **Next.js**, **Tailwind CSS**, and **Framer Motion**.
 <br/>
-Real-time Discord presence, Spotify/Trakt.tv/MyAnimeList integration, useful gist, slide-to-vibe page, and a chat-style contact form.
+Real-time Discord presence, Spotify/Trakt.tv/MyAnimeList integration, useful slide-to-vibe page, and a chat-style contact form.
 
 <br/>
 
@@ -21,7 +21,6 @@ One‑click deploy on Vercel:
 ---
 
 ## ✨ Features
-
 - Discord presence (via Lanyard)
 - Trakt.tv & MyAnimeList Stats
 - Spotify “Now Playing”
@@ -43,7 +42,7 @@ One‑click deploy on Vercel:
 - Framework: Next.js (App Router)
 - Language: TypeScript
 - Styling: Tailwind CSS
-- Animations: Framer Motion
+- Animations: Framer Motion (spring physics, scroll-triggered reveals)
 - Theme: next-themes
 - Icons: lucide-react, react-icons
 - Analytics: Vercel Analytics
@@ -191,6 +190,7 @@ src/
 ├─ hooks/
 │  └─ useDiscordPresence.ts
 └─ lib/
+   ├─ animations.ts                       # shared animation variants & utilities
    ├─ config.ts                           # content & links
    ├─ site-config.ts                      # metadata/SEO
    ├─ stuffs.ts                           # spotify, yt playlist cover images

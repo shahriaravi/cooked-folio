@@ -1,30 +1,62 @@
-"use client"
+"use client";
 
-import { PROJECTS } from "@/lib/config"
-import { motion } from "framer-motion"
-import { ArrowUpRight, Github } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { PROJECTS } from "@/lib/config";
+import { viewport } from "@/lib/animations";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Github } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.07 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 14, scale: 0.98, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 100, damping: 18 },
+  },
+};
 
 export function ProjectList() {
   return (
     <section className="mb-16">
-      <h2 className="text-sm font-mono text-muted-foreground mb-4 uppercase tracking-wider pl-1 md:pl-0">
+      <motion.h2
+        initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={viewport}
+        transition={{ type: "spring", stiffness: 100, damping: 18 }}
+        className="text-sm font-mono text-muted-foreground mb-4 uppercase tracking-wider pl-1 md:pl-0"
+      >
         // projects
-      </h2>
+      </motion.h2>
 
-      <div className="flex flex-col gap-1">
-        {PROJECTS.map((project, index) => (
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewport}
+        className="flex flex-col gap-1"
+      >
+        {PROJECTS.map((project) => (
           <motion.div
             key={project.name}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            variants={item}
+            whileHover={{ x: 4, backgroundColor: "hsl(var(--primary) / 0.04)", transition: { type: "spring", stiffness: 300, damping: 20 } }}
+            whileTap={{ scale: 0.98 }}
             className="
               group relative flex items-start md:items-center gap-4 py-4 px-3 -mx-3
               rounded-lg
               transition-all duration-300 ease-out
-              hover:bg-primary/5 border border-transparent hover:border-primary/10
+              border border-transparent hover:border-primary/10
             "
           >
             <Link
@@ -56,8 +88,8 @@ export function ProjectList() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="
-                      relative z-10 flex items-center justify-center 
-                      w-6 h-6 rounded-full 
+                      relative z-10 flex items-center justify-center
+                      w-6 h-6 rounded-full
                       bg-background text-muted-foreground
                       border border-border/60
                       hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:border-primary
@@ -81,7 +113,7 @@ export function ProjectList() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
-  )
+  );
 }
