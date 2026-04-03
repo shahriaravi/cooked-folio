@@ -25,7 +25,6 @@ One‑click deploy on Vercel:
 - Trakt.tv & MyAnimeList Stats
 - Spotify “Now Playing”
 - GitHub contributions heatmap
-- Useful curated /gist page
 - Slide to Vibe with audio + animations
 - Chat-style contact form (Discord webhook)
 - Dark/Light theme toggle
@@ -127,15 +126,6 @@ Controls site-wide metadata:
 - Base URL and OG image
 - Twitter / X card settings
 
-### 3. Gists – `src/lib/gists.ts`
-
-- Gist list links
-
-### 4. Stuffs – `src/lib/stuffs.ts`
-
-- Spotify & Youtube Playlist
-- Games
-
 Example shape:
 
 ```ts
@@ -169,7 +159,6 @@ src/
 │  │  ├─ discord/presence/route.ts
 │  │  ├─ github/contributions/route.ts
 │  │  └─ spotify/now-playing/route.ts
-│  │  └─ stuffs/api.ts
 │  ├─ contact/page.tsx                    # wraps ContactForm
 │  ├─ donate/page.tsx                     # donation page
 │  ├─ donate/thanks/page.tsx              # post-donation thank you
@@ -184,11 +173,10 @@ src/
 │  ├─ common/                             # Container, ThemeToggle, HelloLoader, CustomScrollArea, InitialSplash
 │  ├─ layout/                             # Hero, Footer, Providers
 │  ├─ sections/                           # ExperienceList, EducationList, ProjectList, StackList
-│  ├─ integrations/                       # DiscordPresenceDot, NowPlaying, GithubActivityCard, Stuffs
+│  ├─ integrations/                       # DiscordPresenceDot, NowPlaying, GithubActivityCard
 │  ├─ vibe/                               # Vibing, SlideToVibeButton
 │  ├─ contact/                            # ContactForm
 │  ├─ donate/                             # DonateContent, DonateThanks
-│  ├─ gist/                               # GistList
 │  └─ ui/                                 # Button, Input, Return, ResumeViewer, TimeDisplay, ThankYouContent
 ├─ hooks/
 │  └─ useDiscordPresence.ts
@@ -196,7 +184,6 @@ src/
    ├─ animations.ts                       # shared animation variants & utilities
    ├─ config.ts                           # content & links
    ├─ site-config.ts                      # metadata/SEO
-   ├─ stuffs.ts                           # spotify, yt playlist cover images
    └─ utils.ts
 ```
 

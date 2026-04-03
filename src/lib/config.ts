@@ -47,7 +47,7 @@ export interface ProjectItem {
 // 2. PERSONAL DETAILS & LINKS
 // =================================================================================
 
-export const BANNER_IMAGE = "https://cdn.discordapp.com/attachments/1346582212983918642/1464618198560411796/0f2d21f97b23af771ab076d912343eb3.jpg?ex=69761f7d&is=6974cdfd&hm=5c2ad4f34ee74bfb40acc9bc1f5560fafd0a84d134020694ea8d5304720b7c14&";
+export const BANNER_IMAGE = "/cp.jpg";
 
 // External Links
 export const RESUME_URL = "https://drive.google.com/file/d/1WKa36vE76iBqOAcucFTeVxGwsFmSim9g/view?usp=drive_link";
@@ -188,18 +188,18 @@ export const PROJECTS: ProjectItem[] = [
     repo: "",
     image: "/images/projects/byontriq.svg",
   },
+    {
+    name: "nothing-vscode-theme",
+    tagline: "High-contrast VS Code theme inspired by Nothing Tech.",
+    url: "https://marketplace.visualstudio.com/items?itemName=xexefe.nothing-os-theme",
+    repo: "https://github.com/shahriaravi/nothing-vscode-theme",
+    image: "/images/projects/nothing-theme.png",
+  },
   {
     name: "Terms Buddy",
     tagline: "Browser extension that analyzes privacy policies for risks.",
     url: "https://github.com/shahriaravi/terms-buddy",
     repo: "",
     image: "/images/projects/tb.png",
-  },
-  {
-    name: "nothing-vscode-theme",
-    tagline: "High-contrast VS Code theme inspired by Nothing Tech.",
-    url: "https://marketplace.visualstudio.com/items?itemName=xexefe.nothing-os-theme",
-    repo: "https://github.com/shahriaravi/nothing-vscode-theme",
-    image: "/images/projects/nothing-theme.png",
   },
 ];

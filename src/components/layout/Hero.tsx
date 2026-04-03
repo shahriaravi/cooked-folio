@@ -59,7 +59,7 @@ export function Hero() {
         <div className="flex items-center justify-start sm:justify-end gap-4">
           <nav className="flex items-center gap-4 text-sm">
             <nav className="flex items-center gap-4 text-sm">
-              {["/stuffs", "/what", "/contact", "/gist"].map((href) => (
+              {["/what", "/contact", "/gist"].map((href) => (
                 <motion.span key={href} whileTap={{ scale: 0.95 }}>
                   <Link
                     href={href}
