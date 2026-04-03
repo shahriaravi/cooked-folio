@@ -94,9 +94,6 @@ Required variables:
 | `SPOTIFY_REFRESH_TOKEN` | Spotify refresh token to fetch now-playing |
 | `GITHUB_USERNAME` | Your GitHub username for contributions |
 | `GITHUB_TOKEN` | GitHub Personal Access Token (classic) with `read:user` |
-| `NEXT_PUBLIC_TRAKT_USERNAME` | TRAKT.tv Username |
-| `TRAKT_CLIENT_ID` | TRAKT.tv Client ID |
-| `NEXT_PUBLIC_MAL_USERNAME` | MyAnimeList Username |
 
 Analytics are handled by **Vercel Analytics**, enabled from your Vercel project settings (no extra env needed).
 
