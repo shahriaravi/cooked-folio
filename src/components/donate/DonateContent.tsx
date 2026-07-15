@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Copy, Loader2, Phone, Play, Send, Wallet, AlertTriangle } from "lucide-react";
+import { Check, Copy, Loader2, Phone, Send, AlertTriangle } from "lucide-react";
 import Return from "@/components/ui/Return";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { SiWise } from "react-icons/si";
 
-const BTC_ADDRESS = "0xb12353fd97dbbc5654145c37595ff29069f9831a";
 const BKASH_NUMBER = "01701076982";
 
 const WISE_DETAILS = [
@@ -57,7 +56,7 @@ const expandVariants = {
 
 export default function DonateContent() {
   const router = useRouter();
-  const [method, setMethod] = useState<"wise" | "btc20" | "bkash" | null>(null);
+  const [method, setMethod] = useState<"wise" | "bkash" | null>(null);
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -126,7 +125,7 @@ export default function DonateContent() {
 
         <motion.div variants={staggerItem}>
           <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2 block">
-            Amount (USD)
+            Amount (USD/BDT)
           </label>
           <Input
             type="number"
@@ -143,6 +142,7 @@ export default function DonateContent() {
             Payment Method
           </label>
           <div className="flex flex-col gap-3">
+            {/* Wise */}
             <motion.button
               onClick={() => !isSubmitting && setMethod("wise")}
               whileTap={!isSubmitting ? { scale: 0.98 } : undefined}
@@ -195,7 +195,9 @@ export default function DonateContent() {
                         className="group/video flex items-center gap-3 rounded-lg bg-primary/[0.06] border border-primary/15 px-3.5 py-2.5 hover:bg-primary/10 hover:border-primary/25 transition-all duration-200"
                       >
                         <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center shrink-0 group-hover/video:bg-primary/25 transition-colors">
-                          <Play className="w-3 h-3 fill-primary text-primary ml-0.5" />
+                          <svg className="w-3 h-3 fill-primary text-primary ml-0.5" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
                         </div>
                         <div>
                           <div className="text-xs font-medium text-primary">watch instruction video</div>
@@ -221,66 +223,7 @@ export default function DonateContent() {
               </AnimatePresence>
             </motion.button>
 
-            <motion.button
-              onClick={() => !isSubmitting && setMethod("btc20")}
-              whileTap={!isSubmitting ? { scale: 0.98 } : undefined}
-              className={`
-                w-full text-left rounded-lg border p-4 transition-all duration-200 cursor-pointer
-                ${method === "btc20"
-                  ? "border-primary/50 bg-primary/5 shadow-sm"
-                  : "border-border/50 bg-card/50 hover:border-primary/20 hover:bg-primary/[0.02]"
-                }
-                ${isSubmitting ? "pointer-events-none opacity-60" : ""}
-              `}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-200 ${method === "btc20" ? "bg-primary/10" : "bg-muted/30"}`}>
-                  <Wallet className={`w-5 h-5 transition-colors duration-200 ${method === "btc20" ? "text-primary" : "text-muted-foreground"}`} />
-                </div>
-                <div>
-                  <div className="font-medium text-sm text-foreground">BTC20</div>
-                  <div className="text-xs text-muted-foreground">USDT on BNB Smart Chain</div>
-                </div>
-                <div className={`ml-auto w-4 h-4 rounded-full border-2 transition-all duration-200 ${method === "btc20" ? "border-primary bg-primary" : "border-muted-foreground/30"}`}>
-                  {method === "btc20" && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                      className="w-full h-full rounded-full flex items-center justify-center"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-foreground" />
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-
-              <AnimatePresence>
-                {method === "btc20" && (
-                  <motion.div
-                    variants={expandVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-4 pt-4 border-t border-border/30 space-y-3">
-                      <div className="space-y-1.5">
-                        <div className="text-xs text-muted-foreground">Network</div>
-                        <div className="text-sm font-medium text-foreground">BNB Smart Chain (BEP20)</div>
-                      </div>
-
-                      <CopyField label="Wallet Address" value={BTC_ADDRESS} copyKey="btc" copiedKey={copiedKey} onCopy={copyText} />
-
-                      <div className="flex items-center gap-2 text-[11px] text-amber-400/80">
-                        <AlertTriangle className="w-3 h-3 shrink-0" />
-                        <span>Don&apos;t send NFTs to this address</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            {/* bKash */}
             <motion.button
               onClick={() => !isSubmitting && setMethod("bkash")}
               whileTap={!isSubmitting ? { scale: 0.98 } : undefined}

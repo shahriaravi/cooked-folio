@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://yoavi.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 const GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
 
@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
       console.error("github env vars missing");
       return NextResponse.json(
         { error: "github credentials not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
       console.error("github graphql error", json.errors || json);
       return NextResponse.json(
         { error: "failed to fetch contributions" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -148,16 +148,13 @@ export async function GET(request: NextRequest) {
     if (!calendar) {
       return NextResponse.json(
         { error: "no contribution data" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(calendar);
   } catch (error) {
     console.error("github contributions route error", error);
-    return NextResponse.json(
-      { error: "unexpected error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "unexpected error" }, { status: 500 });
   }
 }

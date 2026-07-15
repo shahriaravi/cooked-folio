@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://yoavi.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
         isPlaying: false,
         error: "Spotify environment variables not configured on the server.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 

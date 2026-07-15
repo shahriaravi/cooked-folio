@@ -4,12 +4,13 @@ import { Metadata } from "next";
 // 1. BASE CONFIGURATION
 // =================================================================================
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL || "https://yoavi.fun";
+const BASE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 export const siteConfig = {
   name: "avi",
   username: "shahriaravi_",
-  description: "code alchemist ⚗️ building things. turning ideas into products. founder @byontriq",
+  description:
+    "code alchemist ⚗️ building things. turning ideas into products. founder @byontriq",
   url: BASE_URL,
   ogImage: "/og-image.png?v1",
   links: {
@@ -44,7 +45,7 @@ export function constructMetadata({
       template: `%s`,
     },
     description,
-    
+
     // 2. Open Graph (Facebook, Discord, etc.)
     openGraph: {
       title,

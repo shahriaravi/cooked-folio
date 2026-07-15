@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://yoavi.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 export async function GET() {
   const html = `<!doctype html>
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
     if (!song || typeof song !== "string" || !song.trim()) {
       return NextResponse.json(
         { error: "song name is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -97,7 +97,7 @@ export async function POST(request: Request) {
       console.error("DISCORD_WEBHOOK_URL not configured");
       return NextResponse.json(
         { error: "webhook not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
     console.error("song suggestion error:", error);
     return NextResponse.json(
       { error: "failed to submit song" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,12 +1,10 @@
 import {
-  SiFacebook,
-  SiFirebase,
-  SiGithub,
-  SiInstagram,
-  SiLinkedin,
   SiExpress,
+  SiFacebook,
   SiGit,
+  SiGithub,
   SiJavascript,
+  SiLinkedin,
   SiNextdotjs,
   SiNodedotjs,
   SiReact,
@@ -50,7 +48,8 @@ export interface ProjectItem {
 export const BANNER_IMAGE = "/cp.jpg";
 
 // External Links
-export const RESUME_URL = "https://drive.google.com/file/d/1WKa36vE76iBqOAcucFTeVxGwsFmSim9g/view?usp=drive_link";
+export const RESUME_URL =
+  "https://drive.google.com/file/d/1WKa36vE76iBqOAcucFTeVxGwsFmSim9g/view?usp=drive_link";
 export const DISCORD_LINK = "https://discord.gg/wG9qpfvuQQ";
 export const CAL_URL = "https://cal.com/shahriaravi/15m";
 
@@ -59,35 +58,29 @@ export const CAL_URL = "https://cal.com/shahriaravi/15m";
 // =================================================================================
 
 export const SOCIALS = [
-  { 
-    platform: "facebook", 
-    url: "https://facebook.com/shahriaravi", 
-    icon: SiFacebook, 
-    color: "#1877F2" 
+  {
+    platform: "facebook",
+    url: "https://facebook.com/shahriaravi",
+    icon: SiFacebook,
+    color: "#1877F2",
   },
-  { 
-    platform: "instagram", 
-    url: "https://instagram.com/shahriaravi_", 
-    icon: SiInstagram, 
-    color: "#E1306C" 
+  {
+    platform: "linkedin",
+    url: "https://linkedin.com/in/shahriaravi",
+    icon: SiLinkedin,
+    color: "#0A66C2",
   },
-  { 
-    platform: "linkedin", 
-    url: "https://linkedin.com/in/shahriaravi", 
-    icon: SiLinkedin, 
-    color: "#0A66C2" 
+  {
+    platform: "github",
+    url: "https://github.com/shahriaravi",
+    icon: SiGithub,
+    color: "#ffffff",
   },
-  { 
-    platform: "github", 
-    url: "https://github.com/shahriaravi", 
-    icon: SiGithub, 
-    color: "#ffffff" 
-  },
-  { 
-    platform: "x", 
-    url: "https://x.com/shahriaravi_", 
-    icon: SiX, 
-    color: "#ffffff" 
+  {
+    platform: "x",
+    url: "https://x.com/shahriaravi_",
+    icon: SiX,
+    color: "#ffffff",
   },
 ];
 
@@ -118,7 +111,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     role: "Founder & SWE",
     date: "2025 - Present",
     description: "Building modern, minimal web & mobile apps.",
-    logo: "/logos/byontriq.png", 
+    logo: "/logos/byontriq.png",
   },
   {
     company: "EXEAIO",
@@ -167,10 +160,10 @@ export const EDUCATION: EducationItem[] = [
 // =================================================================================
 
 export const PROJECTS: ProjectItem[] = [
-   {
+  {
     name: "cooked-folio",
     tagline: "A minimal, high-performance portfolio template aka this website.",
-    url: "https://yoavi.fun",
+    url: "https://shahriaravi.me",
     repo: "https://github.com/shahriaravi/cooked-folio",
     image: "/avatar/avatar.png",
   },
@@ -188,7 +181,7 @@ export const PROJECTS: ProjectItem[] = [
     repo: "",
     image: "/images/projects/byontriq.svg",
   },
-    {
+  {
     name: "nothing-vscode-theme",
     tagline: "High-contrast VS Code theme inspired by Nothing Tech.",
     url: "https://marketplace.visualstudio.com/items?itemName=xexefe.nothing-os-theme",

@@ -130,7 +130,7 @@ export const siteConfig = {
   name: "avi",
   username: "shahriaravi_",
   description: "founder & swe @ byontriq. building things with next.js, caffeine & monke energy.",
-  url: process.env.NEXT_PUBLIC_URL || "https://yoavi.fun",
+  url: process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me",
   ogImage: "/og-img.png",
   links: {
     twitter: "https://twitter.com/shahriaravi_",

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://yoavi.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 export const dynamic = "force-dynamic";
 
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
   if (!userId) {
     return NextResponse.json(
       { error: "Discord user ID not configured" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
           ? assets.large_image.startsWith("mp:")
             ? `https://media.discordapp.net/${assets.large_image.replace(
                 "mp:",
-                ""
+                "",
               )}`
             : `https://cdn.discordapp.com/app-assets/${application_id}/${assets.large_image}.png`
           : null;
@@ -134,7 +134,7 @@ export async function GET(request: NextRequest) {
           ? assets.small_image.startsWith("mp:")
             ? `https://media.discordapp.net/${assets.small_image.replace(
                 "mp:",
-                ""
+                "",
               )}`
             : `https://cdn.discordapp.com/app-assets/${application_id}/${assets.small_image}.png`
           : null;

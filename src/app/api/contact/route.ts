@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://yoavi.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 export async function GET() {
   const html = `<!doctype html>
@@ -92,7 +92,7 @@ export async function POST(req: Request) {
     if (!message || !name) {
       return NextResponse.json(
         { error: "name and message are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
       console.error("DISCORD_WEBHOOK_URL is not set");
       return NextResponse.json(
         { error: "server misconfigured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -124,16 +124,13 @@ export async function POST(req: Request) {
       console.error("discord webhook error", await res.text());
       return NextResponse.json(
         { error: "failed to send message" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("contact api error", error);
-    return NextResponse.json(
-      { error: "unexpected error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "unexpected error" }, { status: 500 });
   }
 }
