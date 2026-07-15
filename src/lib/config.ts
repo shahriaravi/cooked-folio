@@ -28,7 +28,6 @@ export interface ExperienceItem {
 
 export interface EducationItem {
   institution: string;
-  degree: string;
   period: string;
   logo: string;
 }
@@ -143,13 +142,11 @@ export const EXPERIENCE: ExperienceItem[] = [
 export const EDUCATION: EducationItem[] = [
   {
     institution: "North South University",
-    degree: "Bachelor of Science – Biochemistry and Biotechnology",
     period: "Dec 2025 – Dec 2029",
     logo: "/images/education/nsu.webp",
   },
   {
     institution: "Presidency University",
-    degree: "Bachelor of Science – Computer Science and Engineering",
     period: "Jan 2025 – Aug 2025",
     logo: "/images/education/pu.webp",
   },

@@ -1,8 +1,6 @@
 "use client";
 
 import { CustomScrollArea } from "@/components/common/CustomScrollArea";
-import { viewport } from "@/lib/animations";
-import { motion } from "framer-motion";
 import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -39,16 +37,6 @@ const formatElapsedTime = (start: number): string => {
   const mm = String(minutes).padStart(2, "0");
   if (hours > 0) return `${hours}h ${mm}m`;
   return `${minutes}m`;
-};
-
-const sectionReveal = {
-  hidden: { opacity: 0, y: 16, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 80, damping: 20, mass: 0.8 },
-  },
 };
 
 export function GithubActivityCard() {
@@ -96,15 +84,9 @@ export function GithubActivityCard() {
       : null;
 
   return (
-    <motion.section
-      variants={sectionReveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewport}
-      className="mb-0 w-full"
-    >
+    <section className="mb-0 w-full">
       <h2 className="text-sm font-mono text-muted-foreground mb-3 uppercase tracking-wider pl-1 md:pl-0">
-        // github activity
+        github activity
       </h2>
 
       <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-2 mb-3 text-xs md:text-sm">
@@ -136,17 +118,9 @@ export function GithubActivityCard() {
           <div className="flex gap-[3px] pb-1">
             {calendar.weeks.map((week, wIdx) => (
               <div key={wIdx} className="flex flex-col gap-[3px]">
-                {week.contributionDays.map((day, dIdx) => (
-                  <motion.div
+                {week.contributionDays.map((day) => (
+                  <div
                     key={day.date}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 20,
-                      delay: (wIdx * 7 + dIdx) * 0.002,
-                    }}
                     className={`h-2.5 w-2.5 md:h-3 md:w-3 rounded-[2px] ${getIntensityClass(
                       day.contributionCount
                     )}`}
@@ -179,6 +153,6 @@ export function GithubActivityCard() {
           <span>More</span>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

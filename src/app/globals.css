@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "../components/ui/LogoLoop.css";
 
 @layer base {
   :root {

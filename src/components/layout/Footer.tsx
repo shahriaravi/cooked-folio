@@ -1,9 +1,9 @@
 "use client";
 
+import PixelBlast from "@/components/ui/PixelBlast";
 import { CAL_URL } from "@/lib/config";
 import { getCalApi } from "@calcom/embed-react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, Copy, Paperclip, Plus } from "lucide-react";
+import { Check, Copy, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import { SiGithub } from "react-icons/si";
 export function Footer() {
   const [isCalLoading, setIsCalLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const email = "avilovesburger@gmail.com";
+  const email = "hi@shahriaravi.me";
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(email);
@@ -50,40 +50,45 @@ export function Footer() {
 
   return (
     <>
-      <AnimatePresence>
-        {isCalLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm"
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="relative w-16 h-16"
-            >
-              <Image
-                src="/avatar/avatar.png"
-                alt="loading..."
-                fill
-                className="object-contain"
-                priority
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className={`fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm transition-opacity duration-300 ${
+          isCalLoading
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="relative w-16 h-16 animate-spin">
+          <Image
+            src="/avatar/avatar.png"
+            alt="loading..."
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+      </div>
 
-      <footer className="mt-12 pb-8 pt-8 border-t border-border/40 text-sm text-muted-foreground font-mono">
-        <div className="flex flex-col gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ type: "spring", stiffness: 100, damping: 18 }}
-            className="space-y-2"
-          >
+      <footer className="relative mt-12 pb-8 pt-8 border-t border-border/40 text-sm text-muted-foreground font-mono overflow-hidden">
+        <div className="absolute inset-0 -z-0 opacity-30">
+          <PixelBlast
+            variant="square"
+            pixelSize={4}
+            color="#31d65b"
+            patternScale={3}
+            patternDensity={0.9}
+            pixelSizeJitter={0.3}
+            enableRipples
+            rippleSpeed={0.45}
+            rippleThickness={0.10}
+            rippleIntensityScale={0.8}
+            speed={0.45}
+            edgeFade={0.4}
+            transparent
+          />
+        </div>
+
+        <div className="relative z-10 flex flex-col gap-6">
+          <div className="space-y-2">
             <h3 className="text-foreground font-medium text-base tracking-tight">
               Have a project in mind?
             </h3>
@@ -91,22 +96,13 @@ export function Footer() {
               I&apos;m always open to discussing new opportunities, crazy ideas,
               or just chatting about tech.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ type: "spring", stiffness: 100, damping: 18, delay: 0.08 }}
-            className="flex flex-col md:flex-row md:items-center justify-between gap-4"
-          >
-            <motion.button
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <button
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
               data-cal-config='{"layout":"month_view","hideEventTypeDetails":true}'
-              initial="initial"
-              whileHover="hover"
-              whileTap={{ scale: 0.97 }}
               className="
                 group relative flex items-center overflow-hidden
                 h-12 pl-2 pr-5 w-fit
@@ -116,6 +112,7 @@ export function Footer() {
                 transition-all duration-300
                 cursor-pointer
                 shadow-sm
+                active:scale-[0.97]
               "
             >
               <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md mr-3">
@@ -136,13 +133,13 @@ export function Footer() {
               </div>
 
               <div className="flex items-center">
-                <motion.div
-                  variants={{
-                    initial: { width: 0, opacity: 0, marginRight: 0 },
-                    hover: { width: "auto", opacity: 1, marginRight: 8 },
-                  }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="flex items-center gap-1.5 overflow-hidden whitespace-nowrap"
+                <div
+                  className="
+                    flex items-center gap-1.5 overflow-hidden whitespace-nowrap
+                    w-0 opacity-0 mr-0
+                    group-hover:w-auto group-hover:opacity-100 group-hover:mr-2
+                    transition-all duration-300 ease-out
+                  "
                 >
                   <Plus className="w-3.5 h-3.5 text-primary" />
                   <div className="h-5 px-1.5 rounded-sm bg-background border border-border flex items-center justify-center">
@@ -150,88 +147,45 @@ export function Footer() {
                       You
                     </span>
                   </div>
-                </motion.div>
+                </div>
                 <span className="text-[15px] font-medium text-foreground group-hover:text-primary transition-colors">
                   Book a call
                 </span>
               </div>
-            </motion.button>
+            </button>
 
-            <motion.div
-              whileHover={{ x: 3, transition: { type: "spring", stiffness: 300, damping: 20 } }}
+            <Link
+              href="https://github.com/shahriaravi/cooked-folio"
+              target="_blank"
+              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              <Link
-                href="https://github.com/shahriaravi/cooked-folio"
-                target="_blank"
-                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
-              >
-                <span>Liked my portfolio? Please leave a star</span>
-                <SiGithub className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-              </Link>
-            </motion.div>
-          </motion.div>
+              <span>Liked my portfolio? Please leave a star</span>
+              <SiGithub className="w-4 h-4" />
+            </Link>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ type: "spring", stiffness: 100, damping: 18, delay: 0.15 }}
-            className="flex flex-col gap-4 mt-2"
-          >
-            <div className="flex items-center text-sm text-muted-foreground">
-              <span>email me at&nbsp;</span>
-              <motion.button
-                onClick={copyEmail}
-                whileTap={{ scale: 0.97 }}
-                className="group inline-flex items-center gap-0 cursor-pointer"
-              >
-                <span className={`inline-flex items-center overflow-hidden transition-all duration-300 ease-out ${copied ? "w-5" : "w-0 group-hover:w-5"}`}>
-                  <AnimatePresence mode="wait" initial={false}>
-                    {copied ? (
-                      <motion.span
-                        key="check"
-                        initial={{ opacity: 0, rotate: -90 }}
-                        animate={{ opacity: 1, rotate: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.15, ease: "easeOut" }}
-                        className="inline-flex items-center shrink-0"
-                      >
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      </motion.span>
-                    ) : (
-                      <motion.span
-                        key="copy"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.12 }}
-                        className="inline-flex items-center shrink-0"
-                      >
-                        <Copy className="w-3.5 h-3.5 text-primary" />
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </span>
-                <span className="font-medium text-foreground underline decoration-foreground/30 underline-offset-4 group-hover:decoration-primary group-hover:text-primary transition-colors duration-200">
-                  {email}
-                </span>
-              </motion.button>
-            </div>
-
-            <motion.div
-              whileHover={{ y: -2, transition: { type: "spring", stiffness: 300, damping: 15 } }}
-              whileTap={{ scale: 0.95 }}
-              className="w-fit"
+          <div className="flex items-center text-sm text-muted-foreground mt-2">
+            <span>email me at&nbsp;</span>
+            <button
+              onClick={copyEmail}
+              className="group inline-flex items-center gap-0 cursor-pointer active:scale-[0.97] transition-transform"
             >
-              <Link
-                href="/resume"
-                className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              <span
+                className={`inline-flex items-center overflow-hidden transition-all duration-300 ease-out ${
+                  copied ? "w-5" : "w-0 group-hover:w-5"
+                }`}
               >
-                <Paperclip className="w-4 h-4" />
-                <span>view resume</span>
-              </Link>
-            </motion.div>
-          </motion.div>
+                {copied ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                ) : (
+                  <Copy className="w-3.5 h-3.5 text-primary shrink-0" />
+                )}
+              </span>
+              <span className="font-medium text-foreground underline decoration-foreground/30 underline-offset-4 group-hover:decoration-primary group-hover:text-primary transition-colors duration-200">
+                {email}
+              </span>
+            </button>
+          </div>
         </div>
       </footer>
     </>
