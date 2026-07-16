@@ -6,6 +6,7 @@ import { ArrowUpRight, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Folder from "@/components/ui/Folder";
+import { play } from "cuelume";
 
 export function ProjectList() {
   const [open, setOpen] = useState(false);
@@ -41,7 +42,11 @@ export function ProjectList() {
         />
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            setOpen((v) => !v);
+            play("toggle");
+          }}
+          data-cuelume-hover="tick"
           className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground"
           aria-expanded={open}
         >
@@ -73,6 +78,8 @@ export function ProjectList() {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cuelume-hover="tick"
+                  data-cuelume-press
                   className="absolute inset-0 z-0 rounded-2xl"
                   aria-label={`View ${project.name}`}
                 />
@@ -100,6 +107,8 @@ export function ProjectList() {
                         href={project.repo}
                         target="_blank"
                         rel="noopener noreferrer"
+                        data-cuelume-hover="tick"
+                        data-cuelume-press
                         className="
                           relative z-10 flex items-center justify-center
                           w-6 h-6 rounded-full

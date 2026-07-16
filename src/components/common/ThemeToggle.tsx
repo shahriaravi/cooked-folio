@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { ButtonHTMLAttributes, useEffect, useState } from "react";
+import { play } from "cuelume";
 
-interface ThemeToggleProps {
+type ThemeToggleProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
-}
+};
 
-export default function ThemeToggle({ className }: ThemeToggleProps) {
+export default function ThemeToggle({ className, onClick, ...rest }: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -18,14 +19,17 @@ export default function ThemeToggle({ className }: ThemeToggleProps) {
     setMounted(true);
   }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    play("toggle");
+    onClick?.(e);
   };
 
   if (!mounted) return <div className="w-10 h-10" />;
 
   return (
     <button
+      {...rest}
       onClick={toggleTheme}
       className={cn(
         "relative flex items-center justify-center h-10 w-10 rounded-full bg-secondary/50 transition-colors hover:bg-secondary",

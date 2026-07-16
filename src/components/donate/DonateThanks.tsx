@@ -4,12 +4,20 @@ import { motion } from "framer-motion";
 import { CornerDownLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
+import { play } from "cuelume";
 
 export default function DonateThanks() {
+  useEffect(() => {
+    play("ready");
+  }, []);
+
   return (
     <main className="layout-container">
       <Link
         href="/"
+        data-cuelume-hover="tick"
+        data-cuelume-press
         className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
       >
         <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />

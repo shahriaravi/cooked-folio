@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { play } from "cuelume";
 import "./Folder.css";
 
 const darkenColor = (hex: string, percent: number) => {
@@ -52,6 +53,7 @@ const Folder = ({ color = "#5227FF", size = 1, items = [], className = "", open:
 
   const handleClick = () => {
     const next = !open;
+    play("toggle");
     if (isControlled) {
       onToggle?.(next);
     } else {
@@ -111,6 +113,7 @@ const Folder = ({ color = "#5227FF", size = 1, items = [], className = "", open:
         role="button"
         aria-expanded={open}
         aria-label={open ? "Close folder" : "Open folder"}
+        data-cuelume-hover="tick"
       >
         <div className="folder__back">
           {papers.map((item, i) => (

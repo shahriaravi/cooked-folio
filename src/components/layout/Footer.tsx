@@ -8,17 +8,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SiGithub } from "react-icons/si";
+import { play } from "cuelume";
 
 export function Footer() {
   const [isCalLoading, setIsCalLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const email = "hi@shahriaravi.me";
 
-  const copyEmail = async () => {
-    await navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+const copyEmail = async () => {
+  await navigator.clipboard.writeText(email);
+  setCopied(true);
+  play("success");
+  setTimeout(() => setCopied(false), 2000);
+};
 
   useEffect(() => {
     (async function () {
@@ -118,6 +120,9 @@ export function Footer() {
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
               data-cal-config='{"layout":"month_view","hideEventTypeDetails":true}'
+              data-cuelume-hover
+              data-cuelume-press
+              data-cuelume-release
               className="
                 group relative flex items-center overflow-hidden
                 h-10 w-fit pl-1.5 pr-4
@@ -178,6 +183,8 @@ export function Footer() {
               href="https://github.com/shahriaravi/cooked-folio"
               target="_blank"
               rel="noopener noreferrer"
+              data-cuelume-hover="tick"
+              data-cuelume-press
               className="group inline-flex flex-wrap items-center gap-1.5 text-muted-foreground transition-colors duration-300 hover:text-foreground"
               style={{
                 fontSize: "13px",

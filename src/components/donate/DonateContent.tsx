@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { SiWise } from "react-icons/si";
+import { play } from "cuelume";
 
 const BKASH_NUMBER = "01701076982";
 
@@ -58,6 +59,7 @@ export default function DonateContent() {
   const copyText = async (text: string, key: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedKey(key);
+    play("success");
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
@@ -66,6 +68,7 @@ export default function DonateContent() {
 
     setIsSubmitting(true);
     setError("");
+    play("loading");
 
     try {
       const res = await fetch("/api/donate", {
@@ -78,6 +81,7 @@ export default function DonateContent() {
       router.push("/donate/thanks");
     } catch {
       setError("something went wrong. try again.");
+      play("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -89,6 +93,8 @@ export default function DonateContent() {
     <main className="layout-container">
       <Link
         href="/"
+        data-cuelume-hover="tick"
+        data-cuelume-press
         className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
       >
         <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
@@ -193,7 +199,12 @@ export default function DonateContent() {
             <MethodOption
               active={method === "wise"}
               disabled={isSubmitting}
-              onClick={() => !isSubmitting && setMethod("wise")}
+              onClick={() => {
+                if (!isSubmitting) {
+                  setMethod("wise");
+                  play("toggle");
+                }
+              }}
               icon={<SiWise className="h-[18px] w-[18px]" />}
               title="Wise"
               subtitle="international bank transfer"
@@ -205,6 +216,8 @@ export default function DonateContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
+                  data-cuelume-hover="tick"
+                  data-cuelume-press
                   className="group/video flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/[0.06] px-3.5 py-2.5 transition-all duration-200 hover:border-primary/30 hover:bg-primary/[0.09]"
                 >
                   <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 transition-colors duration-200 group-hover/video:bg-primary/25">
@@ -253,7 +266,12 @@ export default function DonateContent() {
             <MethodOption
               active={method === "bkash"}
               disabled={isSubmitting}
-              onClick={() => !isSubmitting && setMethod("bkash")}
+              onClick={() => {
+                if (!isSubmitting) {
+                  setMethod("bkash");
+                  play("toggle");
+                }
+              }}
               icon={<Smartphone className="h-[18px] w-[18px]" />}
               title="bKash"
               subtitle="mobile wallet, send money"
@@ -314,6 +332,9 @@ export default function DonateContent() {
           <button
             onClick={handleSubmit}
             disabled={!canSubmit}
+            data-cuelume-hover
+            data-cuelume-press
+            data-cuelume-release
             className="group inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
             style={{ fontSize: "15px", lineHeight: "20px", fontWeight: 600 }}
           >

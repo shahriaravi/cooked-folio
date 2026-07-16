@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { play as cue } from "cuelume";
 
 const audioFiles = [
   "/audio/song1.mp3",
@@ -83,6 +84,7 @@ export default function Vibing() {
     if (hasEntered && !isPlaying) {
       timeout = setTimeout(() => {
         setShowAngryState(true);
+        cue("error");
       }, 2000);
     } else {
       setShowAngryState(false);
@@ -122,13 +124,16 @@ export default function Vibing() {
     if (isPlaying) {
       setIsPlaying(false);
       setPauseCount((prev) => prev + 1);
+      cue("droplet");
     } else {
       setIsPlaying(true);
+      cue("bloom");
     }
   };
 
   const handleChangeSong = () => {
     if (isChangingSong) return;
+    cue("page");
     setIsChangingSong(true);
     const availableSongs = audioFiles.filter((song) => song !== currentSong);
     const newSong =
@@ -147,6 +152,7 @@ export default function Vibing() {
 
     setIsSubmitting(true);
     setSubmitStatus("idle");
+    cue("loading");
 
     try {
       const res = await fetch("/api/song-suggestion", {
@@ -159,6 +165,7 @@ export default function Vibing() {
 
       setSubmitStatus("success");
       setSongSuggestion("");
+      cue("success");
 
       setTimeout(() => {
         setShowSongModal(false);
@@ -167,6 +174,7 @@ export default function Vibing() {
     } catch (e) {
       console.error(e);
       setSubmitStatus("error");
+      cue("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -188,6 +196,8 @@ export default function Vibing() {
       <div className="layout-container relative z-20 !py-6">
         <Link
           href="/"
+          data-cuelume-hover="tick"
+          data-cuelume-press
           className="group inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
         >
           <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
@@ -301,7 +311,10 @@ export default function Vibing() {
                 <span className="mx-0.5 h-6 w-px bg-border/60" />
 
                 <ControlButton
-                  onClick={() => setIsMuted(!isMuted)}
+                  onClick={() => {
+                    setIsMuted(!isMuted);
+                    cue("toggle");
+                  }}
                   label={isMuted ? "unmute" : "mute"}
                   active={!isMuted}
                 >
@@ -328,7 +341,10 @@ export default function Vibing() {
                 <span className="mx-0.5 h-6 w-px bg-border/60" />
 
                 <ControlButton
-                  onClick={() => setShowSongModal(true)}
+                  onClick={() => {
+                    setShowSongModal(true);
+                    cue("bloom");
+                  }}
                   label="request"
                 >
                   <Send className="h-[16px] w-[16px]" />
@@ -378,7 +394,10 @@ export default function Vibing() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-              onClick={() => setShowSongModal(false)}
+              onClick={() => {
+                setShowSongModal(false);
+                cue("droplet");
+              }}
             />
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 10 }}
@@ -403,7 +422,12 @@ export default function Vibing() {
                   </h3>
                 </div>
                 <button
-                  onClick={() => setShowSongModal(false)}
+                  onClick={() => {
+                    setShowSongModal(false);
+                    cue("droplet");
+                  }}
+                  data-cuelume-hover="tick"
+                  data-cuelume-press
                   className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
                   aria-label="close"
                 >
@@ -429,6 +453,9 @@ export default function Vibing() {
               <button
                 onClick={handleSubmitSong}
                 disabled={isSubmitting || !songSuggestion.trim()}
+                data-cuelume-hover
+                data-cuelume-press
+                data-cuelume-release
                 className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
                 style={{ fontSize: "14px", lineHeight: "20px", fontWeight: 600 }}
               >
@@ -476,6 +503,8 @@ function ControlButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
+      data-cuelume-hover="tick"
+      data-cuelume-press
       className={cn(
         "flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 active:scale-90 disabled:opacity-40 disabled:hover:bg-transparent",
         primary

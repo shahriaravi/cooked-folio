@@ -16,7 +16,7 @@ export function Hero() {
   const navLinks = [
     { href: "/what", label: "/what" },
     { href: "/contact", label: "/contact" },
-    { href: "/gist", label: "https://gist.yoavi.fun", external: true },
+    { href: "https://gist.yoavi.fun", label: "/gist", external: true },
   ];
 
   return (
@@ -37,6 +37,8 @@ export function Hero() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
+                data-cuelume-hover="tick"
+                data-cuelume-press
                 className="font-mono text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-foreground"
                 style={{ color: "hsl(var(--muted-foreground))" }}
               >
@@ -44,7 +46,11 @@ export function Hero() {
               </Link>
             ))}
           </nav>
-          <ThemeToggle className="h-7 w-7 rounded-md bg-transparent text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary" />
+          <ThemeToggle
+            data-cuelume-hover="tick"
+            data-cuelume-press
+            className="h-7 w-7 rounded-md bg-transparent text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+          />
         </div>
       </div>
 
@@ -92,6 +98,8 @@ export function Hero() {
             href="https://byontriq.xyz"
             target="_blank"
             rel="noopener noreferrer"
+             data-cuelume-hover="tick"
+              data-cuelume-press
             className="font-semibold transition-colors duration-200 hover:text-primary"
             style={{ color: "hsl(var(--foreground))" }}
           >

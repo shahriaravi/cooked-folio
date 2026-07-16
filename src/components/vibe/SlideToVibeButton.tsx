@@ -10,6 +10,7 @@ import {
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { play } from "cuelume";
 
 interface SlideToVibeButtonProps {
   onUnlock: () => void;
@@ -52,6 +53,7 @@ export function SlideToVibeButton({
   function handleDragEnd() {
     setIsDragging(false);
     if (x.get() >= maxDrag - 10) {
+      play("success");
       onUnlock();
     } else {
       animate(x, 0, { type: "spring", bounce: 0.4, duration: 0.5 });

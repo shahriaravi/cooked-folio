@@ -4,12 +4,15 @@ import { CornerDownLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { play } from "cuelume";
 
 export default function NotFound() {
   const [displayText, setDisplayText] = useState("000");
   const targetText = "404";
 
   useEffect(() => {
+    play("whisper");
+
     let iteration = 0;
     let interval: NodeJS.Timeout;
     const chars = "0123456789XY#@%";
@@ -42,6 +45,8 @@ export default function NotFound() {
       <div className="layout-container relative z-20 !py-6">
         <Link
           href="/"
+          data-cuelume-hover="tick"
+          data-cuelume-press
           className="group inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
         >
           <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
@@ -50,6 +55,12 @@ export default function NotFound() {
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center px-4 pb-20 text-center">
+        <span
+          className="mb-6 font-mono uppercase tracking-[0.14em] text-muted-foreground"
+          style={{ fontSize: "11px", lineHeight: "1" }}
+        >
+          error
+        </span>
 
         <div className="mb-8 flex items-center gap-4 md:gap-6">
           <div className="relative h-20 w-20 md:h-24 md:w-24">

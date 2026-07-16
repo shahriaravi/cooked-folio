@@ -6,6 +6,7 @@ import { Send, Loader2, Mail, CornerDownLeft } from "lucide-react";
 import Link from "next/link";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
+import { play } from "cuelume";
 
 type Step = "name" | "message" | "email" | "sending" | "done";
 
@@ -57,6 +58,7 @@ export default function ContactForm() {
         { id: `bot-${Date.now()}`, type: "bot", content },
       ]);
       setBotTyping(false);
+      play("bloom");
       scrollToBottom();
       onDone?.();
     }, 800);
@@ -67,6 +69,7 @@ export default function ContactForm() {
       ...prev,
       { id: `user-${Date.now()}`, type: "user", content },
     ]);
+    play("press");
     scrollToBottom();
   };
 
@@ -95,6 +98,7 @@ export default function ContactForm() {
     if (step === "name") {
       if (!inputValue.trim()) {
         setError("what should i call you?");
+        play("error");
         return;
       }
       const name = inputValue.trim();
@@ -113,6 +117,7 @@ export default function ContactForm() {
     if (step === "message") {
       if (!inputValue.trim()) {
         setError("go ahead, type something");
+        play("error");
         return;
       }
       const msg = inputValue.trim();
@@ -140,6 +145,7 @@ export default function ContactForm() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(val)) {
         setError("that doesn't look right. try again or type \"skip\"");
+        play("error");
         return;
       }
       setFormData((prev) => ({ ...prev, email: val }));
@@ -152,6 +158,7 @@ export default function ContactForm() {
 
   const submitForm = async (data: typeof formData) => {
     setBotTyping(true);
+    play("loading");
     scrollToBottom();
     try {
       const res = await fetch("/api/contact", {
@@ -171,6 +178,7 @@ export default function ContactForm() {
         ]);
         setBotTyping(false);
         setStep("done");
+        play("success");
         scrollToBottom();
       }, 1200);
     } catch {
@@ -185,6 +193,7 @@ export default function ContactForm() {
         ]);
         setBotTyping(false);
         setStep("email");
+        play("error");
         scrollToBottom();
       }, 1000);
     }
@@ -201,6 +210,8 @@ export default function ContactForm() {
     <main className="layout-container">
       <Link
         href="/"
+        data-cuelume-hover="tick"
+        data-cuelume-press
         className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
       >
         <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
@@ -361,6 +372,9 @@ export default function ContactForm() {
             <button
               onClick={validateAndProceed}
               disabled={!inputValue.trim() && step !== "email"}
+              data-cuelume-hover
+              data-cuelume-press
+              data-cuelume-release
               className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-95 disabled:opacity-30 disabled:hover:bg-primary"
               aria-label="send"
             >
