@@ -16,13 +16,16 @@ export function Hero() {
   const navLinks = [
     { href: "/what", label: "/what" },
     { href: "/contact", label: "/contact" },
-    { href: "/gist", label: "/gist", external: true },
+    { href: "/gist", label: "https://gist.yoavi.fun", external: true },
   ];
 
   return (
     <section className="relative mb-16 w-full">
       <div className="mb-14 flex items-center justify-between gap-4">
-        <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+        <div
+          className="font-mono text-[11px] uppercase tracking-[0.14em]"
+          style={{ color: "hsl(var(--muted-foreground))" }}
+        >
           <TimeDisplay />
         </div>
 
@@ -34,7 +37,8 @@ export function Hero() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground"
+                className="font-mono text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-foreground"
+                style={{ color: "hsl(var(--muted-foreground))" }}
               >
                 {link.label}
               </Link>
@@ -66,16 +70,20 @@ export function Hero() {
           </div>
         </div>
 
-        <h1 className="mb-5 text-[22px] font-semibold leading-none tracking-tight text-foreground">
+        <h1
+          className="mb-5 text-[22px] font-semibold leading-none tracking-tight"
+          style={{ color: "hsl(var(--foreground))" }}
+        >
           Shahriar Avi
         </h1>
 
         <p
-          className="mb-6 text-muted-foreground"
+          className="mb-6"
           style={{
             fontSize: "16px",
             lineHeight: "24px",
             letterSpacing: "0.2px",
+            color: "hsl(var(--muted-foreground))",
           }}
         >
           Hey, I&apos;m Avi and I just love building things. I&apos;m currently
@@ -84,7 +92,8 @@ export function Hero() {
             href="https://byontriq.xyz"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-foreground transition-colors duration-200 hover:text-primary"
+            className="font-semibold transition-colors duration-200 hover:text-primary"
+            style={{ color: "hsl(var(--foreground))" }}
           >
             @Byontriq
           </a>
@@ -104,22 +113,37 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.platform}
-              className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
+              className="transition-colors duration-200"
+              style={{ color: "hsl(var(--muted-foreground))" }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "hsl(var(--foreground))")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "hsl(var(--muted-foreground))")
+              }
             >
-              <social.icon className="h-[17px] w-[17px]" />
+              <social.icon
+                className="h-[17px] w-[17px]"
+                style={{ color: "inherit" }}
+              />
             </a>
           ))}
-
-          <span className="hidden h-3.5 w-px bg-border sm:block" />
 
           <a
             href={DISCORD_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-[14px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+            className="group inline-flex items-center gap-2 text-[14px] transition-colors duration-200"
+            style={{ color: "hsl(var(--muted-foreground))" }}
           >
-            <SiDiscord className="h-[17px] w-[17px] text-primary/70 transition-colors duration-200 group-hover:text-primary" />
-            <span className="font-semibold text-foreground/80 transition-colors duration-200 group-hover:text-primary">
+            <SiDiscord
+              className="h-[17px] w-[17px] transition-colors duration-200"
+              style={{ color: "hsl(var(--primary) / 0.7)" }}
+            />
+            <span
+              className="font-semibold transition-colors duration-200 group-hover:text-primary"
+              style={{ color: "hsl(var(--foreground) / 0.8)" }}
+            >
               join community
             </span>
           </a>

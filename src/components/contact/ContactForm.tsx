@@ -23,7 +23,7 @@ const statusLabel = (status: string | null | undefined) => {
     case "idle":
       return "idle";
     case "dnd":
-      return "do not disturb";
+      return "DND";
     case "offline":
     default:
       return "offline";

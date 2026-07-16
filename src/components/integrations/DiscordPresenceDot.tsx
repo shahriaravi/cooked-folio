@@ -23,7 +23,7 @@ const STATUS_MAP: Record<string, StatusConfig> = {
   },
   dnd: {
     color: "bg-red-500",
-    label: "Do Not Disturb",
+    label: "DND",
   },
   offline: {
     color: "bg-zinc-300 dark:bg-zinc-600",

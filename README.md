@@ -165,7 +165,6 @@ src/
 │  ├─ contact/page.tsx                    # wraps ContactForm
 │  ├─ donate/page.tsx                     # donation page
 │  ├─ donate/thanks/page.tsx              # post-donation thank you
-│  ├─ gist/page.tsx                       # redirect to external gist
 │  ├─ what/page.tsx                       # Slide to Vibe page
 │  ├─ layout.tsx                          # root layout (fonts, Providers, InitialSplash)
 │  ├─ loading.tsx

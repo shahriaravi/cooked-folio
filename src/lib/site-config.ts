@@ -29,6 +29,7 @@ interface MetadataProps {
   image?: string;
   icons?: string | Array<any>;
   noIndex?: boolean;
+  other?: Record<string, string>;
 }
 
 export function constructMetadata({
@@ -37,16 +38,15 @@ export function constructMetadata({
   image = siteConfig.ogImage,
   icons = "/favicon.ico",
   noIndex = false,
+  other,
 }: MetadataProps = {}): Metadata {
   return {
-    // 1. Basic Metadata
     title: {
       default: title,
       template: `%s`,
     },
     description,
 
-    // 2. Open Graph (Facebook, Discord, etc.)
     openGraph: {
       title,
       description,
@@ -64,7 +64,6 @@ export function constructMetadata({
       ],
     },
 
-    // 3. Twitter Card
     twitter: {
       card: "summary_large_image",
       title,
@@ -73,15 +72,19 @@ export function constructMetadata({
       creator: "@shahriaravi_",
     },
 
-    // 4. Icons
     icons: {
       icon: icons,
       shortcut: icons,
       apple: icons,
     },
 
-    // 5. Technical SEO
     metadataBase: new URL(siteConfig.url),
+
+    other: {
+      "darkreader-lock": "",
+      ...(other || {}),
+    },
+
     ...(noIndex && {
       robots: {
         index: false,

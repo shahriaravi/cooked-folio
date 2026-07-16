@@ -4,7 +4,6 @@ import { Providers } from "@/components/layout/Providers";
 import { InitialSplash } from "@/components/common/InitialSplash";
 import { constructMetadata } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
@@ -38,8 +37,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${inter.variable} ${GeistMono.variable} darkreader-ignore`}
+      data-darkreader-ignore=""
     >
+      <head>
+        <meta name="darkreader-lock" />
+      </head>
       <body className="font-sans bg-background text-foreground antialiased selection:bg-primary/20">
         <Providers>
           <InitialSplash>{children}</InitialSplash>

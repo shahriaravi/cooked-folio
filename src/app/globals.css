@@ -1,11 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "../components/ui/LogoLoop.css";
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: only light;
 
     --background: 220 30% 97%;
     --foreground: 226 50% 10%;
@@ -51,7 +50,7 @@
   }
 
   .dark {
-    color-scheme: dark;
+    color-scheme: only dark;
 
     --background: 226 51% 8%;
     --foreground: 210 40% 98%;
@@ -129,41 +128,39 @@
     letter-spacing: -0.005em;
   }
 
-  code,
-  kbd,
-  pre,
-  samp {
-    font-family: var(--font-mono);
+  [data-darkreader-inline-bgcolor],
+  [data-darkreader-inline-bgimage],
+  [data-darkreader-inline-color],
+  [data-darkreader-inline-border],
+  [data-darkreader-inline-border-bottom],
+  [data-darkreader-inline-border-left],
+  [data-darkreader-inline-border-right],
+  [data-darkreader-inline-border-top],
+  [data-darkreader-inline-boxshadow],
+  [data-darkreader-inline-fill],
+  [data-darkreader-inline-invert],
+  [data-darkreader-inline-outline],
+  [data-darkreader-inline-stroke] {
+    background-color: initial !important;
+    background-image: initial !important;
+    color: initial !important;
+    border-color: initial !important;
+    box-shadow: initial !important;
+    fill: initial !important;
+    outline-color: initial !important;
+    stroke: initial !important;
+  }
+
+  html[data-darkreader-mode],
+  html[data-darkreader-scheme] {
+    background-color: hsl(var(--background)) !important;
+    color: hsl(var(--foreground)) !important;
   }
 }
 
 @layer utilities {
   .layout-container {
     @apply mx-auto max-w-[640px] px-6 md:px-0 py-10 md:py-16;
-  }
-
-  .font-display {
-    font-family: var(--font-sans);
-    letter-spacing: -0.02em;
-  }
-
-  .font-meta {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .glass-card {
-    @apply bg-card/70 border border-primary/10 hover:border-primary/40 hover:bg-card/90 transition-all duration-300 backdrop-blur-md hover:shadow-[0_4px_20px_-10px_hsl(var(--primary)/0.2)];
-  }
-
-  .text-heading {
-    @apply font-medium text-foreground tracking-tight;
-  }
-
-  .text-subtle {
-    @apply text-muted-foreground text-sm leading-relaxed;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
@@ -174,79 +171,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
-
-@keyframes wiggle {
-  0%,
-  100% {
-    transform: rotate(-3deg);
-  }
-  50% {
-    transform: rotate(3deg);
-  }
-}
-
-.animate-wiggle {
-  animation: wiggle 1s ease-in-out infinite;
-}
-
-.wavy-underline {
-  position: relative;
-  display: inline-block;
-  text-decoration: none !important;
-}
-
-.wavy-underline::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 100%;
-  height: 6px;
-
-  background-color: hsl(var(--primary));
-
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath fill='none' stroke='black' stroke-width='2' d='M0 3.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath fill='none' stroke='black' stroke-width='2' d='M0 3.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3E%3C/svg%3E");
-
-  -webkit-mask-repeat: repeat-x;
-  mask-repeat: repeat-x;
-
-  -webkit-mask-size: 20px 6px;
-  mask-size: 20px 6px;
-
-  animation: wavy-snake 1s linear infinite;
-}
-
-@keyframes wavy-snake {
-  0% {
-    mask-position: 0 0;
-    -webkit-mask-position: 0 0;
-  }
-  100% {
-    mask-position: 20px 0;
-    -webkit-mask-position: 20px 0;
-  }
-}
-
-.highlight-text {
-  display: inline-block;
-  padding: 0.1em 0.4em;
-  border-radius: var(--radius);
-  color: hsl(var(--primary));
-  background-color: hsl(var(--primary) / 0.1);
-  line-height: normal;
-  vertical-align: baseline;
-  transition: all 0.2s ease;
-  font-weight: 600;
-  border: 1px solid hsl(var(--primary) / 0.15);
-}
-
-.highlight-text:hover {
-  background-color: hsl(var(--primary) / 0.2);
-  transform: translateY(-1px);
-  border-color: hsl(var(--primary) / 0.4);
-  box-shadow: 0 4px 12px -2px hsl(var(--primary) / 0.25);
 }
 
 .cal-embed-popup-wrapper {
