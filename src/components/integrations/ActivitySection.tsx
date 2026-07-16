@@ -101,18 +101,21 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
     >
       <motion.h2
         variants={staggerItem}
-        className="text-sm font-mono text-muted-foreground mb-2 uppercase tracking-wider pl-1 md:pl-0"
+        className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0"
       >
         activity
       </motion.h2>
 
       <motion.div
         variants={staggerItem}
-        whileHover={{ y: -2, transition: { type: "spring", stiffness: 300, damping: 20 } }}
-        className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-muted-foreground"
+        whileHover={{
+          y: -2,
+          transition: { type: "spring", stiffness: 300, damping: 20 },
+        }}
+        className="flex flex-wrap items-center gap-3 text-muted-foreground"
       >
         {data.largeImage && (
-          <div className="relative h-9 w-9 md:h-10 md:w-10 overflow-hidden rounded-lg border border-white/10 flex-shrink-0">
+          <div className="relative h-9 w-9 md:h-10 md:w-10 flex-shrink-0 overflow-hidden rounded-lg border border-white/10">
             <Image
               src={data.largeImage}
               alt=""
@@ -125,36 +128,51 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="font-mono uppercase tracking-[0.18em] text-[10px] text-muted-foreground">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
               {activity.activityType === "PLAYING" ? "playing" : "activity"}
             </span>
             {data.startTimestamp && (
-              <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400">
+              <span
+                className="inline-flex items-center gap-1 font-mono text-emerald-400"
+                style={{ fontSize: "11px", lineHeight: "1", letterSpacing: "0.06em" }}
+              >
                 <FaGamepad className="h-3 w-3" />
                 {elapsedTime}
               </span>
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-1 mt-0.5">
-            <span className="font-semibold text-foreground truncate max-w-[160px] md:max-w-xs">
+          <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+            <span
+              className="max-w-[160px] truncate font-semibold text-foreground md:max-w-xs"
+              style={{ fontSize: "15px", lineHeight: "22px" }}
+            >
               {data.name}
             </span>
             {data.details && (
-              <span className="text-muted-foreground truncate max-w-[220px] md:max-w-sm">
+              <span
+                className="max-w-[220px] truncate text-muted-foreground md:max-w-sm"
+                style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+              >
                 – {data.details}
               </span>
             )}
             {data.state && !data.details && (
-              <span className="text-muted-foreground truncate max-w-[220px] md:max-w-sm">
+              <span
+                className="max-w-[220px] truncate text-muted-foreground md:max-w-sm"
+                style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+              >
                 – {data.state}
               </span>
             )}
           </div>
 
           {data.workspace && (
-            <div className="mt-1">
-              <span className="text-[11px] text-muted-foreground/80">
+            <div className="mt-1.5">
+              <span
+                className="font-mono text-muted-foreground/70"
+                style={{ fontSize: "11px", lineHeight: "1", letterSpacing: "0.08em" }}
+              >
                 project: {data.workspace}
               </span>
             </div>

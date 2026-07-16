@@ -4,8 +4,16 @@ import { Providers } from "@/components/layout/Providers";
 import { InitialSplash } from "@/components/common/InitialSplash";
 import { constructMetadata } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const viewport: Viewport = {
   themeColor: [
@@ -27,10 +35,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${GeistMono.className} bg-background text-foreground antialiased selection:bg-primary/20`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body className="font-sans bg-background text-foreground antialiased selection:bg-primary/20">
         <Providers>
           <InitialSplash>{children}</InitialSplash>
         </Providers>

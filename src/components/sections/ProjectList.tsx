@@ -27,7 +27,7 @@ export function ProjectList() {
 
   return (
     <section className="mb-16">
-      <h2 className="text-sm font-mono text-muted-foreground mb-4 uppercase tracking-wider pl-1 md:pl-0">
+      <h2 className="mb-4 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
         projects
       </h2>
 
@@ -42,7 +42,7 @@ export function ProjectList() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground"
           aria-expanded={open}
         >
           {open ? "hide projects" : "click to see ;)"}
@@ -88,7 +88,10 @@ export function ProjectList() {
 
                 <div className="flex flex-col grow min-w-0 pr-1">
                   <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-1">
-                    <span className="font-medium text-[17px] text-foreground tracking-tight group-hover:text-primary transition-colors pointer-events-none">
+                    <span
+                      className="pointer-events-none font-semibold text-foreground tracking-tight transition-colors group-hover:text-primary"
+                      style={{ fontSize: "16px", lineHeight: "22px" }}
+                    >
                       {project.name}
                     </span>
 
@@ -113,7 +116,14 @@ export function ProjectList() {
                     )}
                   </div>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed md:line-clamp-1 group-hover:text-foreground/80 transition-colors pointer-events-none">
+                  <p
+                    className="pointer-events-none text-muted-foreground transition-colors md:line-clamp-1 group-hover:text-foreground/80"
+                    style={{
+                      fontSize: "15px",
+                      lineHeight: "22px",
+                      letterSpacing: "0.1px",
+                    }}
+                  >
                     {project.tagline}
                   </p>
                 </div>

@@ -2,9 +2,9 @@
 
 # 🍳 cooked-folio
 
-A minimal, high-performance portfolio built with **Next.js**, **Tailwind CSS**, and **Framer Motion**.
+A minimal, premium portfolio built with **Next.js**, **Tailwind CSS**, **Inter + Geist Mono**, and **Framer Motion**.
 <br/>
-Real-time Discord presence, Spotify/Trakt.tv/MyAnimeList integration, useful slide-to-vibe page, and a chat-style contact form.
+Real-time Discord presence, Spotify integration, GitHub heatmap, slide-to-vibe page, and a chat-style contact form.
 
 <br/>
 
@@ -21,13 +21,17 @@ One‑click deploy on Vercel:
 ---
 
 ## ✨ Features
-- Discord presence (via Lanyard)
-- Trakt.tv & MyAnimeList Stats
+- Discord presence (via Lanyard) with real status dot
+- Discord activity display (games, IDE, etc.)
 - Spotify “Now Playing”
 - GitHub contributions heatmap
-- Slide to Vibe with audio + animations
-- Chat-style contact form (Discord webhook)
+- Slide to Vibe page with audio player, cycling monkey images & angry state
+- Chat-style contact form (sequential name → message → email, posts to Discord webhook)
+- Donation flow (Wise + bKash) with copy-to-clipboard details
+- Book a call via Cal.com embed
 - Dark/Light theme toggle
+- Editorial typography system (Inter + Geist Mono)
+- Squircle avatars & minimal shape language
 - Next.js App Router, TypeScript, Tailwind, Framer Motion
 
 ### 🔮 Roadmap
@@ -38,13 +42,16 @@ One‑click deploy on Vercel:
 
 ## 🛠️ Tech Stack
 
-- Framework: Next.js (App Router)
+- Framework: Next.js 14.2 (App Router)
 - Language: TypeScript
 - Styling: Tailwind CSS
-- Animations: Framer Motion (spring physics, scroll-triggered reveals)
+- Fonts: Inter (body) + Geist Mono (meta/labels)
+- Animations: Framer Motion (used sparingly — drag, expand/collapse, spring pop-ins)
 - Theme: next-themes
 - Icons: lucide-react, react-icons
+- Data: SWR (client) + async server components (SSR)
 - Analytics: Vercel Analytics
+- Booking: @calcom/embed-react
 
 ---
 
@@ -76,8 +83,6 @@ Then open: http://localhost:3000
 
 Create a `.env.local` file in the project root. You can start from `.env.example`:
 
-Example command:
-
 ```bash
 cp .env.example .env.local
 ```
@@ -87,7 +92,7 @@ Required variables:
 | Variable | Description |
 | --- | --- |
 | `NEXT_PUBLIC_URL` | Your live site URL (for example: `https://your-site.com`) |
-| `DISCORD_WEBHOOK_URL` | Discord webhook URL to receive contact form messages |
+| `DISCORD_WEBHOOK_URL` | Discord webhook URL to receive contact & donate form messages |
 | `NEXT_PUBLIC_DISCORD_USER_ID` | Your Discord User ID (Developer Mode → Copy ID) |
 | `SPOTIFY_CLIENT_ID` | Spotify app Client ID |
 | `SPOTIFY_CLIENT_SECRET` | Spotify app Client Secret |
@@ -107,13 +112,12 @@ Site configuration is split into two main files.
 
 Edit your personal data here:
 
-- Banner image
-- Social links
+- Social links (`SOCIALS`)
 - Tech stack (`STACK`)
 - Experience (`EXPERIENCE`)
 - Education (`EDUCATION`)
 - Projects (`PROJECTS`)
-- External links (Cal.com, Fiverr, etc.)
+- External links (`CAL_URL`, `DISCORD_LINK`, etc.)
 
 ### 2. SEO / Metadata – `src/lib/site-config.ts`
 
@@ -152,37 +156,50 @@ src/
 ├─ app/
 │  ├─ api/
 │  │  ├─ contact/route.ts
+│  │  ├─ donate/route.ts
 │  │  ├─ discord/current-activity/route.ts
 │  │  ├─ discord/presence/route.ts
 │  │  ├─ github/contributions/route.ts
+│  │  ├─ song-suggestion/route.ts
 │  │  └─ spotify/now-playing/route.ts
 │  ├─ contact/page.tsx                    # wraps ContactForm
 │  ├─ donate/page.tsx                     # donation page
 │  ├─ donate/thanks/page.tsx              # post-donation thank you
-│  ├─ resume/page.tsx                     # wraps ResumeViewer
-│  ├─ ty/page.tsx                         # thank-you screen
+│  ├─ gist/page.tsx                       # redirect to external gist
 │  ├─ what/page.tsx                       # Slide to Vibe page
-│  ├─ layout.tsx
+│  ├─ layout.tsx                          # root layout (fonts, Providers, InitialSplash)
 │  ├─ loading.tsx
-│  ├─ not-found.tsx
+│  ├─ not-found.tsx                       # 404 with scramble effect
 │  └─ page.tsx                            # home
 ├─ components/
 │  ├─ common/                             # Container, ThemeToggle, HelloLoader, CustomScrollArea, InitialSplash
 │  ├─ layout/                             # Hero, Footer, Providers
 │  ├─ sections/                           # ExperienceList, EducationList, ProjectList, StackList
-│  ├─ integrations/                       # DiscordPresenceDot, NowPlaying, GithubActivityCard
+│  ├─ integrations/                       # DiscordPresenceDot, ActivitySection, NowPlaying, GithubActivityCard
 │  ├─ vibe/                               # Vibing, SlideToVibeButton
 │  ├─ contact/                            # ContactForm
 │  ├─ donate/                             # DonateContent, DonateThanks
-│  └─ ui/                                 # Button, Input, Return, ResumeViewer, TimeDisplay, ThankYouContent
+│  └─ ui/                                 # Button, Input, TimeDisplay, Folder, LogoLoop, PixelBlast
 ├─ hooks/
 │  └─ useDiscordPresence.ts
 └─ lib/
-   ├─ animations.ts                       # shared animation variants & utilities
    ├─ config.ts                           # content & links
    ├─ site-config.ts                      # metadata/SEO
-   └─ utils.ts
+   └─ utils.ts                            # cn() helper
 ```
+
+---
+
+## 🎨 Design System
+
+- **Content width:** centered 640px column (`.layout-container`)
+- **Fonts:** Inter for body/headings, Geist Mono for meta/labels/dates
+- **Section labels:** `text-[11px] font-mono uppercase tracking-[0.14em]`
+- **Body copy:** `16px / 24px / 0.2px` (Inter)
+- **Headings:** `22–28px semibold` with tight letter-spacing
+- **Avatars:** always squircle (fixed px radius), never full circle for identity avatars
+- **Cards:** `rounded-2xl` with subtle border + hover tint
+- **Interactions:** CSS-first transitions, Framer Motion only for drag, expand/collapse, spring pop-ins
 
 ---
 
@@ -200,6 +217,21 @@ The `/donate` page is specific to me. If you're forking this repo, you'll likely
 2. Remove any links to `/donate` from your site (e.g. in `src/lib/config.ts` or navigation)
 
 That's it — no other files depend on the donate feature.
+
+---
+
+## 🗑️ Removing the Slide to Vibe Page
+
+The `/what` page is a fun personal touch. To remove:
+
+1. Delete these directories:
+   ```bash
+   rm -rf src/app/what
+   rm -rf src/app/api/song-suggestion
+   rm -rf src/components/vibe
+   ```
+
+2. Remove the `/what` link from the Hero nav in `src/components/layout/Hero.tsx`
 
 ---
 

@@ -43,6 +43,11 @@
 
     --radius: 0.5rem;
     --radius-lg: 1.75rem;
+
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+      Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
   .dark {
@@ -119,13 +124,34 @@
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground overflow-x-hidden;
     background-color: hsl(var(--background)) !important;
+    font-family: var(--font-sans);
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    letter-spacing: -0.005em;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
   }
 }
 
 @layer utilities {
   .layout-container {
-    @apply mx-auto max-w-2xl px-6 md:px-0 py-10 md:py-16;
+    @apply mx-auto max-w-[640px] px-6 md:px-0 py-10 md:py-16;
+  }
+
+  .font-display {
+    font-family: var(--font-sans);
+    letter-spacing: -0.02em;
+  }
+
+  .font-meta {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .glass-card {
@@ -235,4 +261,3 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
   max-height: 85vh !important;
 }
-

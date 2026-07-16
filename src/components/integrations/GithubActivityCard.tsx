@@ -53,10 +53,13 @@ export function GithubActivityCard() {
   if (error || !calendar || !calendar.weeks) {
     return (
       <section className="mb-6">
-        <h2 className="text-sm font-mono text-muted-foreground mb-2 uppercase tracking-wider pl-1 md:pl-0">
+        <h2 className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
           github activity
         </h2>
-        <p className="text-xs text-muted-foreground">
+        <p
+          className="text-muted-foreground"
+          style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+        >
           {error ? "skill issue loading data." : "loading activity..."}
         </p>
       </section>
@@ -85,12 +88,15 @@ export function GithubActivityCard() {
 
   return (
     <section className="mb-0 w-full">
-      <h2 className="text-sm font-mono text-muted-foreground mb-3 uppercase tracking-wider pl-1 md:pl-0">
+      <h2 className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
         github activity
       </h2>
 
-      <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-2 mb-3 text-xs md:text-sm">
-        <p className="text-muted-foreground pl-1 md:pl-0">
+      <div className="mb-4 flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-2">
+        <p
+          className="pl-1 text-muted-foreground md:pl-0"
+          style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+        >
           Total:{" "}
           <span className="font-semibold text-foreground">
             {calendar.totalContributions.toLocaleString()}
@@ -98,14 +104,27 @@ export function GithubActivityCard() {
           contributions
         </p>
 
-        <div className="text-muted-foreground md:text-right pl-1 md:pl-0">
+        <div
+          className="pl-1 text-muted-foreground md:pl-0 md:text-right"
+          style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+        >
           {hasActivity ? (
             <p>
               Coding in{" "}
               <span className="font-semibold text-foreground">
                 {activity!.data!.name}
               </span>
-              {elapsed && ` • ${elapsed}`}
+              {elapsed && (
+                <>
+                  {" • "}
+                  <span
+                    className="font-mono text-emerald-400"
+                    style={{ fontSize: "12px", letterSpacing: "0.06em" }}
+                  >
+                    {elapsed}
+                  </span>
+                </>
+              )}
             </p>
           ) : (
             <p className="opacity-60">Currently touching grass</p>
@@ -113,7 +132,7 @@ export function GithubActivityCard() {
         </div>
       </div>
 
-      <div className="space-y-2 text-xs">
+      <div className="space-y-3">
         <CustomScrollArea showFadeEdges>
           <div className="flex gap-[3px] pb-1">
             {calendar.weeks.map((week, wIdx) => (
@@ -121,7 +140,7 @@ export function GithubActivityCard() {
                 {week.contributionDays.map((day) => (
                   <div
                     key={day.date}
-                    className={`h-2.5 w-2.5 md:h-3 md:w-3 rounded-[2px] ${getIntensityClass(
+                    className={`h-2.5 w-2.5 rounded-[2px] md:h-3 md:w-3 ${getIntensityClass(
                       day.contributionCount
                     )}`}
                     title={`${day.date}: ${day.contributionCount} contributions`}
@@ -132,8 +151,13 @@ export function GithubActivityCard() {
           </div>
         </CustomScrollArea>
 
-        <div className="flex items-center justify-end gap-2 text-[10px] text-muted-foreground pr-1 md:pr-0">
-          <span>Less</span>
+        <div className="flex items-center justify-end gap-2 pr-1 text-muted-foreground md:pr-0">
+          <span
+            className="font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: "10px", lineHeight: "1" }}
+          >
+            Less
+          </span>
           <div className="flex gap-1">
             {[0, 1, 2, 3].map((i) => (
               <div
@@ -150,7 +174,12 @@ export function GithubActivityCard() {
               />
             ))}
           </div>
-          <span>More</span>
+          <span
+            className="font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: "10px", lineHeight: "1" }}
+          >
+            More
+          </span>
         </div>
       </div>
     </section>

@@ -1,265 +1,414 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { Send, Loader2, Mail } from "lucide-react"
-import Return from "@/components/ui/Return"
-import { Input } from "@/components/ui/Input"
-import { Button } from "@/components/ui/Button"
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { Send, Loader2, Mail, CornerDownLeft } from "lucide-react";
+import Link from "next/link";
+import { useDiscordPresence } from "@/hooks/useDiscordPresence";
+import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
+
+type Step = "name" | "message" | "email" | "sending" | "done";
+
+interface ChatBubble {
+  id: string;
+  type: "bot" | "user";
+  content: string;
+  inputType?: Step;
+}
+
+const statusLabel = (status: string | null | undefined) => {
+  switch (status) {
+    case "online":
+      return "online";
+    case "idle":
+      return "idle";
+    case "dnd":
+      return "do not disturb";
+    case "offline":
+    default:
+      return "offline";
+  }
+};
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
+  const discordStatus = useDiscordPresence();
+  const [step, setStep] = useState<Step>("name");
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
+  const [bubbles, setBubbles] = useState<ChatBubble[]>([]);
+  const [botTyping, setBotTyping] = useState(true);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const [errors, setErrors] = useState<{
-    name?: string
-    email?: string
-    message?: string
-  }>({})
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, 50);
+  };
 
-  const validate = () => {
-    const newErrors: { name?: string; email?: string; message?: string } = {}
+  const addBotBubble = (content: string, onDone?: () => void) => {
+    setBotTyping(true);
+    scrollToBottom();
+    setTimeout(() => {
+      setBubbles((prev) => [
+        ...prev,
+        { id: `bot-${Date.now()}`, type: "bot", content },
+      ]);
+      setBotTyping(false);
+      scrollToBottom();
+      onDone?.();
+    }, 800);
+  };
 
-    if (!formData.name.trim()) newErrors.name = "name is required"
-    if (!formData.message.trim()) newErrors.message = "message cannot be empty"
+  const addUserBubble = (content: string) => {
+    setBubbles((prev) => [
+      ...prev,
+      { id: `user-${Date.now()}`, type: "user", content },
+    ]);
+    scrollToBottom();
+  };
 
-    if (formData.email.trim()) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(formData.email)) {
-        newErrors.email = "please enter a valid email address"
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      addBotBubble("hey there. what's your name?");
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!botTyping) {
+      setTimeout(() => {
+        if (step === "message") {
+          textareaRef.current?.focus();
+        } else if (step !== "sending" && step !== "done") {
+          inputRef.current?.focus();
+        }
+      }, 100);
+    }
+  }, [botTyping, step]);
+
+  const validateAndProceed = () => {
+    setError("");
+
+    if (step === "name") {
+      if (!inputValue.trim()) {
+        setError("what should i call you?");
+        return;
       }
+      const name = inputValue.trim();
+      setFormData((prev) => ({ ...prev, name }));
+      addUserBubble(name);
+      setInputValue("");
+      addBotBubble(
+        `nice to meet you, ${name.split(" ")[0].toLowerCase()}. so what's on your mind?`,
+        () => {
+          setStep("message");
+        }
+      );
+      return;
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    if (step === "message") {
+      if (!inputValue.trim()) {
+        setError("go ahead, type something");
+        return;
+      }
+      const msg = inputValue.trim();
+      setFormData((prev) => ({ ...prev, message: msg }));
+      addUserBubble(msg);
+      setInputValue("");
+      addBotBubble(
+        `got it. drop your email so i can reply back, or type "skip" if you'd rather not.`,
+        () => {
+          setStep("email");
+        }
+      );
+      return;
+    }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!validate()) return
+    if (step === "email") {
+      const val = inputValue.trim();
+      if (val.toLowerCase() === "skip" || val === "") {
+        addUserBubble(val || "skipped");
+        setInputValue("");
+        setStep("sending");
+        submitForm({ ...formData, email: "" });
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(val)) {
+        setError("that doesn't look right. try again or type \"skip\"");
+        return;
+      }
+      setFormData((prev) => ({ ...prev, email: val }));
+      addUserBubble(val);
+      setInputValue("");
+      setStep("sending");
+      submitForm({ ...formData, email: val });
+    }
+  };
 
-    setIsSubmitting(true)
-
+  const submitForm = async (data: typeof formData) => {
+    setBotTyping(true);
+    scrollToBottom();
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-
-      if (!res.ok) throw new Error("failed")
-
-      setIsSuccess(true)
-      setFormData({ name: "", email: "", message: "" })
-      setErrors({})
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsSubmitting(false)
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("failed");
+      setTimeout(() => {
+        setBubbles((prev) => [
+          ...prev,
+          {
+            id: `bot-${Date.now()}`,
+            type: "bot",
+            content: "message received. i'll get back to you soon. thanks for reaching out ✌️",
+          },
+        ]);
+        setBotTyping(false);
+        setStep("done");
+        scrollToBottom();
+      }, 1200);
+    } catch {
+      setTimeout(() => {
+        setBubbles((prev) => [
+          ...prev,
+          {
+            id: `bot-${Date.now()}`,
+            type: "bot",
+            content: "something went wrong on my end. try again, or just email me directly.",
+          },
+        ]);
+        setBotTyping(false);
+        setStep("email");
+        scrollToBottom();
+      }, 1000);
     }
-  }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      validateAndProceed();
+    }
+  };
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground flex flex-col items-center justify-center px-4 py-12">
-      <Return href="/" label="return" className="mb-10" />
-
-      <form
-        onSubmit={handleSubmit}
-        noValidate
-        className="w-full max-w-lg flex flex-col gap-6"
+    <main className="layout-container">
+      <Link
+        href="/"
+        className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
       >
-        <BotMessage delay={0.1}>
-          hello. i&apos;m listening. who is this?
-        </BotMessage>
+        <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
+        <span>Back</span>
+      </Link>
 
-        <div className="w-full flex flex-col items-end">
-          <UserMessage delay={0.2}>
-            <Input
-              type="text"
-              placeholder="your name ..."
-              value={formData.name}
-              onChange={(e) => {
-                setFormData({ ...formData, name: e.target.value })
-                if (errors.name) setErrors({ ...errors, name: undefined })
-              }}
-              className="h-auto w-full border-none bg-transparent px-0 py-0 text-right text-base shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/40"
-              autoComplete="off"
-              disabled={isSuccess}
+      <div className="mb-10 flex items-center gap-3">
+        <div className="relative h-12 w-12 shrink-0">
+          <div
+            className="relative h-full w-full overflow-hidden bg-background"
+            style={{ borderRadius: "14px" }}
+          >
+            <Image
+              src="/avatar/avatar.png"
+              alt="avi"
+              fill
+              className="object-cover"
+              priority
             />
-          </UserMessage>
-          {errors.name && (
-            <motion.span
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-red-400 mt-1 mr-2 font-mono"
-            >
-              * {errors.name}
-            </motion.span>
-          )}
-        </div>
-
-        <BotMessage delay={0.3}>where should i send my reply?</BotMessage>
-
-        <div className="w-full flex flex-col items-end">
-          <UserMessage delay={0.4}>
-            <div className="flex items-center justify-end gap-3 w-full">
-              <Input
-                type="email"
-                placeholder="email (optional) ..."
-                value={formData.email}
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value })
-                  if (errors.email) setErrors({ ...errors, email: undefined })
-                }}
-                className="h-auto w-full border-none bg-transparent px-0 py-0 text-right text-base shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/40"
-                autoComplete="off"
-                disabled={isSuccess}
-              />
-              <Mail className="w-4 h-4 text-muted-foreground/50 shrink-0" />
-            </div>
-          </UserMessage>
-          {errors.email && (
-            <motion.span
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-red-400 mt-1 mr-2 font-mono"
-            >
-              * {errors.email}
-            </motion.span>
-          )}
-        </div>
-
-        <BotMessage delay={0.5}>alright. what&apos;s on your mind?</BotMessage>
-
-        <div className="w-full flex flex-col items-end">
-          <UserMessage delay={0.6} className="min-h-[120px]">
-            <textarea
-              placeholder="write your query ..."
-              value={formData.message}
-              onChange={(e) => {
-                setFormData({ ...formData, message: e.target.value })
-                if (errors.message)
-                  setErrors({ ...errors, message: undefined })
-              }}
-              className="w-full h-full bg-transparent border-none outline-none text-right resize-none placeholder:text-muted-foreground/40 py-1 text-base font-medium leading-relaxed"
-              disabled={isSuccess}
+          </div>
+          <div className="absolute -bottom-0.5 -right-0.5">
+            <DiscordPresenceDot
+              status={discordStatus}
+              className="h-[13px] w-[13px] border-[2.5px] border-background"
             />
-          </UserMessage>
-          {errors.message && (
-            <motion.span
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-red-400 mt-1 mr-2 font-mono"
-            >
-              * {errors.message}
-            </motion.span>
-          )}
+          </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          {isSuccess ? (
-            <BotMessage delay={0} key="success-msg">
-              <span className="text-emerald-400">
-                message received. i&apos;ll get back to you soon.
-              </span>
-            </BotMessage>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ delay: 0.7 }}
-              className="flex justify-end mt-4"
-              key="submit-btn"
-            >
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="rounded-xl rounded-tr-sm h-14 px-8 text-base shadow-lg shadow-primary/10 gap-3 group"
+        <div className="min-w-0">
+          <p
+            className="font-semibold text-foreground"
+            style={{ fontSize: "16px", lineHeight: "20px" }}
+          >
+            avi
+          </p>
+          <p
+            className="font-mono uppercase tracking-[0.12em] text-muted-foreground"
+            style={{ fontSize: "10px", lineHeight: "1", marginTop: "5px" }}
+          >
+            {botTyping ? "typing..." : statusLabel(discordStatus)}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 pb-6">
+        {bubbles.map((bubble) => (
+          <div
+            key={bubble.id}
+            className={`flex ${bubble.type === "user" ? "justify-end" : "justify-start"}`}
+            style={{ animation: "chatReveal 0.3s ease-out both" }}
+          >
+            {bubble.type === "bot" ? (
+              <div className="flex max-w-[85%] items-end gap-2">
+                <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full">
+                  <Image
+                    src="/avatar/avatar.png"
+                    alt=""
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div
+                  className="rounded-2xl rounded-bl-md border border-border/50 bg-card/50 px-3.5 py-2.5 text-foreground/90 backdrop-blur-sm"
+                  style={{ fontSize: "15px", lineHeight: "22px", letterSpacing: "0.1px" }}
+                >
+                  {bubble.content}
+                </div>
+              </div>
+            ) : (
+              <div
+                className="max-w-[80%] rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5 text-primary-foreground shadow-sm"
+                style={{ fontSize: "15px", lineHeight: "22px", letterSpacing: "0.1px" }}
               >
-                {isSubmitting ? (
-                  <>
-                    <span>sending</span>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  </>
-                ) : (
-                  <>
-                    <span>send message</span>
-                    <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </>
+                {bubble.content}
+              </div>
+            )}
+          </div>
+        ))}
+
+        {botTyping && (
+          <div className="flex items-end gap-2">
+            <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full">
+              <Image
+                src="/avatar/avatar.png"
+                alt=""
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-border/50 bg-card/50 px-3.5 py-3 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:0ms]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:150ms]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:300ms]" />
+            </div>
+          </div>
+        )}
+
+        <div ref={bottomRef} />
+      </div>
+
+      {step !== "done" && step !== "sending" && (
+        <div className="sticky bottom-4 mt-4">
+          <div className="flex items-end gap-2 rounded-2xl border border-border/60 bg-background/85 p-2 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+            {step === "message" ? (
+              <div className="flex min-h-[38px] flex-1 items-end px-2 py-2">
+                <textarea
+                  ref={textareaRef}
+                  value={inputValue}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    if (error) setError("");
+                  }}
+                  onKeyDown={handleKeyDown}
+                  placeholder="type your message..."
+                  rows={1}
+                  className="max-h-32 w-full resize-none bg-transparent text-foreground outline-none placeholder:text-muted-foreground/50"
+                  style={{
+                    minHeight: "22px",
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    letterSpacing: "0.1px",
+                  }}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = "auto";
+                    target.style.height = `${Math.min(target.scrollHeight, 128)}px`;
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="flex h-[38px] flex-1 items-center px-2">
+                {step === "email" && (
+                  <Mail className="mr-2 h-4 w-4 shrink-0 text-muted-foreground/40" />
                 )}
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </form>
-    </div>
-  )
-}
+                <input
+                  ref={inputRef}
+                  type={step === "email" ? "email" : "text"}
+                  value={inputValue}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    if (error) setError("");
+                  }}
+                  onKeyDown={handleKeyDown}
+                  placeholder={
+                    step === "name" ? "your name..." : "email or type skip..."
+                  }
+                  className="w-full bg-transparent text-foreground outline-none placeholder:text-muted-foreground/50"
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    letterSpacing: "0.1px",
+                  }}
+                  autoComplete="off"
+                />
+              </div>
+            )}
 
-function BotMessage({
-  children,
-  delay,
-}: {
-  children: React.ReactNode
-  delay: number
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
-      className="flex items-end gap-3 self-start max-w-[90%]"
-    >
-      <div className="w-11 h-11 shrink-0">
-        <Image
-          src="/avatar/avatar.png"
-          alt="bot"
-          width={44}
-          height={44}
-          className="object-contain w-full h-full drop-shadow-sm"
-        />
-      </div>
-      <div className="bg-card/50 border border-border/50 px-5 py-4 rounded-xl rounded-bl-none text-base text-foreground/90 shadow-sm leading-relaxed">
-        {children}
-      </div>
-    </motion.div>
-  )
-}
+            <button
+              onClick={validateAndProceed}
+              disabled={!inputValue.trim() && step !== "email"}
+              className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-95 disabled:opacity-30 disabled:hover:bg-primary"
+              aria-label="send"
+            >
+              <Send className="h-[15px] w-[15px]" />
+            </button>
+          </div>
 
-function UserMessage({
-  children,
-  delay,
-  className = "",
-}: {
-  children: React.ReactNode
-  delay: number
-  className?: string
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
-      className="self-end max-w-[90%] w-full flex justify-end"
-    >
-      <div
-        className={`
-        bg-primary/5 border border-primary/10 
-        px-5 py-4 rounded-xl rounded-br-none 
-        text-base text-foreground shadow-sm w-full
-        focus-within:bg-primary/10 focus-within:border-primary/20 transition-colors
-        ${className}
-      `}
-      >
-        {children}
-      </div>
-    </motion.div>
-  )
+          <div
+            className="overflow-hidden transition-all duration-200 ease-out"
+            style={{
+              maxHeight: error ? "36px" : "0px",
+              opacity: error ? 1 : 0,
+            }}
+          >
+            <p
+              className="mt-2 pl-3 text-red-400/90"
+              style={{ fontSize: "12px", lineHeight: "16px", letterSpacing: "0.1px" }}
+            >
+              * {error}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {step === "sending" && (
+        <div className="mt-6 flex items-center justify-center gap-2 text-muted-foreground">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          <span
+            className="font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: "11px" }}
+          >
+            sending your message...
+          </span>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes chatReveal {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </main>
+  );
 }

@@ -3,10 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Copy, Loader2, Phone, Send, AlertTriangle } from "lucide-react";
-import Return from "@/components/ui/Return";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+import {
+  Check,
+  Copy,
+  Loader2,
+  Send,
+  CornerDownLeft,
+  Smartphone,
+} from "lucide-react";
+import Link from "next/link";
 import { SiWise } from "react-icons/si";
 
 const BKASH_NUMBER = "01701076982";
@@ -22,30 +27,17 @@ const WISE_DETAILS = [
   { label: "Post Code", value: "1212" },
 ];
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const staggerItem = {
-  hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 100, damping: 18 },
-  },
-};
-
 const expandVariants = {
   hidden: { opacity: 0, height: 0 },
   visible: {
     opacity: 1,
     height: "auto",
-    transition: { type: "spring", stiffness: 100, damping: 20, opacity: { duration: 0.2 } },
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20,
+      opacity: { duration: 0.2 },
+    },
   },
   exit: {
     opacity: 0,
@@ -91,222 +83,369 @@ export default function DonateContent() {
     }
   };
 
+  const canSubmit = email.trim() && amount.trim() && method && !isSubmitting;
+
   return (
-    <div className="min-h-screen w-full bg-background text-foreground flex flex-col items-center justify-center px-4 py-12">
-      <Return href="/" label="return" className="mb-10" />
-
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-        className="w-full max-w-lg flex flex-col gap-6"
+    <main className="layout-container">
+      <Link
+        href="/"
+        className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
       >
-        <motion.div variants={staggerItem} className="text-center mb-2">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
-            support my work
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            your contribution keeps me caffeinated and shipping
-          </p>
-        </motion.div>
+        <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
+        <span>Back</span>
+      </Link>
 
-        <motion.div variants={staggerItem}>
-          <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2 block">
-            Email
+      <div className="mb-10 flex flex-col gap-3">
+        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+          support
+        </span>
+        <h1
+          className="font-semibold text-foreground"
+          style={{
+            fontSize: "22px",
+            lineHeight: "28px",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Buy me a coffee, or something stronger
+        </h1>
+        <p
+          className="text-muted-foreground"
+          style={{
+            fontSize: "16px",
+            lineHeight: "24px",
+            letterSpacing: "0.2px",
+          }}
+        >
+          If anything I&apos;ve built has been useful to you, this is the tip
+          jar. No pressure, no paywalls, just genuine appreciation that keeps
+          the caffeine flowing and the commits pushing.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="email"
+            className="font-mono uppercase tracking-[0.12em] text-muted-foreground"
+            style={{ fontSize: "10px", lineHeight: "1" }}
+          >
+            your email
           </label>
-          <Input
+          <input
+            id="email"
             type="email"
-            placeholder="your email"
+            placeholder="hi@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isSubmitting}
+            className="h-11 rounded-xl border border-border/60 bg-card/40 px-4 text-foreground outline-none transition-colors duration-200 placeholder:text-muted-foreground/50 focus:border-primary/40 focus:bg-card/70 disabled:opacity-50"
+            style={{
+              fontSize: "15px",
+              lineHeight: "22px",
+              letterSpacing: "0.1px",
+            }}
           />
-        </motion.div>
+        </div>
 
-        <motion.div variants={staggerItem}>
-          <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2 block">
-            Amount (USD/BDT)
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="amount"
+            className="font-mono uppercase tracking-[0.12em] text-muted-foreground"
+            style={{ fontSize: "10px", lineHeight: "1" }}
+          >
+            amount
           </label>
-          <Input
-            type="number"
-            placeholder="10.00"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            disabled={isSubmitting}
-            min="1"
-          />
-        </motion.div>
-
-        <motion.div variants={staggerItem}>
-          <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-4 block">
-            Payment Method
-          </label>
-          <div className="flex flex-col gap-3">
-            {/* Wise */}
-            <motion.button
-              onClick={() => !isSubmitting && setMethod("wise")}
-              whileTap={!isSubmitting ? { scale: 0.98 } : undefined}
-              className={`
-                w-full text-left rounded-lg border p-4 transition-all duration-200 cursor-pointer
-                ${method === "wise"
-                  ? "border-primary/50 bg-primary/5 shadow-sm"
-                  : "border-border/50 bg-card/50 hover:border-primary/20 hover:bg-primary/[0.02]"
-                }
-                ${isSubmitting ? "pointer-events-none opacity-60" : ""}
-              `}
+          <div className="relative">
+            <input
+              id="amount"
+              type="number"
+              placeholder="10.00"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              disabled={isSubmitting}
+              min="1"
+              className="h-11 w-full rounded-xl border border-border/60 bg-card/40 px-4 pr-20 text-foreground outline-none transition-colors duration-200 placeholder:text-muted-foreground/50 focus:border-primary/40 focus:bg-card/70 disabled:opacity-50"
+              style={{
+                fontSize: "15px",
+                lineHeight: "22px",
+                letterSpacing: "0.1px",
+              }}
+            />
+            <span
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 font-mono uppercase tracking-[0.12em] text-muted-foreground/60"
+              style={{ fontSize: "10px", lineHeight: "1" }}
             >
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-200 ${method === "wise" ? "bg-primary/10" : "bg-muted/30"}`}>
-                  <SiWise className={`w-5 h-5 transition-colors duration-200 ${method === "wise" ? "text-primary" : "text-muted-foreground"}`} />
-                </div>
-                <div>
-                  <div className="font-medium text-sm text-foreground">Wise</div>
-                  <div className="text-xs text-muted-foreground">bank transfer via bKash</div>
-                </div>
-                <div className={`ml-auto w-4 h-4 rounded-full border-2 transition-all duration-200 ${method === "wise" ? "border-primary bg-primary" : "border-muted-foreground/30"}`}>
-                  {method === "wise" && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                      className="w-full h-full rounded-full flex items-center justify-center"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-foreground" />
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-
-              <AnimatePresence>
-                {method === "wise" && (
-                  <motion.div
-                    variants={expandVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-4 pt-4 border-t border-border/30 space-y-3">
-                      <a
-                        href="https://www.youtube.com/watch?v=gwD7VsqcHsY"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="group/video flex items-center gap-3 rounded-lg bg-primary/[0.06] border border-primary/15 px-3.5 py-2.5 hover:bg-primary/10 hover:border-primary/25 transition-all duration-200"
-                      >
-                        <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center shrink-0 group-hover/video:bg-primary/25 transition-colors">
-                          <svg className="w-3 h-3 fill-primary text-primary ml-0.5" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-primary">watch instruction video</div>
-                          <div className="text-[10px] text-muted-foreground">step-by-step guide for Wise transfer</div>
-                        </div>
-                      </a>
-
-                      <div className="rounded-lg border border-border/40 bg-card/30 divide-y divide-border/30 overflow-hidden">
-                        {WISE_DETAILS.map((item) => (
-                          <CopyRow
-                            key={item.label}
-                            label={item.label}
-                            value={item.value}
-                            copyKey={`wise-${item.label}`}
-                            copiedKey={copiedKey}
-                            onCopy={copyText}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
-
-            {/* bKash */}
-            <motion.button
-              onClick={() => !isSubmitting && setMethod("bkash")}
-              whileTap={!isSubmitting ? { scale: 0.98 } : undefined}
-              className={`
-                w-full text-left rounded-lg border p-4 transition-all duration-200 cursor-pointer
-                ${method === "bkash"
-                  ? "border-primary/50 bg-primary/5 shadow-sm"
-                  : "border-border/50 bg-card/50 hover:border-primary/20 hover:bg-primary/[0.02]"
-                }
-                ${isSubmitting ? "pointer-events-none opacity-60" : ""}
-              `}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-200 ${method === "bkash" ? "bg-primary/10" : "bg-muted/30"}`}>
-                  <Phone className={`w-5 h-5 transition-colors duration-200 ${method === "bkash" ? "text-primary" : "text-muted-foreground"}`} />
-                </div>
-                <div>
-                  <div className="font-medium text-sm text-foreground">bKash</div>
-                  <div className="text-xs text-muted-foreground">mobile wallet transfer</div>
-                </div>
-                <div className={`ml-auto w-4 h-4 rounded-full border-2 transition-all duration-200 ${method === "bkash" ? "border-primary bg-primary" : "border-muted-foreground/30"}`}>
-                  {method === "bkash" && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                      className="w-full h-full rounded-full flex items-center justify-center"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-foreground" />
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-
-              <AnimatePresence>
-                {method === "bkash" && (
-                  <motion.div
-                    variants={expandVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-4 pt-4 border-t border-border/30 space-y-3">
-                      <div className="text-xs text-muted-foreground">Type: <span className="text-foreground font-medium">Send Money</span></div>
-                      <CopyField label="bKash Number" value={BKASH_NUMBER} copyKey="bkash" copiedKey={copiedKey} onCopy={copyText} />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+              usd / bdt
+            </span>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div variants={staggerItem}>
-          {error && (
-            <motion.p
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-red-400 mb-3 font-mono"
+        <div className="mt-2 flex flex-col gap-3">
+          <label
+            className="font-mono uppercase tracking-[0.12em] text-muted-foreground"
+            style={{ fontSize: "10px", lineHeight: "1" }}
+          >
+            payment method
+          </label>
+
+          <div className="flex flex-col gap-2.5">
+            <MethodOption
+              active={method === "wise"}
+              disabled={isSubmitting}
+              onClick={() => !isSubmitting && setMethod("wise")}
+              icon={<SiWise className="h-[18px] w-[18px]" />}
+              title="Wise"
+              subtitle="international bank transfer"
+              expanded={method === "wise"}
+            >
+              <div className="space-y-3 pt-3">
+                <a
+                  href="https://www.youtube.com/watch?v=gwD7VsqcHsY"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="group/video flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/[0.06] px-3.5 py-2.5 transition-all duration-200 hover:border-primary/30 hover:bg-primary/[0.09]"
+                >
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 transition-colors duration-200 group-hover/video:bg-primary/25">
+                    <svg
+                      className="ml-0.5 h-3 w-3 fill-primary text-primary"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <p
+                      className="font-semibold text-primary"
+                      style={{ fontSize: "13px", lineHeight: "16px" }}
+                    >
+                      watch instruction video
+                    </p>
+                    <p
+                      className="text-muted-foreground"
+                      style={{
+                        fontSize: "11px",
+                        lineHeight: "14px",
+                        marginTop: "2px",
+                      }}
+                    >
+                      step by step guide for Wise transfer
+                    </p>
+                  </div>
+                </a>
+
+                <div className="overflow-hidden rounded-xl border border-border/50 bg-background/40 divide-y divide-border/40">
+                  {WISE_DETAILS.map((item) => (
+                    <CopyRow
+                      key={item.label}
+                      label={item.label}
+                      value={item.value}
+                      copyKey={`wise-${item.label}`}
+                      copiedKey={copiedKey}
+                      onCopy={copyText}
+                    />
+                  ))}
+                </div>
+              </div>
+            </MethodOption>
+
+            <MethodOption
+              active={method === "bkash"}
+              disabled={isSubmitting}
+              onClick={() => !isSubmitting && setMethod("bkash")}
+              icon={<Smartphone className="h-[18px] w-[18px]" />}
+              title="bKash"
+              subtitle="mobile wallet, send money"
+              expanded={method === "bkash"}
+            >
+              <div className="space-y-3 pt-3">
+                <div
+                  className="flex items-center gap-2 text-muted-foreground"
+                  style={{
+                    fontSize: "13px",
+                    lineHeight: "18px",
+                    letterSpacing: "0.1px",
+                  }}
+                >
+                  <span
+                    className="font-mono uppercase tracking-[0.12em] text-muted-foreground/70"
+                    style={{ fontSize: "10px", lineHeight: "1" }}
+                  >
+                    type
+                  </span>
+                  <span className="font-semibold text-foreground">
+                    Send Money
+                  </span>
+                </div>
+
+                <CopyField
+                  label="bKash Number"
+                  value={BKASH_NUMBER}
+                  copyKey="bkash"
+                  copiedKey={copiedKey}
+                  onCopy={copyText}
+                />
+              </div>
+            </MethodOption>
+          </div>
+        </div>
+
+        <div className="mt-2 flex flex-col gap-3">
+          <div
+            className="overflow-hidden transition-all duration-200 ease-out"
+            style={{
+              maxHeight: error ? "32px" : "0px",
+              opacity: error ? 1 : 0,
+            }}
+          >
+            <p
+              className="text-red-400/90"
+              style={{
+                fontSize: "12px",
+                lineHeight: "16px",
+                letterSpacing: "0.1px",
+              }}
             >
               * {error}
-            </motion.p>
-          )}
-          <Button
+            </p>
+          </div>
+
+          <button
             onClick={handleSubmit}
-            disabled={isSubmitting || !email.trim() || !amount.trim() || !method}
-            className="w-full h-12 text-base gap-3 group"
+            disabled={!canSubmit}
+            className="group inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
+            style={{ fontSize: "15px", lineHeight: "20px", fontWeight: 600 }}
           >
             {isSubmitting ? (
               <>
                 <span>sending</span>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
               </>
             ) : (
               <>
                 <span>notify me</span>
-                <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <Send className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </>
             )}
-          </Button>
-        </motion.div>
-      </motion.div>
+          </button>
+
+          <p
+            className="text-center text-muted-foreground/70"
+            style={{
+              fontSize: "12px",
+              lineHeight: "18px",
+              letterSpacing: "0.1px",
+            }}
+          >
+            after payment, hit notify so I can send a proper thank you
+          </p>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function MethodOption({
+  active,
+  disabled,
+  onClick,
+  icon,
+  title,
+  subtitle,
+  expanded,
+  children,
+}: {
+  active: boolean;
+  disabled: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  expanded: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      onClick={onClick}
+      className={`
+        w-full cursor-pointer rounded-2xl border p-4 transition-all duration-200
+        ${
+          active
+            ? "border-primary/40 bg-primary/[0.04]"
+            : "border-border/50 bg-card/40 hover:border-primary/25 hover:bg-primary/[0.02]"
+        }
+        ${disabled ? "pointer-events-none opacity-60" : ""}
+      `}
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className={`
+            flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors duration-200
+            ${
+              active
+                ? "bg-primary/10 text-primary"
+                : "bg-muted/30 text-muted-foreground"
+            }
+          `}
+        >
+          {icon}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p
+            className="font-semibold text-foreground"
+            style={{ fontSize: "15px", lineHeight: "20px" }}
+          >
+            {title}
+          </p>
+          <p
+            className="text-muted-foreground"
+            style={{
+              fontSize: "12px",
+              lineHeight: "16px",
+              letterSpacing: "0.1px",
+              marginTop: "2px",
+            }}
+          >
+            {subtitle}
+          </p>
+        </div>
+
+        <div
+          className={`
+            ml-2 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border-2 transition-all duration-200
+            ${
+              active
+                ? "border-primary bg-primary"
+                : "border-muted-foreground/30"
+            }
+          `}
+        >
+          {active && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 500, damping: 25 }}
+              className="h-1.5 w-1.5 rounded-full bg-primary-foreground"
+            />
+          )}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            variants={expandVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="overflow-hidden"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -331,11 +470,21 @@ function CopyRow({
         e.stopPropagation();
         onCopy(value, copyKey);
       }}
-      className="group/row flex items-center justify-between gap-3 px-3.5 py-2.5 cursor-pointer hover:bg-primary/[0.03] transition-colors"
+      className="group/row flex cursor-pointer items-center justify-between gap-3 px-3.5 py-2.5 transition-colors duration-200 hover:bg-primary/[0.04]"
     >
-      <span className="text-[11px] text-muted-foreground shrink-0">{label}</span>
-      <div className="flex items-center gap-2 min-w-0">
-        <span className="text-xs font-mono text-foreground truncate">{value}</span>
+      <span
+        className="shrink-0 font-mono uppercase tracking-[0.1em] text-muted-foreground/70"
+        style={{ fontSize: "10px", lineHeight: "1" }}
+      >
+        {label}
+      </span>
+      <div className="flex min-w-0 items-center gap-2">
+        <span
+          className="truncate font-mono text-foreground"
+          style={{ fontSize: "12px", lineHeight: "18px" }}
+        >
+          {value}
+        </span>
         <AnimatePresence mode="wait" initial={false}>
           {isCopied ? (
             <motion.span
@@ -346,18 +495,18 @@ function CopyRow({
               transition={{ duration: 0.15, ease: "easeOut" }}
               className="shrink-0"
             >
-              <Check className="w-3 h-3 text-emerald-400" />
+              <Check className="h-3 w-3 text-emerald-400" />
             </motion.span>
           ) : (
             <motion.span
               key="copy"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0 }}
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: 0.3 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.12 }}
-              className="shrink-0 group-hover/row:!opacity-50 transition-opacity"
+              className="shrink-0 transition-opacity group-hover/row:!opacity-70"
             >
-              <Copy className="w-3 h-3 text-muted-foreground" />
+              <Copy className="h-3 w-3 text-muted-foreground" />
             </motion.span>
           )}
         </AnimatePresence>
@@ -381,16 +530,26 @@ function CopyField({
 }) {
   const isCopied = copiedKey === copyKey;
   return (
-    <div className="space-y-1.5">
-      <div className="text-xs text-muted-foreground">{label}</div>
+    <div className="flex flex-col gap-2">
+      <span
+        className="font-mono uppercase tracking-[0.12em] text-muted-foreground/70"
+        style={{ fontSize: "10px", lineHeight: "1" }}
+      >
+        {label}
+      </span>
       <div
         onClick={(e) => {
           e.stopPropagation();
           onCopy(value, copyKey);
         }}
-        className="group/copy flex items-center gap-2 bg-muted/20 rounded-md px-3 py-2 cursor-pointer hover:bg-muted/30 transition-colors"
+        className="group/copy flex cursor-pointer items-center gap-2 rounded-xl border border-border/50 bg-background/40 px-3.5 py-2.5 transition-colors duration-200 hover:border-primary/30 hover:bg-primary/[0.03]"
       >
-        <span className="text-xs font-mono text-foreground break-all flex-1">{value}</span>
+        <span
+          className="flex-1 break-all font-mono text-foreground"
+          style={{ fontSize: "14px", lineHeight: "20px" }}
+        >
+          {value}
+        </span>
         <AnimatePresence mode="wait" initial={false}>
           {isCopied ? (
             <motion.span
@@ -401,18 +560,18 @@ function CopyField({
               transition={{ duration: 0.15, ease: "easeOut" }}
               className="shrink-0"
             >
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <Check className="h-[14px] w-[14px] text-emerald-400" />
             </motion.span>
           ) : (
             <motion.span
               key="copy"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0.5 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.12 }}
-              className="shrink-0 group-hover/copy:!opacity-100 transition-opacity"
+              className="shrink-0 transition-opacity group-hover/copy:!opacity-100"
             >
-              <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+              <Copy className="h-[14px] w-[14px] text-muted-foreground" />
             </motion.span>
           )}
         </AnimatePresence>

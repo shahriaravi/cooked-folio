@@ -6,7 +6,6 @@ import NowPlaying from "@/components/integrations/NowPlaying";
 import TimeDisplay from "@/components/ui/TimeDisplay";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import { DISCORD_LINK, SOCIALS } from "@/lib/config";
-import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiDiscord } from "react-icons/si";
@@ -14,108 +13,116 @@ import { SiDiscord } from "react-icons/si";
 export function Hero() {
   const discordStatus = useDiscordPresence();
 
+  const navLinks = [
+    { href: "/what", label: "/what" },
+    { href: "/contact", label: "/contact" },
+    { href: "/gist", label: "/gist", external: true },
+  ];
+
   return (
-    <section className="relative mb-14 font-mono">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 py-2 mb-16 md:mb-20 text-xs text-muted-foreground uppercase tracking-wider">
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-primary" />
+    <section className="relative mb-16 w-full">
+      <div className="mb-14 flex items-center justify-between gap-4">
+        <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
           <TimeDisplay />
         </div>
 
-        <div className="flex items-center justify-start sm:justify-end gap-4">
-          <nav className="flex items-center gap-4 text-sm">
-            {["/what", "/contact", "/gist"].map((href) => (
+        <div className="flex items-center gap-4">
+          <nav className="flex items-center gap-4">
+            {navLinks.map((link) => (
               <Link
-                key={href}
-                href={href}
-                target={href === "/gist" ? "blank" : undefined}
-                className="hover:text-primary transition-colors underline decoration-wavy underline-offset-4 lowercase"
+                key={link.href}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground"
               >
-                {href}
+                {link.label}
               </Link>
             ))}
           </nav>
-
-          <ThemeToggle className="bg-transparent hover:bg-primary/10 text-muted-foreground hover:text-primary w-8 h-8 rounded-md transition-colors" />
+          <ThemeToggle className="h-7 w-7 rounded-md bg-transparent text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary" />
         </div>
       </div>
 
-      <div className="px-1 md:px-2">
-        <div>
-          <div className="flex items-center gap-5 md:gap-6 mb-8 md:mb-10">
-            <div className="relative shrink-0">
-              <div
-                className="relative h-20 w-20 md:h-24 md:w-24 overflow-hidden bg-background ring-1 ring-border/50 shadow-lg"
-                style={{ borderRadius: "var(--radius-lg)" }}
-              >
-                <Image
-                  src="/avatar/avatar-full.png"
-                  alt="avi"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <div className="absolute -bottom-1 -right-1">
-                <DiscordPresenceDot
-                  status={discordStatus}
-                  className="w-5 h-5 md:w-6 md:h-6 border-[3px] border-background"
-                />
-              </div>
-            </div>
-
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-              Shahriar Avi
-            </h1>
+      <div className="flex flex-col w-full">
+        <div className="relative mb-4 h-20 w-20 shrink-0">
+          <div
+            className="relative h-full w-full overflow-hidden bg-background ring-1 ring-border/60"
+            style={{ borderRadius: "22px" }}
+          >
+            <Image
+              src="/avatar/avatar-full.png"
+              alt="avi"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
-
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8 md:mb-10">
-            Hey, I&apos;m Avi and I just love building things. I&apos;m
-            currently building{" "}
-            <a
-              href="https://byontriq.xyz"
-              target="_blank"
-              className="font-semibold text-primary hover:text-primary/80 transition-colors"
-            >
-              @Byontriq
-            </a>
-            . I make apps, websites and extensions, experiment a lot, break
-            stuff on purpose and ship what&apos;s actually useful.
-          </p>
-
-          <div className="mb-10 md:mb-12">
-            <NowPlaying />
+          <div className="absolute -bottom-0.5 -right-0.5">
+            <DiscordPresenceDot
+              status={discordStatus}
+              className="h-[18px] w-[18px] border-[2.5px] border-background"
+            />
           </div>
+        </div>
 
-          <div className="flex flex-wrap items-center gap-3 md:gap-4">
-            {SOCIALS.map((social) => (
-              <a
-                key={social.platform}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.platform}
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                <social.icon className="w-5 h-5 md:w-6 md:h-6" />
-              </a>
-            ))}
+        <h1 className="mb-5 text-[22px] font-semibold leading-none tracking-tight text-foreground">
+          Shahriar Avi
+        </h1>
 
-            <div className="hidden sm:block w-px h-6 bg-border" />
+        <p
+          className="mb-6 text-muted-foreground"
+          style={{
+            fontSize: "16px",
+            lineHeight: "24px",
+            letterSpacing: "0.2px",
+          }}
+        >
+          Hey, I&apos;m Avi and I just love building things. I&apos;m currently
+          building{" "}
+          <a
+            href="https://byontriq.xyz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-foreground transition-colors duration-200 hover:text-primary"
+          >
+            @Byontriq
+          </a>
+          . I make apps, websites and extensions, experiment a lot, break stuff
+          on purpose and ship what&apos;s actually useful.
+        </p>
 
+        <div className="mb-6">
+          <NowPlaying />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          {SOCIALS.map((social) => (
             <a
-              href={DISCORD_LINK}
+              key={social.platform}
+              href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 font-medium text-foreground hover:text-primary transition-colors text-sm md:text-base"
+              aria-label={social.platform}
+              className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
-              <SiDiscord className="w-5 h-5 text-primary/80 group-hover:text-primary transition-colors" />
-              <span>Join Community</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                →
-              </span>
+              <social.icon className="h-[17px] w-[17px]" />
             </a>
-          </div>
+          ))}
+
+          <span className="hidden h-3.5 w-px bg-border sm:block" />
+
+          <a
+            href={DISCORD_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 text-[14px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+          >
+            <SiDiscord className="h-[17px] w-[17px] text-primary/70 transition-colors duration-200 group-hover:text-primary" />
+            <span className="font-semibold text-foreground/80 transition-colors duration-200 group-hover:text-primary">
+              join community
+            </span>
+          </a>
         </div>
       </div>
     </section>

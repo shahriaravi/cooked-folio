@@ -108,29 +108,33 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     company: "Byontriq",
     role: "Founder & SWE",
-    date: "2025 - Present",
-    description: "Building modern, minimal web & mobile apps.",
+    date: "2025 — Present",
+    description:
+      "Building Byontriq from the ground up. Designing the product, writing the code, shipping the site, and answering support in between deploys. It's chaotic, and I love every part of it.",
     logo: "/logos/byontriq.png",
   },
   {
     company: "EXEAIO",
     role: "Project Manager",
-    date: "2023 - 2024",
-    description: "Led projects at a VR game studio.",
+    date: "2023 — 2024",
+    description:
+      "Led production and delivery at a VR game studio. Coordinated designers, developers, and artists across timezones while keeping releases predictable and the team unblocked.",
     logo: "/images/companies/exeaio.png",
   },
   {
     company: "Crisis Entertainment",
     role: "Game Ops",
-    date: "2020 - 2023",
-    description: "Handled live operations at a video game development MNC.",
+    date: "2020 — 2023",
+    description:
+      "Handled live operations at a video game MNC. Kept servers healthy, managed community incidents, and worked closely with engineering to ship fixes without breaking the vibe of live matches.",
     logo: "/images/companies/ce.png",
   },
   {
     company: "GameExp",
     role: "Editor",
     date: "2022",
-    description: "Wrote and edited content about all things gaming.",
+    description:
+      "Wrote and edited long form gaming content across reviews, guides, and industry commentary. Learned that a good headline saves an okay article, and a bad one buries a great one.",
     logo: "/images/companies/gxp.png",
   },
 ];

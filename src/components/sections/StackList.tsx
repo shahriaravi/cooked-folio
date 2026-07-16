@@ -22,7 +22,7 @@ export function StackList() {
 
   return (
     <section className="mb-16 w-full">
-      <h2 className="text-sm font-mono text-muted-foreground mb-6 uppercase tracking-wider pl-1 md:pl-0">
+      <h2 className="mb-6 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
         stack
       </h2>
 

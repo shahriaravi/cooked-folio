@@ -1,13 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import Return from "@/components/ui/Return";
 import { SlideToVibeButton } from "@/components/vibe/SlideToVibeButton";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertTriangle,
+  CornerDownLeft,
+  Loader2,
   Pause,
   Play,
   RotateCcw,
@@ -17,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const audioFiles = [
@@ -36,11 +36,11 @@ const cyclingImages = [
 ];
 
 const ANGRY_MESSAGES = [
-  "Bruh, you just killed the vibe! Top 10 Anime Betrayals",
+  "Bruh, you just killed the vibe. Top 10 Anime Betrayals",
   "Not cool, bro. Not cool.",
   "Who gave you the aux?",
   "Explain yourself.",
-  "Unbelievable! Ruined it.",
+  "Unbelievable. Absolutely ruined it.",
 ];
 
 export default function Vibing() {
@@ -48,16 +48,12 @@ export default function Vibing() {
   const [hasEntered, setHasEntered] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-
   const [isMuted, setIsMuted] = useState(false);
-
   const [currentSong, setCurrentSong] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isChangingSong, setIsChangingSong] = useState(false);
-
   const [pauseCount, setPauseCount] = useState(0);
   const [showAngryState, setShowAngryState] = useState(false);
-
   const [showSongModal, setShowSongModal] = useState(false);
   const [songSuggestion, setSongSuggestion] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -103,7 +99,7 @@ export default function Vibing() {
     if (isPlaying && !isMuted) {
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.catch((e) =>
+        playPromise.catch(() =>
           console.log("Autoplay waiting for user interaction")
         );
       }
@@ -114,9 +110,7 @@ export default function Vibing() {
 
   const handleEnter = () => {
     if (hasEntered || isPreparing) return;
-
     setIsPreparing(true);
-
     setTimeout(() => {
       setHasEntered(true);
       setIsPlaying(true);
@@ -186,42 +180,61 @@ export default function Vibing() {
   if (!mounted) return <div className="h-screen w-full bg-background" />;
 
   return (
-    <div className="h-screen w-full bg-background text-foreground flex flex-col items-center justify-center overflow-hidden relative px-4">
+    <main className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-background text-foreground">
       {currentSong && (
         <audio ref={audioRef} src={currentSong} loop preload="auto" />
       )}
 
-      <div className="relative w-full max-w-4xl flex flex-col items-center justify-center min-h-[500px]">
-        <div className="mb-8 z-50">
-          <Return href="/" label="return" />
-        </div>
+      <div className="layout-container relative z-20 !py-6">
+        <Link
+          href="/"
+          className="group inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+        >
+          <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
+          <span>Back</span>
+        </Link>
+      </div>
 
+      <div className="relative flex flex-1 flex-col items-center justify-center px-4 pb-16">
         <AnimatePresence mode="popLayout">
           {hasEntered ? (
             <motion.div
               key="vibes-content"
-              className="flex flex-col items-center w-full"
-              initial={{ opacity: 0, scale: 0.9 }}
+              className="flex w-full flex-col items-center"
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="relative h-72 w-72 md:h-96 md:w-96 flex items-center justify-center mb-8 mt-4">
+              <div className="relative mb-10 flex h-72 w-72 items-center justify-center md:h-96 md:w-96">
                 <AnimatePresence mode="wait">
                   {showAngryState ? (
                     <motion.div
                       key="angry"
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.85 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="text-center z-10"
+                      exit={{ opacity: 0, scale: 0.85 }}
+                      className="z-10 flex flex-col items-center text-center"
                     >
-                      <h2 className="text-2xl md:text-4xl font-bold text-red-300 drop-shadow-lg leading-tight">
+                      <span
+                        className="mb-3 font-mono uppercase tracking-[0.14em] text-red-400/80"
+                        style={{ fontSize: "11px", lineHeight: "1" }}
+                      >
+                        vibe interrupted
+                      </span>
+                      <h2
+                        className="max-w-[420px] font-semibold text-foreground"
+                        style={{
+                          fontSize: "22px",
+                          lineHeight: "28px",
+                          letterSpacing: "-0.01em",
+                        }}
+                      >
                         {getAngryMessage()}
                       </h2>
-                      <div className="relative w-24 h-24 mx-auto mt-4">
+                      <div className="relative mt-5 h-24 w-24">
                         <Image
                           src="/avatar/avatar-angry.png"
-                          alt="Angry"
+                          alt="angry avi"
                           fill
                           className="object-contain"
                         />
@@ -230,14 +243,14 @@ export default function Vibing() {
                   ) : (
                     <motion.div
                       key="vibing-monke"
-                      className="relative w-full h-full"
+                      className="relative h-full w-full"
                     >
                       <AnimatePresence mode="popLayout">
                         <motion.div
                           key={currentImageIndex}
                           initial={{
                             opacity: 0,
-                            scale: 0.8,
+                            scale: 0.85,
                             filter: "blur(10px)",
                           }}
                           animate={{
@@ -255,7 +268,7 @@ export default function Vibing() {
                         >
                           <Image
                             src={cyclingImages[currentImageIndex]}
-                            alt="Vibing Monkey"
+                            alt="vibing monke"
                             fill
                             className="object-contain drop-shadow-2xl"
                             priority
@@ -268,64 +281,89 @@ export default function Vibing() {
               </div>
 
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
+                initial={{ y: 16, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="flex items-center gap-6 bg-secondary/30 backdrop-blur-md px-8 py-4 rounded-full border border-white/5 shadow-2xl z-20"
+                transition={{ delay: 0.2, type: "spring", stiffness: 100, damping: 18 }}
+                className="z-20 flex items-center gap-1 rounded-full border border-border/60 bg-card/60 p-1.5 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.35)] backdrop-blur-xl"
               >
-                <button
+                <ControlButton
                   onClick={handleTogglePlayPause}
-                  className="hover:scale-110 transition-transform text-foreground"
+                  label={isPlaying ? "pause" : "play"}
+                  primary
                 >
-                  {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-                </button>
-                <div className="w-px h-6 bg-white/10" />
-                <button
-                  onClick={() => setIsMuted(!isMuted)}
-                  className={cn(
-                    "hover:scale-110 transition-transform",
-                    isMuted ? "text-muted-foreground" : "text-primary"
+                  {isPlaying ? (
+                    <Pause className="h-[18px] w-[18px]" />
+                  ) : (
+                    <Play className="ml-0.5 h-[18px] w-[18px]" />
                   )}
+                </ControlButton>
+
+                <span className="mx-0.5 h-6 w-px bg-border/60" />
+
+                <ControlButton
+                  onClick={() => setIsMuted(!isMuted)}
+                  label={isMuted ? "unmute" : "mute"}
+                  active={!isMuted}
                 >
-                  {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-                </button>
-                <button
+                  {isMuted ? (
+                    <VolumeX className="h-[16px] w-[16px]" />
+                  ) : (
+                    <Volume2 className="h-[16px] w-[16px]" />
+                  )}
+                </ControlButton>
+
+                <ControlButton
                   onClick={handleChangeSong}
                   disabled={isChangingSong}
-                  className="hover:scale-110 transition-transform disabled:opacity-50"
+                  label="next"
                 >
                   <RotateCcw
-                    size={24}
-                    className={cn(isChangingSong && "animate-spin")}
+                    className={cn(
+                      "h-[16px] w-[16px]",
+                      isChangingSong && "animate-spin"
+                    )}
                   />
-                </button>
-                <div className="w-px h-6 bg-white/10" />
-                <button
+                </ControlButton>
+
+                <span className="mx-0.5 h-6 w-px bg-border/60" />
+
+                <ControlButton
                   onClick={() => setShowSongModal(true)}
-                  className="hover:scale-110 transition-transform text-foreground"
+                  label="request"
                 >
-                  <Send size={24} />
-                </button>
+                  <Send className="h-[16px] w-[16px]" />
+                </ControlButton>
               </motion.div>
             </motion.div>
           ) : (
             <motion.div
               key="slider-container"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="flex flex-col items-center justify-center gap-6 z-10 w-full"
+              transition={{ duration: 0.4 }}
+              className="z-10 flex w-full flex-col items-center justify-center gap-6"
             >
-              <div className="w-full max-w-sm flex justify-center">
+              <div className="flex w-full max-w-sm justify-center">
                 <SlideToVibeButton
                   onUnlock={handleEnter}
                   disabled={!currentSong || isPreparing}
-                  label={isPreparing ? "Loading..." : "Slide to Vibe"}
+                  label={isPreparing ? "loading..." : "slide to vibe"}
                 />
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
-                <AlertTriangle className="w-3 h-3" />
-                <span>caution: audio incoming</span>
+              <div
+                className="flex items-center gap-2 text-muted-foreground/70"
+                style={{
+                  fontSize: "11px",
+                  lineHeight: "1",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                <AlertTriangle className="h-3 w-3" />
+                <span className="font-mono uppercase">
+                  caution · audio incoming
+                </span>
               </div>
             </motion.div>
           )}
@@ -343,44 +381,111 @@ export default function Vibing() {
               onClick={() => setShowSongModal(false)}
             />
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative bg-card border border-border/50 p-6 rounded-lg w-full max-w-sm shadow-xl"
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              transition={{ type: "spring", stiffness: 200, damping: 22 }}
+              className="relative w-full max-w-sm rounded-2xl border border-border/60 bg-card p-5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.5)]"
             >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
-                  Song Request
-                </h3>
-                <button onClick={() => setShowSongModal(false)}>
-                  <X size={18} />
+              <div className="mb-5 flex items-center justify-between">
+                <div className="flex flex-col gap-1">
+                  <span
+                    className="font-mono uppercase tracking-[0.14em] text-muted-foreground"
+                    style={{ fontSize: "10px", lineHeight: "1" }}
+                  >
+                    song request
+                  </span>
+                  <h3
+                    className="font-semibold text-foreground"
+                    style={{ fontSize: "16px", lineHeight: "20px" }}
+                  >
+                    got a banger?
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setShowSongModal(false)}
+                  className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
+                  aria-label="close"
+                >
+                  <X className="h-4 w-4" />
                 </button>
               </div>
 
-              <Input
+              <input
                 autoFocus
-                className="w-full"
-                placeholder="Song name or URL..."
+                type="text"
+                placeholder="song name or url..."
                 value={songSuggestion}
                 onChange={(e) => setSongSuggestion(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSubmitSong()}
+                className="h-11 w-full rounded-xl border border-border/60 bg-background/60 px-4 text-foreground outline-none transition-colors duration-200 placeholder:text-muted-foreground/50 focus:border-primary/40 focus:bg-background"
+                style={{
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  letterSpacing: "0.1px",
+                }}
               />
 
-              <Button
+              <button
                 onClick={handleSubmitSong}
                 disabled={isSubmitting || !songSuggestion.trim()}
-                className="w-full mt-4 h-12 text-sm font-semibold rounded-lg"
+                className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
+                style={{ fontSize: "14px", lineHeight: "20px", fontWeight: 600 }}
               >
-                {isSubmitting
-                  ? "Sending..."
-                  : submitStatus === "success"
-                  ? "Sent!"
-                  : "Send Recommendation"}
-              </Button>
+                {isSubmitting ? (
+                  <>
+                    <span>sending</span>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  </>
+                ) : submitStatus === "success" ? (
+                  <span>sent, thanks ✌️</span>
+                ) : submitStatus === "error" ? (
+                  <span>try again</span>
+                ) : (
+                  <>
+                    <span>send recommendation</span>
+                    <Send className="h-4 w-4" />
+                  </>
+                )}
+              </button>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-    </div>
+    </main>
+  );
+}
+
+function ControlButton({
+  children,
+  onClick,
+  disabled,
+  label,
+  active,
+  primary,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+  label: string;
+  active?: boolean;
+  primary?: boolean;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className={cn(
+        "flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 active:scale-90 disabled:opacity-40 disabled:hover:bg-transparent",
+        primary
+          ? "bg-primary text-primary-foreground hover:bg-primary/90"
+          : active
+          ? "text-primary hover:bg-primary/10"
+          : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+      )}
+    >
+      {children}
+    </button>
   );
 }

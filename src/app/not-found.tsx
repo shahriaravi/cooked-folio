@@ -1,7 +1,8 @@
 "use client";
 
-import Return from "@/components/ui/Return";
+import { CornerDownLeft } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function NotFound() {
@@ -37,28 +38,70 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center bg-background text-foreground overflow-hidden">
-      <div className="flex items-center gap-4 md:gap-6 mb-6">
-        <div className="relative w-24 h-24 md:w-32 md:h-32">
-          <Image
-            src="/avatar/avatar.png"
-            alt="avi"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-
-        <h1 className="text-7xl md:text-9xl font-mono font-bold tracking-tighter text-foreground">
-          {displayText}
-        </h1>
+    <main className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-background text-foreground">
+      <div className="layout-container relative z-20 !py-6">
+        <Link
+          href="/"
+          className="group inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+        >
+          <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
+          <span>Back</span>
+        </Link>
       </div>
 
-      <p className="text-muted-foreground text-sm md:text-base mb-6">
-        you probably lost in the universe
-      </p>
+      <div className="flex flex-1 flex-col items-center justify-center px-4 pb-20 text-center">
 
-      <Return animate={false} />
-    </div>
+        <div className="mb-8 flex items-center gap-4 md:gap-6">
+          <div className="relative h-20 w-20 md:h-24 md:w-24">
+            <div
+              className="relative h-full w-full overflow-hidden bg-background"
+              style={{ borderRadius: "20px" }}
+            >
+              <Image
+                src="/avatar/avatar.png"
+                alt="avi"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+
+          <h1
+            className="font-mono font-semibold tracking-tighter text-foreground"
+            style={{
+              fontSize: "clamp(72px, 14vw, 128px)",
+              lineHeight: "1",
+              letterSpacing: "-0.04em",
+            }}
+          >
+            {displayText}
+          </h1>
+        </div>
+
+        <h2
+          className="mb-3 font-semibold text-foreground"
+          style={{
+            fontSize: "22px",
+            lineHeight: "28px",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          You&apos;re lost in the void.
+        </h2>
+
+        <p
+          className="max-w-[420px] text-muted-foreground"
+          style={{
+            fontSize: "16px",
+            lineHeight: "24px",
+            letterSpacing: "0.2px",
+          }}
+        >
+          This page doesn&apos;t exist, was moved, or never existed in the
+          first place. Either way, nothing to see here.
+        </p>
+      </div>
+    </main>
   );
 }

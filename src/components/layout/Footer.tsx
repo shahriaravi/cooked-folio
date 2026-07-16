@@ -57,7 +57,7 @@ export function Footer() {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="relative w-16 h-16 animate-spin">
+        <div className="relative h-14 w-14 animate-spin">
           <Image
             src="/avatar/avatar.png"
             alt="loading..."
@@ -68,8 +68,8 @@ export function Footer() {
         </div>
       </div>
 
-      <footer className="relative mt-12 pb-8 pt-8 border-t border-border/40 text-sm text-muted-foreground font-mono overflow-hidden">
-        <div className="absolute inset-0 -z-0 opacity-30">
+      <footer className="relative mt-14 overflow-hidden pb-8 pt-8">
+        <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
           <PixelBlast
             variant="square"
             pixelSize={4}
@@ -79,7 +79,7 @@ export function Footer() {
             pixelSizeJitter={0.3}
             enableRipples
             rippleSpeed={0.45}
-            rippleThickness={0.10}
+            rippleThickness={0.1}
             rippleIntensityScale={0.8}
             speed={0.45}
             edgeFade={0.4}
@@ -87,35 +87,49 @@ export function Footer() {
           />
         </div>
 
-        <div className="relative z-10 flex flex-col gap-6">
-          <div className="space-y-2">
-            <h3 className="text-foreground font-medium text-base tracking-tight">
+        <div className="relative z-10 flex flex-col gap-8">
+          <div className="flex flex-col gap-2">
+            <h3
+              className="font-semibold text-foreground"
+              style={{
+                fontSize: "17px",
+                lineHeight: "22px",
+                letterSpacing: "-0.01em",
+              }}
+            >
               Have a project in mind?
             </h3>
-            <p className="text-muted-foreground/80 max-w-md leading-relaxed">
+
+            <p
+              className="max-w-[480px] text-muted-foreground"
+              style={{
+                fontSize: "14px",
+                lineHeight: "22px",
+                letterSpacing: "0.1px",
+              }}
+            >
               I&apos;m always open to discussing new opportunities, crazy ideas,
-              or just chatting about tech.
+              or just chatting about tech over coffee.
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
             <button
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
               data-cal-config='{"layout":"month_view","hideEventTypeDetails":true}'
               className="
                 group relative flex items-center overflow-hidden
-                h-12 pl-2 pr-5 w-fit
-                bg-card hover:bg-primary/5
-                border border-border hover:border-primary/50
+                h-10 w-fit pl-1.5 pr-4
                 rounded-lg
-                transition-all duration-300
-                cursor-pointer
+                border border-border/60 bg-card/80 hover:bg-primary/5 hover:border-primary/40
                 shadow-sm
+                cursor-pointer
+                transition-all duration-300
                 active:scale-[0.97]
               "
             >
-              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md mr-3">
+              <div className="relative mr-2.5 h-7 w-7 shrink-0 overflow-hidden rounded-md">
                 <Image
                   src="/avatar/avatar.png"
                   alt="avi"
@@ -135,20 +149,26 @@ export function Footer() {
               <div className="flex items-center">
                 <div
                   className="
-                    flex items-center gap-1.5 overflow-hidden whitespace-nowrap
+                    flex items-center gap-1 overflow-hidden whitespace-nowrap
                     w-0 opacity-0 mr-0
-                    group-hover:w-auto group-hover:opacity-100 group-hover:mr-2
+                    group-hover:w-auto group-hover:opacity-100 group-hover:mr-1.5
                     transition-all duration-300 ease-out
                   "
                 >
-                  <Plus className="w-3.5 h-3.5 text-primary" />
-                  <div className="h-5 px-1.5 rounded-sm bg-background border border-border flex items-center justify-center">
-                    <span className="text-[10px] font-medium text-foreground">
+                  <Plus className="h-3 w-3 text-primary" />
+                  <div className="flex h-4 items-center justify-center rounded-sm border border-border bg-background px-1">
+                    <span
+                      className="font-mono uppercase tracking-[0.08em] text-foreground"
+                      style={{ fontSize: "9px", lineHeight: "1" }}
+                    >
                       You
                     </span>
                   </div>
                 </div>
-                <span className="text-[15px] font-medium text-foreground group-hover:text-primary transition-colors">
+                <span
+                  className="font-semibold text-foreground transition-colors group-hover:text-primary"
+                  style={{ fontSize: "13px", lineHeight: "18px" }}
+                >
                   Book a call
                 </span>
               </div>
@@ -157,31 +177,49 @@ export function Footer() {
             <Link
               href="https://github.com/shahriaravi/cooked-folio"
               target="_blank"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
+              rel="noopener noreferrer"
+              className="group inline-flex flex-wrap items-center gap-1.5 text-muted-foreground transition-colors duration-300 hover:text-foreground"
+              style={{
+                fontSize: "13px",
+                lineHeight: "18px",
+                letterSpacing: "0.1px",
+              }}
             >
-              <span>Liked my portfolio? Please leave a star</span>
-              <SiGithub className="w-4 h-4" />
+              <span className="leading-none">liked my portfolio?</span>
+              <span className="font-semibold leading-none text-foreground/80 transition-colors duration-300 group-hover:text-primary">
+                leave a star
+              </span>
+              <SiGithub className="h-[14px] w-[14px] shrink-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-primary" />
             </Link>
           </div>
 
-          <div className="flex items-center text-sm text-muted-foreground mt-2">
+          <div
+            className="flex items-center text-muted-foreground"
+            style={{
+              fontSize: "14px",
+              lineHeight: "22px",
+              letterSpacing: "0.1px",
+            }}
+          >
             <span>email me at&nbsp;</span>
             <button
               onClick={copyEmail}
-              className="group inline-flex items-center gap-0 cursor-pointer active:scale-[0.97] transition-transform"
+              className="group inline-flex cursor-pointer items-center gap-0 transition-transform active:scale-[0.97]"
             >
               <span
                 className={`inline-flex items-center overflow-hidden transition-all duration-300 ease-out ${
-                  copied ? "w-5" : "w-0 group-hover:w-5"
+                  copied
+                    ? "mr-1.5 w-3.5"
+                    : "mr-0 w-0 group-hover:mr-1.5 group-hover:w-3.5"
                 }`}
               >
                 {copied ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <Check className="h-[12px] w-[12px] shrink-0 text-emerald-400" />
                 ) : (
-                  <Copy className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <Copy className="h-[12px] w-[12px] shrink-0 text-primary" />
                 )}
               </span>
-              <span className="font-medium text-foreground underline decoration-foreground/30 underline-offset-4 group-hover:decoration-primary group-hover:text-primary transition-colors duration-200">
+              <span className="font-semibold text-foreground transition-colors duration-200 group-hover:text-primary">
                 {email}
               </span>
             </button>
