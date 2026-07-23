@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PROJECTS } from "@/lib/config";
 import { ArrowUpRight, Github } from "lucide-react";
+import { SiGoogleplay } from "react-icons/si";
 import Image from "next/image";
 import Link from "next/link";
 import Folder from "@/components/ui/Folder";
@@ -121,6 +122,28 @@ export function ProjectList() {
                         title="View Source Code"
                       >
                         <Github className="w-3.5 h-3.5 fill-current" />
+                      </Link>
+                    )}
+
+                    {project.playstore && (
+                      <Link
+                        href={project.playstore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-cuelume-hover="tick"
+                        data-cuelume-press
+                        className="
+                          relative z-10 flex items-center justify-center
+                          w-6 h-6 rounded-full
+                          bg-background text-muted-foreground
+                          border border-border/60
+                          hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:border-primary
+                          transition-all duration-300 ease-out
+                          shadow-sm
+                        "
+                        title="View on Play Store"
+                      >
+                        <SiGoogleplay className="w-3.5 h-3.5" />
                       </Link>
                     )}
                   </div>

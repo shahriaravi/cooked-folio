@@ -92,10 +92,10 @@ export function Hero() {
             color: "hsl(var(--muted-foreground))",
           }}
         >
-          Hey, I&apos;m Avi and I just love building things. I&apos;m currently
-          building{" "}
+          Hey, I&apos;m Avi and I just love building things. Currently
+          building at{" "}
           <a
-            href="https://byontriq.xyz"
+            href="https://byontriq.dev"
             target="_blank"
             rel="noopener noreferrer"
              data-cuelume-hover="tick"

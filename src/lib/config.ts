@@ -14,10 +14,6 @@ import {
   SiX,
 } from "react-icons/si";
 
-// =================================================================================
-// 1. TYPES & INTERFACES
-// =================================================================================
-
 export interface ExperienceItem {
   company: string;
   role: string;
@@ -37,24 +33,16 @@ export interface ProjectItem {
   tagline: string;
   url: string;
   repo?: string;
+  playstore?: string;
   image: string;
 }
 
-// =================================================================================
-// 2. PERSONAL DETAILS & LINKS
-// =================================================================================
-
 export const BANNER_IMAGE = "/cp.jpg";
 
-// External Links
 export const RESUME_URL =
   "https://drive.google.com/file/d/1WKa36vE76iBqOAcucFTeVxGwsFmSim9g/view?usp=drive_link";
 export const DISCORD_LINK = "https://discord.gg/wG9qpfvuQQ";
 export const CAL_URL = "https://cal.com/shahriaravi/15m";
-
-// =================================================================================
-// 3. SOCIAL MEDIA
-// =================================================================================
 
 export const SOCIALS = [
   {
@@ -83,10 +71,6 @@ export const SOCIALS = [
   },
 ];
 
-// =================================================================================
-// 4. TECH STACK
-// =================================================================================
-
 export const STACK = [
   { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
   { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
@@ -100,10 +84,6 @@ export const STACK = [
   { name: "Unreal Engine", icon: SiUnrealengine, color: "#FFFFFF" },
 ];
 
-// =================================================================================
-// 5. EXPERIENCE
-// =================================================================================
-
 export const EXPERIENCE: ExperienceItem[] = [
   {
     company: "Byontriq",
@@ -111,7 +91,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     date: "2025 — Present",
     description:
       "Building Byontriq from the ground up. Designing the product, writing the code, shipping the site, and answering support in between deploys. It's chaotic, and I love every part of it.",
-    logo: "/images/projects/byontriq.svg",
+    logo: "/images/companies/byontriq.jpeg",
   },
   {
     company: "EXEAIO",
@@ -139,10 +119,6 @@ export const EXPERIENCE: ExperienceItem[] = [
   },
 ];
 
-// =================================================================================
-// 6. EDUCATION
-// =================================================================================
-
 export const EDUCATION: EducationItem[] = [
   {
     institution: "North South University",
@@ -156,15 +132,11 @@ export const EDUCATION: EducationItem[] = [
   },
 ];
 
-// =================================================================================
-// 7. PROJECTS
-// =================================================================================
-
 export const PROJECTS: ProjectItem[] = [
   {
     name: "Mate",
     tagline: "Private finance tracker app. No ads. Just beautiful design.",
-    url: "https://mate.byontriq.xyz",
+    url: "https://mate.byontriq.dev",
     repo: "https://github.com/shahriaravi/MateApp",
     image: "/images/projects/mate.png",
   },
@@ -184,9 +156,10 @@ export const PROJECTS: ProjectItem[] = [
   {
     name: "Byontriq",
     tagline: "The central hub for our privacy-first apps and tools.",
-    url: "https://byontriq.xyz",
+    url: "https://byontriq.dev",
     repo: "",
-    image: "/images/projects/byontriq.svg",
+    playstore: "https://play.google.com/store/apps/dev?id=6170259174823402335",
+    image: "/images/projects/byontriq.png",
   },
   {
     name: "nothing-vscode-theme",

@@ -39,7 +39,7 @@ export function ExperienceList() {
                 <span>{job.role}</span>
                 <span className="font-normal text-muted-foreground">at</span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="relative inline-block h-[18px] w-[18px] overflow-hidden rounded-[4px] ring-1 ring-border/40">
+                  <span className="relative inline-block h-[22px] w-[22px] overflow-hidden rounded-[4px] ring-1 ring-border/40">
                     <Image
                       src={job.logo}
                       alt={job.company}
