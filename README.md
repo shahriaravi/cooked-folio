@@ -27,7 +27,6 @@ One‑click deploy on Vercel:
 - GitHub contributions heatmap
 - Slide to Vibe page with audio player, cycling monkey images & angry state
 - Chat-style contact form (sequential name → message → email, posts to Discord webhook)
-- Donation flow (Wise + bKash) with copy-to-clipboard details
 - Book a call via Cal.com embed
 - Dark/Light theme toggle
 - Editorial typography system (Inter + Geist Mono)

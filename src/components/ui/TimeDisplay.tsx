@@ -26,14 +26,14 @@ export default function TimeDisplay() {
     return () => clearInterval(id);
   }, []);
 
-  if (!time) return <span className="opacity-0">00:00:00 AM</span>;
+  if (!time) return <span className="opacity-0 leading-none">00:00:00 AM</span>;
 
   return (
-    <span className="inline-flex items-center gap-2">
-      <span className="tracking-[0.25em] font-semibold tabular-nums">
+    <span className="inline-flex flex-col sm:flex-row sm:items-baseline sm:gap-2 leading-none">
+      <span className="tracking-[0.25em] font-semibold tabular-nums leading-none">
         {time}
       </span>
-      <span className="text-[12px] text-muted-foreground tracking-normal">
+      <span className="text-[11px] text-muted-foreground tracking-normal leading-none mt-1 sm:mt-0">
         // GMT+6
       </span>
     </span>

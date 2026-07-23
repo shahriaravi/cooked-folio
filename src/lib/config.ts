@@ -111,7 +111,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     date: "2025 — Present",
     description:
       "Building Byontriq from the ground up. Designing the product, writing the code, shipping the site, and answering support in between deploys. It's chaotic, and I love every part of it.",
-    logo: "/logos/byontriq.png",
+    logo: "/images/projects/byontriq.svg",
   },
   {
     company: "EXEAIO",
@@ -162,6 +162,13 @@ export const EDUCATION: EducationItem[] = [
 
 export const PROJECTS: ProjectItem[] = [
   {
+    name: "Mate",
+    tagline: "Private finance tracker app. No ads. Just beautiful design.",
+    url: "https://mate.byontriq.xyz",
+    repo: "https://github.com/shahriaravi/MateApp",
+    image: "/images/projects/mate.png",
+  },
+  {
     name: "cooked-folio",
     tagline: "A minimal, high-performance portfolio template aka this website.",
     url: "https://shahriaravi.me",
@@ -169,11 +176,10 @@ export const PROJECTS: ProjectItem[] = [
     image: "/avatar/avatar.png",
   },
   {
-    name: "Mate",
-    tagline: "Private finance tracker app. No ads. Just beautiful design.",
-    url: "https://mate.byontriq.xyz",
-    repo: "https://github.com/shahriaravi/MateApp",
-    image: "/images/projects/mate.png",
+    name: "NSU Directory",
+    tagline: "NSU Students - clubs, communities, resources, faculty review portal",
+    url: "https://nsudirectory.xyz",
+    image: "/images/projects/nsudr.ico",
   },
   {
     name: "Byontriq",
