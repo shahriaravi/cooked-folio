@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Send, Loader2, Mail, CornerDownLeft } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
 import { play } from "cuelume";
@@ -33,8 +33,13 @@ const statusLabel = (status: string | null | undefined) => {
 
 export default function ContactForm() {
   const discordStatus = useDiscordPresence();
+  const router = useRouter();
   const [step, setStep] = useState<Step>("name");
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
   const [bubbles, setBubbles] = useState<ChatBubble[]>([]);
@@ -107,9 +112,7 @@ export default function ContactForm() {
       setInputValue("");
       addBotBubble(
         `nice to meet you, ${name.split(" ")[0].toLowerCase()}. so what's on your mind?`,
-        () => {
-          setStep("message");
-        }
+        () => setStep("message")
       );
       return;
     }
@@ -126,9 +129,7 @@ export default function ContactForm() {
       setInputValue("");
       addBotBubble(
         `got it. drop your email so i can reply back, or type "skip" if you'd rather not.`,
-        () => {
-          setStep("email");
-        }
+        () => setStep("email")
       );
       return;
     }
@@ -144,7 +145,7 @@ export default function ContactForm() {
       }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(val)) {
-        setError("that doesn't look right. try again or type \"skip\"");
+        setError('that doesn\'t look right. try again or type "skip"');
         play("error");
         return;
       }
@@ -173,7 +174,8 @@ export default function ContactForm() {
           {
             id: `bot-${Date.now()}`,
             type: "bot",
-            content: "message received. i'll get back to you soon. thanks for reaching out ✌️",
+            content:
+              "message received. i'll get back to you soon. thanks for reaching out ✌️",
           },
         ]);
         setBotTyping(false);
@@ -188,7 +190,8 @@ export default function ContactForm() {
           {
             id: `bot-${Date.now()}`,
             type: "bot",
-            content: "something went wrong on my end. try again, or just email me directly.",
+            content:
+              "something went wrong on my end. try again, or just email me directly.",
           },
         ]);
         setBotTyping(false);
@@ -208,15 +211,15 @@ export default function ContactForm() {
 
   return (
     <main className="layout-container">
-      <Link
-        href="/"
+      <button
+        onClick={() => router.back()}
         data-cuelume-hover="tick"
         data-cuelume-press
         className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
       >
         <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
         <span>Back</span>
-      </Link>
+      </button>
 
       <div className="mb-10 flex items-center gap-3">
         <div className="relative h-12 w-12 shrink-0">
@@ -226,7 +229,7 @@ export default function ContactForm() {
           >
             <Image
               src="/avatar/avatar.png"
-              alt="avi"
+              alt="Shahriar Avi"
               fill
               className="object-cover"
               priority
@@ -275,7 +278,11 @@ export default function ContactForm() {
                 </div>
                 <div
                   className="rounded-2xl rounded-bl-md border border-border/50 bg-card/50 px-3.5 py-2.5 text-foreground/90 backdrop-blur-sm"
-                  style={{ fontSize: "15px", lineHeight: "22px", letterSpacing: "0.1px" }}
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    letterSpacing: "0.1px",
+                  }}
                 >
                   {bubble.content}
                 </div>
@@ -283,7 +290,11 @@ export default function ContactForm() {
             ) : (
               <div
                 className="max-w-[80%] rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5 text-primary-foreground shadow-sm"
-                style={{ fontSize: "15px", lineHeight: "22px", letterSpacing: "0.1px" }}
+                style={{
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  letterSpacing: "0.1px",
+                }}
               >
                 {bubble.content}
               </div>
@@ -391,7 +402,11 @@ export default function ContactForm() {
           >
             <p
               className="mt-2 pl-3 text-red-400/90"
-              style={{ fontSize: "12px", lineHeight: "16px", letterSpacing: "0.1px" }}
+              style={{
+                fontSize: "12px",
+                lineHeight: "16px",
+                letterSpacing: "0.1px",
+              }}
             >
               * {error}
             </p>

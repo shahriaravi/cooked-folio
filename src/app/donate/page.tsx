@@ -1,11 +1,7 @@
-import { constructMetadata } from "@/lib/site-config";
-import DonateContent from "@/components/donate/DonateContent";
+import { constructMetadata, siteConfig } from "@/lib/site-config";
 
 export const metadata = constructMetadata({
-  title: "donate",
-  description: "support my work with a donation.",
+  canonicalUrl: `${siteConfig.url}/donate`,
 });
 
-export default function DonatePage() {
-  return <DonateContent />;
-}
+export { default } from "@/components/donate/DonateContent";

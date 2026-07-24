@@ -54,11 +54,10 @@ const personJsonLd = {
   worksFor: {
     "@type": "Organization",
     name: "Byontriq",
-    url: "https://byontriq.com",
+    url: "https://byontriq.dev",
     description:
       "Software company founded by Shahriar Avi, building Mate wallet tracker app.",
   },
-  foundingDate: "2024",
   owns: {
     "@type": "SoftwareApplication",
     name: "Mate",
@@ -75,7 +74,7 @@ const personJsonLd = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Shahriar Avi — Portfolio",
+  name: "Shahriar Avi",
   alternateName: ["avi.portfolio", "yoavi.fun", "shahriaravi.me"],
   url: siteConfig.url,
   description:

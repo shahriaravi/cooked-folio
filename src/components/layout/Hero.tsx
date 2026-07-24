@@ -7,15 +7,16 @@ import TimeDisplay from "@/components/ui/TimeDisplay";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import { DISCORD_LINK, SOCIALS } from "@/lib/config";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SiDiscord } from "react-icons/si";
 
 export function Hero() {
   const discordStatus = useDiscordPresence();
+  const router = useRouter();
 
   const navLinks = [
-    { href: "/what", label: "/what" },
-    { href: "/contact", label: "/contact" },
+    { href: "/what", label: "/what", external: false },
+    { href: "/contact", label: "/contact", external: false },
     { href: "https://gist.yoavi.fun", label: "/gist", external: true },
   ];
 
@@ -32,18 +33,24 @@ export function Hero() {
         <div className="flex items-center gap-4">
           <nav className="flex items-center gap-4">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
+                onClick={(e) => {
+                  if (!link.external) {
+                    e.preventDefault();
+                    router.push(link.href);
+                  }
+                }}
                 data-cuelume-hover="tick"
                 data-cuelume-press
                 className="font-mono text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-foreground"
                 style={{ color: "hsl(var(--muted-foreground))" }}
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </nav>
           <ThemeToggle
@@ -62,7 +69,7 @@ export function Hero() {
           >
             <Image
               src="/avatar/avatar-full.png"
-              alt="avi"
+              alt="Shahriar Avi"
               fill
               className="object-cover"
               priority
@@ -92,14 +99,14 @@ export function Hero() {
             color: "hsl(var(--muted-foreground))",
           }}
         >
-          Hey, I&apos;m Avi and I just love building things. Currently
-          building at{" "}
+          Hey, I&apos;m Avi and I just love building things. Currently building
+          at{" "}
           <a
             href="https://byontriq.dev"
             target="_blank"
             rel="noopener noreferrer"
-             data-cuelume-hover="tick"
-              data-cuelume-press
+            data-cuelume-hover="tick"
+            data-cuelume-press
             className="font-semibold transition-colors duration-200 hover:text-primary"
             style={{ color: "hsl(var(--foreground))" }}
           >
@@ -127,7 +134,8 @@ export function Hero() {
                 (e.currentTarget.style.color = "hsl(var(--foreground))")
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "hsl(var(--muted-foreground))")
+                (e.currentTarget.style.color =
+                  "hsl(var(--muted-foreground))")
               }
             >
               <social.icon

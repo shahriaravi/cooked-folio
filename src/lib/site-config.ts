@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "Shahriar Avi",
   shortName: "avi",
   username: "shahriaravi_",
-  title: "Shahriar Avi — Software Engineer & Founder",
+  title: "Shahriar Avi",
   description:
     "Shahriar Avi is a software engineer, indie developer, and founder of Byontriq. Building Mate — a wallet tracker app. Based in Bangladesh, working globally.",
   url: BASE_URL,
@@ -54,67 +54,54 @@ export const siteConfig = {
 };
 
 interface MetadataProps {
-  title?: string;
-  description?: string;
-  image?: string;
-  icons?: string | Array<any>;
   noIndex?: boolean;
   other?: Record<string, string>;
-  keywords?: string[];
   canonicalUrl?: string;
 }
 
 export function constructMetadata({
-  title = siteConfig.title,
-  description = siteConfig.description,
-  image = siteConfig.ogImage,
-  icons = "/favicon.ico",
   noIndex = false,
   other,
-  keywords = siteConfig.keywords,
   canonicalUrl = siteConfig.url,
 }: MetadataProps = {}): Metadata {
   return {
-    title: {
-      default: title,
-      template: `%s — Shahriar Avi`,
-    },
-    description,
-    keywords,
+    title: "Shahriar Avi",
+    description: siteConfig.description,
+    keywords: siteConfig.keywords,
     authors: [{ name: siteConfig.author.name, url: siteConfig.author.url }],
     creator: siteConfig.author.name,
     publisher: siteConfig.author.name,
 
     openGraph: {
-      title,
-      description,
+      title: "Shahriar Avi",
+      description: siteConfig.description,
       url: canonicalUrl,
-      siteName: siteConfig.title,
+      siteName: "Shahriar Avi",
       locale: "en_US",
       type: "website",
       images: [
         {
-          url: image,
+          url: siteConfig.ogImage,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} — Software Engineer & Founder of Byontriq`,
+          alt: "Shahriar Avi — Software Engineer & Founder of Byontriq",
         },
       ],
     },
 
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: [image],
+      title: "Shahriar Avi",
+      description: siteConfig.description,
+      images: [siteConfig.ogImage],
       creator: siteConfig.author.twitter,
       site: siteConfig.author.twitter,
     },
 
     icons: {
-      icon: icons,
-      shortcut: icons,
-      apple: icons,
+      icon: "/favicon.ico",
+      shortcut: "/favicon.ico",
+      apple: "/favicon.ico",
     },
 
     metadataBase: new URL(siteConfig.url),
