@@ -12,6 +12,13 @@ const nextConfig = {
     formats: ["image/webp"],
   },
 
+  outputFileTracingIncludes: {
+    "/writing/[slug]/opengraph-image": [
+      "./public/images/blog.png",
+      "./public/avatar/avatar.png",
+    ],
+  },
+
   reactStrictMode: true,
 };
 
