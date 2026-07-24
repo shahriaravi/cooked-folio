@@ -19,6 +19,7 @@ const nextConfig = {
         "./public/avatar/avatar.png",
         "./public/fonts/Inter-Regular.ttf",
         "./public/fonts/Inter-Bold.ttf",
+         "./src/content/writing/**/*.mdx",
       ],
     },
   },
