@@ -1,9 +1,8 @@
-import { constructMetadata } from "@/lib/site-config";
+import { constructMetadata, siteConfig } from "@/lib/site-config";
 import DonateThanks from "@/components/donate/DonateThanks";
 
 export const metadata = constructMetadata({
-  title: "thank you 💚",
-  description: "your donation means the world.",
+  canonicalUrl: `${siteConfig.url}/donate/thanks`,
 });
 
 export default function DonateThanksPage() {
