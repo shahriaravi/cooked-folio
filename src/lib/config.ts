@@ -1,16 +1,17 @@
 import {
-  SiExpress,
+  SiArc,
+  SiExcalidraw,
+  SiExpo,
   SiFacebook,
-  SiGit,
   SiGithub,
   SiJavascript,
   SiLinkedin,
   SiNextdotjs,
   SiNodedotjs,
   SiReact,
+  SiShadcnui,
   SiTailwindcss,
   SiTypescript,
-  SiUnrealengine,
   SiX,
 } from "react-icons/si";
 
@@ -72,16 +73,16 @@ export const SOCIALS = [
 ];
 
 export const STACK = [
+  { name: "Arc", icon: SiArc, color: "#FFFFFF" },
+  { name: "Excalidraw", icon: SiExcalidraw, color: "#6965DB" },
   { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
   { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-  { name: "React", icon: SiReact, color: "#61DAFB" },
-  { name: "React Native", icon: SiReact, color: "#61DAFB" },
   { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
-  { name: "TailwindCSS", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "shadcn/ui", icon: SiShadcnui, color: "#FFFFFF" },
+  { name: "React/Native", icon: SiReact, color: "#61DAFB" },
+  { name: "Expo", icon: SiExpo, color: "#FFFFFF" },
   { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
-  { name: "Express", icon: SiExpress, color: "#FFFFFF" },
-  { name: "Git", icon: SiGit, color: "#F05032" },
-  { name: "Unreal Engine", icon: SiUnrealengine, color: "#FFFFFF" },
+  { name: "TailwindCSS", icon: SiTailwindcss, color: "#06B6D4" },
 ];
 
 export const EXPERIENCE: ExperienceItem[] = [
@@ -149,7 +150,8 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     name: "NSU Directory",
-    tagline: "NSU Students - clubs, communities, resources, faculty review portal",
+    tagline:
+      "NSU Students - clubs, communities, resources, faculty review portal",
     url: "https://nsudirectory.xyz",
     image: "/images/projects/nsudr.ico",
   },
