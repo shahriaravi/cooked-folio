@@ -6,32 +6,39 @@ import { HelloLoader } from "./HelloLoader";
 const SPLASH_KEY = "avi-splash-shown";
 
 export function InitialSplash({ children }: { children: React.ReactNode }) {
+  const [checked, setChecked] = useState(false);
   const [showSplash, setShowSplash] = useState(false);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const alreadyShown = sessionStorage.getItem(SPLASH_KEY);
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(SPLASH_KEY) === "1";
+    } catch {}
 
-    if (alreadyShown) {
-      setReady(true);
+    if (seen) {
+      setChecked(true);
       return;
     }
 
     setShowSplash(true);
+    setChecked(true);
+
     const id = setTimeout(() => {
+      try {
+        sessionStorage.setItem(SPLASH_KEY, "1");
+      } catch {}
       setShowSplash(false);
-      setReady(true);
-      sessionStorage.setItem(SPLASH_KEY, "1");
     }, 1200);
+
     return () => clearTimeout(id);
   }, []);
 
-  if (showSplash) {
-    return <HelloLoader />;
+  if (!checked) {
+    return <>{children}</>;
   }
 
-  if (!ready) {
-    return null;
+  if (showSplash) {
+    return <HelloLoader />;
   }
 
   return <>{children}</>;

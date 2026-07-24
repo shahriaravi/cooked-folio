@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaGamepad } from "react-icons/fa";
-import { motion } from "framer-motion";
 
 export interface Activity {
   isActive: boolean;
@@ -23,6 +22,22 @@ interface ActivitySectionProps {
   initialActivity?: Activity;
 }
 
+const CACHE_KEY = "avi-activity-cache";
+
+function getCachedActivity(): Activity | null {
+  try {
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) return JSON.parse(cached);
+  } catch {}
+  return null;
+}
+
+function setCachedActivity(activity: Activity) {
+  try {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(activity));
+  } catch {}
+}
+
 const formatElapsedTime = (start: number): string => {
   const totalSeconds = Math.floor((Date.now() - start) / 1000);
   const hours = Math.floor(totalSeconds / 3600);
@@ -33,27 +48,9 @@ const formatElapsedTime = (start: number): string => {
   return hours > 0 ? `${hours}:${mm}:${ss}` : `${minutes}:${ss}`;
 };
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const staggerItem = {
-  hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 100, damping: 18 },
-  },
-};
-
 export function ActivitySection({ initialActivity }: ActivitySectionProps) {
   const [activity, setActivity] = useState<Activity | null>(
-    initialActivity ?? null
+    initialActivity ?? getCachedActivity()
   );
   const [elapsedTime, setElapsedTime] = useState("0:00");
 
@@ -66,6 +63,7 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
         if (res.ok) {
           const json = await res.json();
           setActivity(json);
+          setCachedActivity(json);
         }
       } catch (error) {
         console.error("failed to update activity:", error);
@@ -93,27 +91,12 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
   const data = activity.data;
 
   return (
-    <motion.section
-      variants={staggerContainer}
-      initial="hidden"
-      animate="visible"
-      className="mb-10"
-    >
-      <motion.h2
-        variants={staggerItem}
-        className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0"
-      >
+    <section className="mb-10">
+      <h2 className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
         activity
-      </motion.h2>
+      </h2>
 
-      <motion.div
-        variants={staggerItem}
-        whileHover={{
-          y: -2,
-          transition: { type: "spring", stiffness: 300, damping: 20 },
-        }}
-        className="flex flex-wrap items-center gap-3 text-muted-foreground"
-      >
+      <div className="flex flex-wrap items-center gap-3 text-muted-foreground">
         {data.largeImage && (
           <div className="relative h-9 w-9 md:h-10 md:w-10 flex-shrink-0 overflow-hidden rounded-lg border border-white/10">
             <Image
@@ -134,7 +117,11 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
             {data.startTimestamp && (
               <span
                 className="inline-flex items-center gap-1 font-mono text-emerald-400"
-                style={{ fontSize: "11px", lineHeight: "1", letterSpacing: "0.06em" }}
+                style={{
+                  fontSize: "11px",
+                  lineHeight: "1",
+                  letterSpacing: "0.06em",
+                }}
               >
                 <FaGamepad className="h-3 w-3" />
                 {elapsedTime}
@@ -152,7 +139,11 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
             {data.details && (
               <span
                 className="max-w-[220px] truncate text-muted-foreground md:max-w-sm"
-                style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "22px",
+                  letterSpacing: "0.1px",
+                }}
               >
                 – {data.details}
               </span>
@@ -160,7 +151,11 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
             {data.state && !data.details && (
               <span
                 className="max-w-[220px] truncate text-muted-foreground md:max-w-sm"
-                style={{ fontSize: "14px", lineHeight: "22px", letterSpacing: "0.1px" }}
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "22px",
+                  letterSpacing: "0.1px",
+                }}
               >
                 – {data.state}
               </span>
@@ -171,14 +166,18 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
             <div className="mt-1.5">
               <span
                 className="font-mono text-muted-foreground/70"
-                style={{ fontSize: "11px", lineHeight: "1", letterSpacing: "0.08em" }}
+                style={{
+                  fontSize: "11px",
+                  lineHeight: "1",
+                  letterSpacing: "0.08em",
+                }}
               >
                 project: {data.workspace}
               </span>
             </div>
           )}
         </div>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 }

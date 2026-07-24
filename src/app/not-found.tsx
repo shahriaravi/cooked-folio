@@ -1,8 +1,6 @@
 "use client";
 
-import { CornerDownLeft } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { play } from "cuelume";
 
@@ -41,19 +39,7 @@ export default function NotFound() {
   }, []);
 
   return (
-    <main className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-background text-foreground">
-      <div className="layout-container relative z-20 !py-6">
-        <Link
-          href="/"
-          data-cuelume-hover="tick"
-          data-cuelume-press
-          className="group inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
-        >
-          <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
-          <span>Back</span>
-        </Link>
-      </div>
-
+    <main className="relative flex min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden bg-background text-foreground">
       <div className="flex flex-1 flex-col items-center justify-center px-4 pb-20 text-center">
         <span
           className="mb-6 font-mono uppercase tracking-[0.14em] text-muted-foreground"

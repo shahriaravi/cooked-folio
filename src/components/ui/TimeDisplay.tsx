@@ -1,5 +1,6 @@
 "use client";
 
+import { Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function TimeDisplay() {
@@ -12,13 +13,11 @@ export default function TimeDisplay() {
         now.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
       );
 
-      const h24 = zoned.getHours();
-      const h12 = h24 % 12 || 12;
+      const h = zoned.getHours().toString().padStart(2, "0");
       const m = zoned.getMinutes().toString().padStart(2, "0");
       const s = zoned.getSeconds().toString().padStart(2, "0");
-      const ampm = h24 >= 12 ? "PM" : "AM";
 
-      setTime(`${h12}:${m}:${s} ${ampm}`);
+      setTime(`${h}:${m}:${s}`);
     };
 
     updateTime();
@@ -26,16 +25,19 @@ export default function TimeDisplay() {
     return () => clearInterval(id);
   }, []);
 
-  if (!time) return <span className="opacity-0 leading-none">00:00:00 AM</span>;
+  if (!time) {
+    return (
+      <span className="inline-flex items-center gap-1.5 opacity-0">
+        <Clock className="h-3 w-3" strokeWidth={2.25} />
+        <span className="tabular-nums">00:00:00 GMT+6</span>
+      </span>
+    );
+  }
 
   return (
-    <span className="inline-flex flex-col sm:flex-row sm:items-baseline sm:gap-2 leading-none">
-      <span className="tracking-[0.25em] font-semibold tabular-nums leading-none">
-        {time}
-      </span>
-      <span className="text-[11px] text-muted-foreground tracking-normal leading-none mt-1 sm:mt-0">
-        // GMT+6
-      </span>
+    <span className="inline-flex items-center gap-1.5">
+      <Clock className="h-3 w-3" strokeWidth={2.25} />
+      <span className="tabular-nums">{time} GMT+6</span>
     </span>
   );
 }

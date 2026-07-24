@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ButtonHTMLAttributes, useEffect, useState } from "react";
@@ -11,7 +10,11 @@ type ThemeToggleProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
 };
 
-export default function ThemeToggle({ className, onClick, ...rest }: ThemeToggleProps) {
+export default function ThemeToggle({
+  className,
+  onClick,
+  ...rest
+}: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -25,43 +28,25 @@ export default function ThemeToggle({ className, onClick, ...rest }: ThemeToggle
     onClick?.(e);
   };
 
-  if (!mounted) return <div className="w-10 h-10" />;
+  if (!mounted) {
+    return <div className="h-4 w-4" />;
+  }
 
   return (
     <button
       {...rest}
       onClick={toggleTheme}
       className={cn(
-        "relative flex items-center justify-center h-10 w-10 rounded-full bg-secondary/50 transition-colors hover:bg-secondary",
+        "inline-flex items-center justify-center text-muted-foreground transition-colors hover:text-foreground",
         className
       )}
       aria-label="Toggle theme"
     >
-      <AnimatePresence mode="wait" initial={false}>
-        {resolvedTheme === "dark" ? (
-          <motion.div
-            key="sun"
-            initial={{ y: -20, opacity: 0, rotate: -90 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: 20, opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.2 }}
-            className="absolute"
-          >
-            <Sun className="h-5 w-5 text-primary" />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="moon"
-            initial={{ y: -20, opacity: 0, rotate: -90 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: 20, opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.2 }}
-            className="absolute"
-          >
-            <Moon className="h-5 w-5 text-primary" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {resolvedTheme === "dark" ? (
+        <Sun className="h-4 w-4" />
+      ) : (
+        <Moon className="h-4 w-4" />
+      )}
     </button>
   );
 }

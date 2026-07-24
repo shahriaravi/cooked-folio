@@ -2,6 +2,8 @@ import "./globals.css";
 
 import { Providers } from "@/components/layout/Providers";
 import { InitialSplash } from "@/components/common/InitialSplash";
+import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
+import { SiteFooterWrapper } from "@/components/layout/SiteFooterWrapper";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
 import { Inter } from "next/font/google";
@@ -116,9 +118,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="font-sans bg-background text-foreground antialiased selection:bg-primary/20">
+      <body className="flex min-h-[100dvh] flex-col font-sans bg-background text-foreground antialiased selection:bg-primary/20">
         <Providers>
-          <InitialSplash>{children}</InitialSplash>
+          <InitialSplash>
+            <NavbarWrapper />
+            <div className="flex-1">{children}</div>
+            <SiteFooterWrapper />
+          </InitialSplash>
         </Providers>
         <Analytics />
       </body>

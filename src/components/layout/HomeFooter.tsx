@@ -3,24 +3,22 @@
 import PixelBlast from "@/components/ui/PixelBlast";
 import { CAL_URL } from "@/lib/config";
 import { getCalApi } from "@calcom/embed-react";
+import { play } from "cuelume";
 import { Check, Copy, Plus } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SiGithub } from "react-icons/si";
-import { play } from "cuelume";
 
-export function Footer() {
+export function HomeFooter() {
   const [isCalLoading, setIsCalLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const email = "hi@shahriaravi.me";
 
-const copyEmail = async () => {
-  await navigator.clipboard.writeText(email);
-  setCopied(true);
-  play("success");
-  setTimeout(() => setCopied(false), 2000);
-};
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText(email);
+    setCopied(true);
+    play("success");
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
     (async function () {
@@ -178,26 +176,6 @@ const copyEmail = async () => {
                 </span>
               </div>
             </button>
-
-            <Link
-              href="https://github.com/shahriaravi/cooked-folio"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cuelume-hover="tick"
-              data-cuelume-press
-              className="group inline-flex flex-wrap items-center gap-1.5 text-muted-foreground transition-colors duration-300 hover:text-foreground"
-              style={{
-                fontSize: "13px",
-                lineHeight: "18px",
-                letterSpacing: "0.1px",
-              }}
-            >
-              <span className="leading-none">liked my portfolio?</span>
-              <span className="font-semibold leading-none text-foreground/80 transition-colors duration-300 group-hover:text-primary">
-                leave a star
-              </span>
-              <SiGithub className="h-[14px] w-[14px] shrink-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-primary" />
-            </Link>
           </div>
 
           <div

@@ -52,23 +52,23 @@ export const SOCIALS = [
     icon: SiFacebook,
     color: "#1877F2",
   },
-  {
-    platform: "linkedin",
-    url: "https://linkedin.com/in/shahriaravi",
-    icon: SiLinkedin,
-    color: "#0A66C2",
-  },
-  {
+   {
     platform: "github",
     url: "https://github.com/shahriaravi",
     icon: SiGithub,
     color: "#ffffff",
   },
-  {
+   {
     platform: "x",
     url: "https://x.com/shahriaravi_",
     icon: SiX,
     color: "#ffffff",
+  },
+  {
+    platform: "linkedin",
+    url: "https://linkedin.com/in/shahriaravi",
+    icon: SiLinkedin,
+    color: "#0A66C2",
   },
 ];
 

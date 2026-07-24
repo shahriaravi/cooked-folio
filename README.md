@@ -2,9 +2,9 @@
 
 # 🍳 cooked-folio
 
-A minimal, premium portfolio built with **Next.js**, **Tailwind CSS**, **Inter + Geist Mono**, and **Framer Motion**.
+A minimal, editorial portfolio built with **Next.js 14**, **Tailwind**, and **TypeScript**.
 <br/>
-Real-time Discord presence, Spotify integration, GitHub heatmap, slide-to-vibe page, and a chat-style contact form.
+Real-time Discord presence, Spotify now-playing, GitHub heatmap, MDX blog, and a chat-style contact form.
 
 <br/>
 
@@ -14,137 +14,96 @@ Real-time Discord presence, Spotify integration, GitHub heatmap, slide-to-vibe p
 
 ## ⚡ Deploy
 
-One‑click deploy on Vercel:
+One-click deploy on Vercel:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fshahriaravi%2Fcooked-folio&env=DISCORD_WEBHOOK_URL,NEXT_PUBLIC_DISCORD_USER_ID,SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN,NEXT_PUBLIC_URL,GITHUB_USERNAME,GITHUB_TOKEN)
 
 ---
 
 ## ✨ Features
-- Discord presence (via Lanyard) with real status dot
-- Discord activity display (games, IDE, etc.)
-- Spotify “Now Playing”
-- GitHub contributions heatmap
-- Slide to Vibe page with audio player, cycling monkey images & angry state
-- Chat-style contact form (sequential name → message → email, posts to Discord webhook)
-- Book a call via Cal.com embed
-- Dark/Light theme toggle
-- Editorial typography system (Inter + Geist Mono)
-- Squircle avatars & minimal shape language
-- Next.js App Router, TypeScript, Tailwind, Framer Motion
 
-### 🔮 Roadmap
-
-- Suggestions are open, no new ideas in my mind rn 🙂
+- **Discord presence** via Lanyard, with real status dot + current activity
+- **Spotify now playing** with album art
+- **GitHub contributions heatmap**
+- **MDX blog** at `/writing` — auto reading time, share menu (X, Facebook, Discord, copy link), related posts
+- **Chat-style contact form** — sequential prompts, posts to Discord webhook
+- **Cal.com booking modal** embedded in homepage footer
+- **Dark/light theme** with instant swap
+- **Universal navbar + footer** with copyright and GitHub star link
+- **SEO-optimized** — full metadata, JSON-LD Person + WebSite schema, robots.txt, sitemap.xml
+- **AI crawler friendly** — GPTBot, ClaudeBot, Gemini, Perplexity explicitly allowed
+- Editorial typography (Inter + Geist Mono), squircle avatars, no unnecessary animations
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Framework: Next.js 14.2 (App Router)
-- Language: TypeScript
-- Styling: Tailwind CSS
-- Fonts: Inter (body) + Geist Mono (meta/labels)
-- Animations: Framer Motion (used sparingly — drag, expand/collapse, spring pop-ins)
-- Theme: next-themes
-- Icons: lucide-react, react-icons
-- Data: SWR (client) + async server components (SSR)
-- Analytics: Vercel Analytics
-- Booking: @calcom/embed-react
+- **Framework:** Next.js 14.2 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Fonts:** Inter (body) + Geist Mono (meta/labels)
+- **Content:** MDX via `next-mdx-remote`, `gray-matter`, `reading-time`
+- **Icons:** lucide-react, react-icons
+- **Data:** SWR + async server components
+- **Analytics:** Vercel Analytics
+- **Booking:** @calcom/embed-react
+- **Sound feedback:** cuelume
 
 ---
 
 ## 🚀 Getting Started
 
-Clone and install:
-
 ```bash
 git clone https://github.com/shahriaravi/cooked-folio.git
 cd cooked-folio
 npm install
-# or
-bun install
-```
-
-Run dev:
-
-```bash
 npm run dev
-# or
-bun dev
 ```
 
-Then open: http://localhost:3000
+Open `http://localhost:3000`.
 
 ---
 
 ## ⚙️ Environment Variables
 
-Create a `.env.local` file in the project root. You can start from `.env.example`:
+Copy `.env.example` to `.env.local`:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Required variables:
-
 | Variable | Description |
 | --- | --- |
-| `NEXT_PUBLIC_URL` | Your live site URL (for example: `https://your-site.com`) |
-| `DISCORD_WEBHOOK_URL` | Discord webhook URL to receive contact & donate form messages |
-| `NEXT_PUBLIC_DISCORD_USER_ID` | Your Discord User ID (Developer Mode → Copy ID) |
+| `NEXT_PUBLIC_URL` | Your live site URL |
+| `DISCORD_WEBHOOK_URL` | Discord webhook for contact/donate messages |
+| `NEXT_PUBLIC_DISCORD_USER_ID` | Your Discord User ID |
 | `SPOTIFY_CLIENT_ID` | Spotify app Client ID |
 | `SPOTIFY_CLIENT_SECRET` | Spotify app Client Secret |
-| `SPOTIFY_REFRESH_TOKEN` | Spotify refresh token to fetch now-playing |
-| `GITHUB_USERNAME` | Your GitHub username for contributions |
-| `GITHUB_TOKEN` | GitHub Personal Access Token (classic) with `read:user` |
-
-Analytics are handled by **Vercel Analytics**, enabled from your Vercel project settings (no extra env needed).
+| `SPOTIFY_REFRESH_TOKEN` | Spotify refresh token |
+| `GITHUB_USERNAME` | Your GitHub username |
+| `GITHUB_TOKEN` | GitHub PAT with `read:user` |
 
 ---
 
 ## 🔧 Configuration
 
-Site configuration is split into two main files.
+**Content** → `src/lib/config.ts`
+Socials, stack, experience, education, projects, external links.
 
-### 1. Content Config – `src/lib/config.ts`
+**SEO** → `src/lib/site-config.ts`
+Metadata, keywords, JSON-LD schema, OpenGraph, Twitter cards.
 
-Edit your personal data here:
+**Blog posts** → `src/content/writing/*.mdx`
+Filename becomes slug. Frontmatter is minimal:
 
-- Social links (`SOCIALS`)
-- Tech stack (`STACK`)
-- Experience (`EXPERIENCE`)
-- Education (`EDUCATION`)
-- Projects (`PROJECTS`)
-- External links (`CAL_URL`, `DISCORD_LINK`, etc.)
-
-### 2. SEO / Metadata – `src/lib/site-config.ts`
-
-Controls site-wide metadata:
-
-- Site name and description
-- Base URL and OG image
-- Twitter / X card settings
-
-Example shape:
-
-```ts
-export const siteConfig = {
-  name: "avi",
-  username: "shahriaravi_",
-  description: "founder & swe @ byontriq. building things with next.js, caffeine & monke energy.",
-  url: process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me",
-  ogImage: "/og-img.png",
-  links: {
-    twitter: "https://twitter.com/shahriaravi_",
-    github: "https://github.com/shahriaravi",
-  },
-};
-
-export function constructMetadata(/* overrides */) {
-  // returns a Next.js Metadata object
-}
+```mdx
+---
+title: "Post Title"
+date: "2026-01-15"
+---
 ```
+
+Reading time, word count, and slug are auto-generated.
 
 ---
 
@@ -153,98 +112,76 @@ export function constructMetadata(/* overrides */) {
 ```text
 src/
 ├─ app/
-│  ├─ api/
-│  │  ├─ contact/route.ts
-│  │  ├─ donate/route.ts
-│  │  ├─ discord/current-activity/route.ts
-│  │  ├─ discord/presence/route.ts
-│  │  ├─ github/contributions/route.ts
-│  │  ├─ song-suggestion/route.ts
-│  │  └─ spotify/now-playing/route.ts
-│  ├─ contact/page.tsx                    # wraps ContactForm
-│  ├─ donate/page.tsx                     # donation page
-│  ├─ donate/thanks/page.tsx              # post-donation thank you
-│  ├─ what/page.tsx                       # Slide to Vibe page
-│  ├─ layout.tsx                          # root layout (fonts, Providers, InitialSplash)
-│  ├─ loading.tsx
-│  ├─ not-found.tsx                       # 404 with scramble effect
-│  └─ page.tsx                            # home
+│  ├─ api/                     # contact, donate, discord, spotify, github routes
+│  ├─ writing/                 # blog list + [slug] dynamic post pages
+│  ├─ contact/                 # chat-style form
+│  ├─ donate/                  # donation page + thanks
+│  ├─ layout.tsx               # root layout (Navbar, footer, JSON-LD, splash)
+│  ├─ sitemap.ts               # dynamic sitemap
+│  └─ page.tsx                 # homepage
 ├─ components/
-│  ├─ common/                             # Container, ThemeToggle, HelloLoader, CustomScrollArea, InitialSplash
-│  ├─ layout/                             # Hero, Footer, Providers
-│  ├─ sections/                           # ExperienceList, EducationList, ProjectList, StackList
-│  ├─ integrations/                       # DiscordPresenceDot, ActivitySection, NowPlaying, GithubActivityCard
-│  ├─ vibe/                               # Vibing, SlideToVibeButton
-│  ├─ contact/                            # ContactForm
-│  ├─ donate/                             # DonateContent, DonateThanks
-│  └─ ui/                                 # Button, Input, TimeDisplay, Folder, LogoLoop, PixelBlast
-├─ hooks/
-│  └─ useDiscordPresence.ts
-└─ lib/
-   ├─ config.ts                           # content & links
-   ├─ site-config.ts                      # metadata/SEO
-   └─ utils.ts                            # cn() helper
+│  ├─ common/                  # Container, ThemeToggle, InitialSplash, HelloLoader
+│  ├─ layout/                  # Hero, Navbar, HomeFooter, SiteFooter
+│  ├─ sections/                # Experience, Education, Projects, Stack
+│  ├─ integrations/            # Discord, Spotify, GitHub cards
+│  ├─ contact/                 # ContactForm
+│  ├─ donate/                  # DonateContent, DonateThanks
+│  ├─ writing/                 # WritingList, MdxComponents, ShareMenu, MorePosts
+│  └─ ui/                      # TimeDisplay, Folder, LogoLoop, PixelBlast
+├─ content/writing/            # MDX blog posts
+├─ hooks/                      # useDiscordPresence
+└─ lib/                        # config, site-config, writing, utils
 ```
 
 ---
 
 ## 🎨 Design System
 
-- **Content width:** centered 640px column (`.layout-container`)
-- **Fonts:** Inter for body/headings, Geist Mono for meta/labels/dates
-- **Section labels:** `text-[11px] font-mono uppercase tracking-[0.14em]`
-- **Body copy:** `16px / 24px / 0.2px` (Inter)
-- **Headings:** `22–28px semibold` with tight letter-spacing
-- **Avatars:** always squircle (fixed px radius), never full circle for identity avatars
+- **Content width:** 640px column, centered
+- **Fonts:** Inter body, Geist Mono for meta/labels/dates
+- **Section overline:** `text-[11px] font-mono uppercase tracking-[0.14em]`
+- **Body copy:** `16px / 24px / 0.2px`
+- **Headings:** `22–28px semibold`, tight letter-spacing
+- **Avatars:** squircle with fixed px radius
 - **Cards:** `rounded-2xl` with subtle border + hover tint
-- **Interactions:** CSS-first transitions, Framer Motion only for drag, expand/collapse, spring pop-ins
+- **Interactions:** instant CSS transitions, no unnecessary animations
 
 ---
 
-## 🗑️ Removing the Donate Page
+## 📝 Writing System
 
-The `/donate` page is specific to me. If you're forking this repo, you'll likely want to remove it:
+Add a new blog post by creating a `.mdx` file:
 
-1. Delete these directories:
-   ```bash
-   rm -rf src/app/donate
-   rm -rf src/app/api/donate
-   rm -rf src/components/donate
-   ```
+```
+src/content/writing/my-new-post.mdx
+```
 
-2. Remove any links to `/donate` from your site (e.g. in `src/lib/config.ts` or navigation)
-
-That's it — no other files depend on the donate feature.
+Filename becomes the URL slug (`/writing/my-new-post`). The list page, related posts, and metadata all update automatically on next build.
 
 ---
 
-## 🗑️ Removing the Slide to Vibe Page
+## 🗑️ Removing Optional Features
 
-The `/what` page is a fun personal touch. To remove:
+**Donate page**:
 
-1. Delete these directories:
-   ```bash
-   rm -rf src/app/what
-   rm -rf src/app/api/song-suggestion
-   rm -rf src/components/vibe
-   ```
+```bash
+rm -rf src/app/donate src/app/api/donate src/components/donate
+```
 
-2. Remove the `/what` link from the Hero nav in `src/components/layout/Hero.tsx`
+Remove any `/donate` links from `src/lib/config.ts`.
 
 ---
 
 ## 🤝 Contributing
 
-PRs are welcome.
-
-1. Fork the repo  
-2. Create a branch: `git checkout -b feat/cool-thing`  
-3. Commit: `git commit -m "feat: add cool thing"`  
-4. Push: `git push origin feat/cool-thing`  
-5. Open a pull request  
+1. Fork
+2. `git checkout -b feat/thing`
+3. `git commit -m "feat: add thing"`
+4. `git push origin feat/thing`
+5. Open PR
 
 ---
 
 ## 📄 License
 
-MIT © 2025 Shahriar Avi
+MIT © 2026 Shahriar Avi

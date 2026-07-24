@@ -185,3 +185,22 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
   max-height: 85vh !important;
 }
+
+.writing-content {
+  color: hsl(var(--foreground));
+}
+
+.writing-content > *:first-child {
+  margin-top: 0;
+}
+
+.writing-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.writing-content pre code {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}

@@ -1,66 +1,17 @@
 "use client";
 
-import ThemeToggle from "@/components/common/ThemeToggle";
 import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
 import NowPlaying from "@/components/integrations/NowPlaying";
-import TimeDisplay from "@/components/ui/TimeDisplay";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import { DISCORD_LINK, SOCIALS } from "@/lib/config";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { SiDiscord } from "react-icons/si";
 
 export function Hero() {
   const discordStatus = useDiscordPresence();
-  const router = useRouter();
-
-  const navLinks = [
-    { href: "/what", label: "/what", external: false },
-    { href: "/contact", label: "/contact", external: false },
-    { href: "https://gist.yoavi.fun", label: "/gist", external: true },
-  ];
 
   return (
     <section className="relative mb-16 w-full">
-      <div className="mb-14 flex items-center justify-between gap-4">
-        <div
-          className="font-mono text-[11px] uppercase tracking-[0.14em]"
-          style={{ color: "hsl(var(--muted-foreground))" }}
-        >
-          <TimeDisplay />
-        </div>
-
-        <div className="flex items-center gap-4">
-          <nav className="flex items-center gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-                onClick={(e) => {
-                  if (!link.external) {
-                    e.preventDefault();
-                    router.push(link.href);
-                  }
-                }}
-                data-cuelume-hover="tick"
-                data-cuelume-press
-                className="font-mono text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-foreground"
-                style={{ color: "hsl(var(--muted-foreground))" }}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-          <ThemeToggle
-            data-cuelume-hover="tick"
-            data-cuelume-press
-            className="h-7 w-7 rounded-md bg-transparent text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
-          />
-        </div>
-      </div>
-
       <div className="flex flex-col w-full">
         <div className="relative mb-4 h-20 w-20 shrink-0">
           <div
@@ -134,8 +85,7 @@ export function Hero() {
                 (e.currentTarget.style.color = "hsl(var(--foreground))")
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.color =
-                  "hsl(var(--muted-foreground))")
+                (e.currentTarget.style.color = "hsl(var(--muted-foreground))")
               }
             >
               <social.icon

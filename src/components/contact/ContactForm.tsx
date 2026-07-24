@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { Send, Loader2, Mail, CornerDownLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
+import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import { play } from "cuelume";
+import { Loader2, Mail, Send } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 type Step = "name" | "message" | "email" | "sending" | "done";
 
@@ -33,7 +32,6 @@ const statusLabel = (status: string | null | undefined) => {
 
 export default function ContactForm() {
   const discordStatus = useDiscordPresence();
-  const router = useRouter();
   const [step, setStep] = useState<Step>("name");
   const [formData, setFormData] = useState({
     name: "",
@@ -112,7 +110,7 @@ export default function ContactForm() {
       setInputValue("");
       addBotBubble(
         `nice to meet you, ${name.split(" ")[0].toLowerCase()}. so what's on your mind?`,
-        () => setStep("message")
+        () => setStep("message"),
       );
       return;
     }
@@ -129,7 +127,7 @@ export default function ContactForm() {
       setInputValue("");
       addBotBubble(
         `got it. drop your email so i can reply back, or type "skip" if you'd rather not.`,
-        () => setStep("email")
+        () => setStep("email"),
       );
       return;
     }
@@ -210,17 +208,7 @@ export default function ContactForm() {
   };
 
   return (
-    <main className="layout-container">
-      <button
-        onClick={() => router.back()}
-        data-cuelume-hover="tick"
-        data-cuelume-press
-        className="group mb-10 inline-flex items-center gap-2 font-mono text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
-      >
-        <CornerDownLeft className="h-[14px] w-[14px] transition-transform duration-200 group-hover:-translate-x-0.5" />
-        <span>Back</span>
-      </button>
-
+    <main className="layout-container !pt-0">
       <div className="mb-10 flex items-center gap-3">
         <div className="relative h-12 w-12 shrink-0">
           <div
@@ -325,7 +313,7 @@ export default function ContactForm() {
 
       {step !== "done" && step !== "sending" && (
         <div className="sticky bottom-4 mt-4">
-          <div className="flex items-end gap-2 rounded-2xl border border-border/60 bg-background/85 p-2 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+          <div className="flex items-end gap-2 rounded-2xl border border-border/60 bg-background p-2">
             {step === "message" ? (
               <div className="flex min-h-[38px] flex-1 items-end px-2 py-2">
                 <textarea
