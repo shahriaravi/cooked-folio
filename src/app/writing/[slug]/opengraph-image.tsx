@@ -11,9 +11,13 @@ export const size = {
 };
 export const alt = "Shahriar Avi";
 
-async function loadAsset(relPath: string): Promise<Buffer> {
-  const fullPath = path.join(process.cwd(), "public", relPath);
-  return fs.readFileSync(fullPath);
+function loadAsset(relPath: string): Buffer | null {
+  try {
+    const fullPath = path.join(process.cwd(), "public", relPath);
+    return fs.readFileSync(fullPath);
+  } catch {
+    return null;
+  }
 }
 
 export default async function Image({
@@ -25,27 +29,35 @@ export default async function Image({
   const title = post?.title ?? "Shahriar Avi";
   const readingTime = post?.readingTime ?? "";
 
-  let bgBase64 = "";
-  let avatarBase64 = "";
+  const bgBuffer = loadAsset("images/blog.png");
+  const avatarBuffer = loadAsset("avatar/avatar.png");
+  const fontRegular = loadAsset("fonts/Inter-Regular.ttf");
+  const fontBold = loadAsset("fonts/Inter-Bold.ttf");
 
-  try {
-    const bgBuffer = await loadAsset("images/blog.png");
-    bgBase64 = `data:image/png;base64,${bgBuffer.toString("base64")}`;
-  } catch {}
+  const bgBase64 = bgBuffer
+    ? `data:image/png;base64,${bgBuffer.toString("base64")}`
+    : "";
+  const avatarBase64 = avatarBuffer
+    ? `data:image/png;base64,${avatarBuffer.toString("base64")}`
+    : "";
 
-  try {
-    const avatarBuffer = await loadAsset("avatar/avatar.png");
-    avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
-  } catch {}
-
-  const [fontData, fontDataBold] = await Promise.all([
-    fetch(
-      "https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf"
-    ).then((res) => res.arrayBuffer()),
-    fetch(
-      "https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf"
-    ).then((res) => res.arrayBuffer()),
-  ]);
+  const fonts = [];
+  if (fontRegular) {
+    fonts.push({
+      name: "Inter",
+      data: fontRegular,
+      weight: 400 as const,
+      style: "normal" as const,
+    });
+  }
+  if (fontBold) {
+    fonts.push({
+      name: "Inter",
+      data: fontBold,
+      weight: 700 as const,
+      style: "normal" as const,
+    });
+  }
 
   return new ImageResponse(
     (
@@ -127,20 +139,7 @@ export default async function Image({
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: "Inter",
-          data: fontData,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Inter",
-          data: fontDataBold,
-          weight: 700,
-          style: "normal",
-        },
-      ],
+      fonts,
     }
   );
 }
