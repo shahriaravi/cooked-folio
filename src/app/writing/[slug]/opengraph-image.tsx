@@ -67,6 +67,7 @@ export default async function Image({
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          justifyContent: "space-between",
           padding: "80px",
           backgroundImage: bgBase64 ? `url(${bgBase64})` : undefined,
           backgroundColor: "#0a1024",
@@ -81,7 +82,7 @@ export default async function Image({
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(180deg, rgba(10,16,36,0.55) 0%, rgba(10,16,36,0.85) 100%)",
+              "linear-gradient(180deg, rgba(10,16,36,0.65) 0%, rgba(10,16,36,0.85) 100%)",
             display: "flex",
           }}
         />
@@ -90,50 +91,71 @@ export default async function Image({
           style={{
             position: "relative",
             display: "flex",
-            alignItems: "center",
-            gap: "28px",
             zIndex: 10,
+            color: "#ffffff",
+            fontSize: title.length > 60 ? "60px" : "76px",
+            fontWeight: 700,
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            maxWidth: "1040px",
           }}
         >
-          {avatarBase64 && (
-            <img
-              src={avatarBase64}
-              width={96}
-              height={96}
-              style={{
-                borderRadius: "24px",
-              }}
-              alt=""
-            />
-          )}
-          <div
-            style={{
-              color: "#ffffff",
-              fontSize: title.length > 60 ? "56px" : "68px",
-              fontWeight: 700,
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-              maxWidth: "900px",
-              display: "flex",
-            }}
-          >
-            {title}
-          </div>
+          {title}
         </div>
 
         <div
           style={{
             position: "relative",
-            marginTop: "auto",
             display: "flex",
+            flexDirection: "column",
+            gap: "20px",
             zIndex: 10,
-            color: "rgba(255,255,255,0.65)",
-            fontSize: "22px",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
           }}
         >
-          {readingTime} read
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            {avatarBase64 && (
+              <img
+                src={avatarBase64}
+                width={72}
+                height={72}
+                style={{
+                  borderRadius: "18px",
+                }}
+                alt=""
+              />
+            )}
+            <div
+              style={{
+                color: "#ffffff",
+                fontSize: "32px",
+                fontWeight: 700,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Shahriar Avi
+            </div>
+          </div>
+
+          {readingTime && (
+            <div
+              style={{
+                display: "flex",
+                color: "rgba(255,255,255,0.55)",
+                fontSize: "22px",
+                fontWeight: 400,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+              }}
+            >
+              {readingTime} read
+            </div>
+          )}
         </div>
       </div>
     ),
