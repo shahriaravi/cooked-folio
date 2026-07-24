@@ -39,65 +39,35 @@ export default function NotFound() {
   }, []);
 
   return (
-    <main className="relative flex min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden bg-background text-foreground">
-      <div className="flex flex-1 flex-col items-center justify-center px-4 pb-20 text-center">
-        <span
-          className="mb-6 font-mono uppercase tracking-[0.14em] text-muted-foreground"
-          style={{ fontSize: "11px", lineHeight: "1" }}
+    <main className="flex min-h-[60vh] w-full items-center justify-center px-4">
+      <div className="flex items-center gap-5">
+        <div
+          className="relative overflow-hidden bg-background"
+          style={{
+            width: "clamp(56px, 10vw, 88px)",
+            height: "clamp(56px, 10vw, 88px)",
+            borderRadius: "18px",
+          }}
         >
-          error
-        </span>
-
-        <div className="mb-8 flex items-center gap-4 md:gap-6">
-          <div className="relative h-20 w-20 md:h-24 md:w-24">
-            <div
-              className="relative h-full w-full overflow-hidden bg-background"
-              style={{ borderRadius: "20px" }}
-            >
-              <Image
-                src="/avatar/avatar.png"
-                alt="Shahriar Avi"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
-
-          <h1
-            className="font-mono font-semibold tracking-tighter text-foreground"
-            style={{
-              fontSize: "clamp(72px, 14vw, 128px)",
-              lineHeight: "1",
-              letterSpacing: "-0.04em",
-            }}
-          >
-            {displayText}
-          </h1>
+          <Image
+            src="/avatar/avatar.png"
+            alt="Shahriar Avi"
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
 
-        <h2
-          className="mb-3 font-semibold text-foreground"
+        <h1
+          className="font-mono font-semibold tracking-tighter text-foreground"
           style={{
-            fontSize: "22px",
-            lineHeight: "28px",
-            letterSpacing: "-0.01em",
+            fontSize: "clamp(56px, 10vw, 88px)",
+            lineHeight: "1",
+            letterSpacing: "-0.04em",
           }}
         >
-          You&apos;re lost in the void.
-        </h2>
-
-        <p
-          className="max-w-[420px] text-muted-foreground"
-          style={{
-            fontSize: "16px",
-            lineHeight: "24px",
-            letterSpacing: "0.2px",
-          }}
-        >
-          This page doesn&apos;t exist, was moved, or never existed in the
-          first place. Either way, nothing to see here.
-        </p>
+          {displayText}
+        </h1>
       </div>
     </main>
   );

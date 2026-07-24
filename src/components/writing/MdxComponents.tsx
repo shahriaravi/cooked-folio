@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import { CodeBlock } from "./CodeBlock";
 
 export const mdxComponents: MDXComponents = {
   h1: (props) => (
@@ -113,23 +114,25 @@ export const mdxComponents: MDXComponents = {
     />
   ),
 
-  code: (props) => (
-    <code
-      className="rounded-md border border-border/50 bg-secondary/60 px-[6px] py-[2px] font-mono text-[13.5px] text-foreground before:content-none after:content-none"
-      {...props}
-    />
-  ),
+  code: (props: any) => {
+    const isInline = !props.className?.includes("language-");
+    if (isInline) {
+      return (
+        <code
+          className="rounded-md border border-border/50 bg-secondary/60 px-[6px] py-[2px] font-mono text-[13.5px] text-foreground before:content-none after:content-none"
+          {...props}
+        />
+      );
+    }
+    return <code {...props} />;
+  },
 
-  pre: (props) => (
-    <pre
-      className="mb-6 overflow-x-auto rounded-xl border border-border/60 bg-secondary/40 p-4 font-mono text-[13.5px] leading-[22px] text-foreground"
-      {...props}
-    />
-  ),
+  pre: (props: any) => {
+    const { children, ...rest } = props;
+    return <CodeBlock {...rest}>{children}</CodeBlock>;
+  },
 
-  hr: () => (
-    <hr className="my-10 border-0 border-t border-border/40" />
-  ),
+  hr: () => <hr className="my-10 border-0 border-t border-border/40" />,
 
   img: ({ src, alt, ...props }) => {
     if (!src) return null;

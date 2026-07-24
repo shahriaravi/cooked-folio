@@ -5,7 +5,6 @@ import {
   SiFacebook,
   SiGithub,
   SiJavascript,
-  SiLinkedin,
   SiNextdotjs,
   SiNodedotjs,
   SiReact,
@@ -14,6 +13,8 @@ import {
   SiTypescript,
   SiX,
 } from "react-icons/si";
+
+import { FaLinkedin } from 'react-icons/fa';
 
 export interface ExperienceItem {
   company: string;
@@ -67,7 +68,7 @@ export const SOCIALS = [
   {
     platform: "linkedin",
     url: "https://linkedin.com/in/shahriaravi",
-    icon: SiLinkedin,
+    icon: FaLinkedin,
     color: "#0A66C2",
   },
 ];
