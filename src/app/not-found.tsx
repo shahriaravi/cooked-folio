@@ -70,7 +70,7 @@ export default function NotFound() {
             >
               <Image
                 src="/avatar/avatar.png"
-                alt="avi"
+                alt="Shahriar Avi"
                 fill
                 className="object-cover"
                 priority

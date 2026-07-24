@@ -7,12 +7,30 @@ import { StackList } from "@/components/sections/StackList";
 import { ProjectList } from "@/components/sections/ProjectList";
 import { GithubActivityCard } from "@/components/integrations/GithubActivityCard";
 import { Footer } from "@/components/layout/Footer";
-
-import { constructMetadata } from "@/lib/site-config";
+import { constructMetadata, siteConfig } from "@/lib/site-config";
 
 export const metadata = constructMetadata({
-  title: "avi.portfolio",
-  description: "building things. breaking things.",
+  title: "Shahriar Avi — Software Engineer & Founder",
+  description:
+    "Shahriar Avi — software engineer, indie developer, and founder of Byontriq. Building Mate, a wallet tracker app. Open to work in USA, Germany, India, and Bangladesh.",
+  canonicalUrl: siteConfig.url,
+  keywords: [
+    "Shahriar Avi",
+    "Avi portfolio",
+    "Byontriq founder",
+    "Mate app developer",
+    "indie developer portfolio",
+    "solo developer",
+    "web engineer portfolio",
+    "software engineer Bangladesh",
+    "Next.js developer",
+    "TypeScript engineer",
+    "full stack developer portfolio",
+    "wallet tracker app",
+    "software engineer for hire",
+    "web designer",
+    "product engineer",
+  ],
 });
 
 export const revalidate = 60;

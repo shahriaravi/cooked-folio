@@ -1,27 +1,57 @@
 import { Metadata } from "next";
 
-// =================================================================================
-// 1. BASE CONFIGURATION
-// =================================================================================
-
 const BASE_URL = process.env.NEXT_PUBLIC_URL || "https://shahriaravi.me";
 
 export const siteConfig = {
-  name: "avi",
+  name: "Shahriar Avi",
+  shortName: "avi",
   username: "shahriaravi_",
+  title: "Shahriar Avi — Software Engineer & Founder",
   description:
-    "code alchemist ⚗️ building things. turning ideas into products. founder @byontriq",
+    "Shahriar Avi is a software engineer, indie developer, and founder of Byontriq. Building Mate — a wallet tracker app. Based in Bangladesh, working globally.",
   url: BASE_URL,
-  ogImage: "/og-image.png?v1",
+  ogImage: `${BASE_URL}/og-image.png?v1`,
+  keywords: [
+    "Shahriar Avi",
+    "Avi",
+    "shahriaravi",
+    "Byontriq",
+    "Byontriq founder",
+    "Mate app",
+    "Mate wallet tracker",
+    "wallet tracker app",
+    "software engineer Bangladesh",
+    "indie developer",
+    "solo developer",
+    "web engineer",
+    "web designer",
+    "full stack developer",
+    "Next.js developer",
+    "TypeScript developer",
+    "React developer",
+    "software engineer",
+    "frontend engineer",
+    "product engineer",
+    "indie hacker",
+    "Bangladesh developer",
+    "Bangladeshi software engineer",
+    "software engineer USA",
+    "software engineer Germany",
+    "software engineer India",
+    "open source developer",
+    "yoavi.fun",
+    "shahriaravi.me",
+  ],
   links: {
     twitter: "https://twitter.com/shahriaravi_",
     github: "https://github.com/shahriaravi",
   },
+  author: {
+    name: "Shahriar Avi",
+    url: BASE_URL,
+    twitter: "@shahriaravi_",
+  },
 };
-
-// =================================================================================
-// 2. METADATA GENERATOR
-// =================================================================================
 
 interface MetadataProps {
   title?: string;
@@ -30,28 +60,36 @@ interface MetadataProps {
   icons?: string | Array<any>;
   noIndex?: boolean;
   other?: Record<string, string>;
+  keywords?: string[];
+  canonicalUrl?: string;
 }
 
 export function constructMetadata({
-  title = "avi — code alchemist ⚗️",
+  title = siteConfig.title,
   description = siteConfig.description,
   image = siteConfig.ogImage,
   icons = "/favicon.ico",
   noIndex = false,
   other,
+  keywords = siteConfig.keywords,
+  canonicalUrl = siteConfig.url,
 }: MetadataProps = {}): Metadata {
   return {
     title: {
       default: title,
-      template: `%s`,
+      template: `%s — Shahriar Avi`,
     },
     description,
+    keywords,
+    authors: [{ name: siteConfig.author.name, url: siteConfig.author.url }],
+    creator: siteConfig.author.name,
+    publisher: siteConfig.author.name,
 
     openGraph: {
       title,
       description,
-      url: siteConfig.url,
-      siteName: "avi.portfolio",
+      url: canonicalUrl,
+      siteName: siteConfig.title,
       locale: "en_US",
       type: "website",
       images: [
@@ -59,7 +97,7 @@ export function constructMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: description,
+          alt: `${siteConfig.name} — Software Engineer & Founder of Byontriq`,
         },
       ],
     },
@@ -69,7 +107,8 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: "@shahriaravi_",
+      creator: siteConfig.author.twitter,
+      site: siteConfig.author.twitter,
     },
 
     icons: {
@@ -80,16 +119,27 @@ export function constructMetadata({
 
     metadataBase: new URL(siteConfig.url),
 
+    alternates: {
+      canonical: canonicalUrl,
+    },
+
+    robots: noIndex
+      ? { index: false, follow: false }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+          },
+        },
+
     other: {
       "darkreader-lock": "",
       ...(other || {}),
     },
-
-    ...(noIndex && {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }),
   };
 }

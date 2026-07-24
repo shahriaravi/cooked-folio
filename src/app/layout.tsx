@@ -2,7 +2,7 @@ import "./globals.css";
 
 import { Providers } from "@/components/layout/Providers";
 import { InitialSplash } from "@/components/common/InitialSplash";
-import { constructMetadata } from "@/lib/site-config";
+import { constructMetadata, siteConfig } from "@/lib/site-config";
 import { GeistMono } from "geist/font/mono";
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
@@ -21,12 +21,78 @@ export const viewport: Viewport = {
   ],
 };
 
-export const metadata: Metadata = constructMetadata({
-  title: "avi.portfolio",
+export const metadata: Metadata = constructMetadata();
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Shahriar Avi",
+  alternateName: ["Avi", "shahriaravi", "shahriaravi_"],
+  url: siteConfig.url,
+  image: `${siteConfig.url}/avatar/avatar.png`,
+  sameAs: [
+    "https://twitter.com/shahriaravi_",
+    "https://github.com/shahriaravi",
+    "https://yoavi.fun",
+    "https://shahriaravi.me",
+  ],
+  jobTitle: "Software Engineer",
   description:
-    "software engineer & founder. fueled by caffeine, anime and production bugs.",
-  icons: "/favicon.ico",
-});
+    "Shahriar Avi is a software engineer, indie developer, and founder of Byontriq. Building Mate — a wallet tracker app.",
+  knowsAbout: [
+    "Software Engineering",
+    "Web Development",
+    "TypeScript",
+    "Next.js",
+    "React",
+    "Product Design",
+    "Indie Development",
+    "Mobile Applications",
+    "Wallet Tracker",
+  ],
+  nationality: "Bangladeshi",
+  worksFor: {
+    "@type": "Organization",
+    name: "Byontriq",
+    url: "https://byontriq.com",
+    description:
+      "Software company founded by Shahriar Avi, building Mate wallet tracker app.",
+  },
+  foundingDate: "2024",
+  owns: {
+    "@type": "SoftwareApplication",
+    name: "Mate",
+    description: "A wallet tracker app built by Shahriar Avi via Byontriq.",
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "iOS, Android",
+    author: {
+      "@type": "Person",
+      name: "Shahriar Avi",
+    },
+  },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Shahriar Avi — Portfolio",
+  alternateName: ["avi.portfolio", "yoavi.fun", "shahriaravi.me"],
+  url: siteConfig.url,
+  description:
+    "Personal portfolio of Shahriar Avi — software engineer, indie developer, and founder of Byontriq.",
+  author: {
+    "@type": "Person",
+    name: "Shahriar Avi",
+  },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteConfig.url}/?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -42,6 +108,14 @@ export default function RootLayout({
     >
       <head>
         <meta name="darkreader-lock" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </head>
       <body className="font-sans bg-background text-foreground antialiased selection:bg-primary/20">
         <Providers>
