@@ -39,7 +39,6 @@ export const siteConfig = {
     "software engineer Germany",
     "software engineer India",
     "open source developer",
-    "yoavi.fun",
     "shahriaravi.me",
   ],
   links: {

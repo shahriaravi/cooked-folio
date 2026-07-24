@@ -35,7 +35,6 @@ const personJsonLd = {
   sameAs: [
     "https://twitter.com/shahriaravi_",
     "https://github.com/shahriaravi",
-    "https://yoavi.fun",
     "https://shahriaravi.me",
   ],
   jobTitle: "Software Engineer",
@@ -77,7 +76,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Shahriar Avi",
-  alternateName: ["avi.portfolio", "yoavi.fun", "shahriaravi.me"],
+  alternateName: ["avi.portfolio", "shahriaravi.me"],
   url: siteConfig.url,
   description:
     "Personal portfolio of Shahriar Avi — software engineer, indie developer, and founder of Byontriq.",

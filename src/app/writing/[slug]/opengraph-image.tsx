@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getPostBySlug } from "@/lib/writing";
-import fs from "fs";
-import path from "path";
+import { siteConfig } from "@/lib/site-config";
 
 export const runtime = "nodejs";
 export const contentType = "image/png";
@@ -20,29 +19,25 @@ export default async function Image({
   const title = post?.title ?? "Shahriar Avi";
   const readingTime = post?.readingTime ?? "";
 
-  const bgPath = path.join(process.cwd(), "public", "images", "blog.png");
-  const avatarPath = path.join(
-    process.cwd(),
-    "public",
-    "avatar",
-    "avatar.png"
-  );
+  const [bgBuffer, avatarBuffer, fontData, fontDataBold] = await Promise.all([
+    fetch(`${siteConfig.url}/images/blog.png`).then((res) => res.arrayBuffer()),
+    fetch(`${siteConfig.url}/avatar/avatar.png`).then((res) =>
+      res.arrayBuffer()
+    ),
+    fetch(
+      "https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf"
+    ).then((res) => res.arrayBuffer()),
+    fetch(
+      "https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf"
+    ).then((res) => res.arrayBuffer()),
+  ]);
 
-  const bgBuffer = fs.readFileSync(bgPath);
-  const avatarBuffer = fs.readFileSync(avatarPath);
-
-  const bgBase64 = `data:image/png;base64,${bgBuffer.toString("base64")}`;
-  const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString(
+  const bgBase64 = `data:image/png;base64,${Buffer.from(bgBuffer).toString(
     "base64"
   )}`;
-
-  const fontData = await fetch(
-    "https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf"
-  ).then((res) => res.arrayBuffer());
-
-  const fontDataBold = await fetch(
-    "https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf"
-  ).then((res) => res.arrayBuffer());
+  const avatarBase64 = `data:image/png;base64,${Buffer.from(
+    avatarBuffer
+  ).toString("base64")}`;
 
   return new ImageResponse(
     (
