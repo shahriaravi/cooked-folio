@@ -12,13 +12,15 @@ const nextConfig = {
     formats: ["image/webp"],
   },
 
-  outputFileTracingIncludes: {
-    "/writing/[slug]/opengraph-image": [
-      "./public/images/blog.png",
-      "./public/avatar/avatar.png",
-      "./public/fonts/Inter-Regular.ttf",
-      "./public/fonts/Inter-Bold.ttf",
-    ],
+  experimental: {
+    outputFileTracingIncludes: {
+      "/writing/[slug]/opengraph-image": [
+        "./public/images/blog.png",
+        "./public/avatar/avatar.png",
+        "./public/fonts/Inter-Regular.ttf",
+        "./public/fonts/Inter-Bold.ttf",
+      ],
+    },
   },
 
   reactStrictMode: true,
