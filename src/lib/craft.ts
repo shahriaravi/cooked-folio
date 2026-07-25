@@ -2,9 +2,9 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const LAB_DIR = path.join(process.cwd(), "src/content/lab");
+const CRAFT_DIR = path.join(process.cwd(), "src/content/craft");
 
-export interface LabFrontmatter {
+export interface CraftFrontmatter {
   title: string;
   description: string;
   component: string;
@@ -12,7 +12,7 @@ export interface LabFrontmatter {
   tags?: string[];
 }
 
-export interface LabMeta {
+export interface CraftMeta {
   slug: string;
   title: string;
   description: string;
@@ -21,7 +21,7 @@ export interface LabMeta {
   tags: string[];
 }
 
-export interface LabComponent extends LabMeta {
+export interface CraftComponent extends CraftMeta {
   content: string;
 }
 
@@ -30,18 +30,18 @@ function slugify(filename: string): string {
 }
 
 function getAllFilenames(): string[] {
-  if (!fs.existsSync(LAB_DIR)) return [];
+  if (!fs.existsSync(CRAFT_DIR)) return [];
   return fs
-    .readdirSync(LAB_DIR)
+    .readdirSync(CRAFT_DIR)
     .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
 }
 
-function parseFile(filename: string): LabComponent {
-  const fullPath = path.join(LAB_DIR, filename);
+function parseFile(filename: string): CraftComponent {
+  const fullPath = path.join(CRAFT_DIR, filename);
   const raw = fs.readFileSync(fullPath, "utf-8");
   const { data, content } = matter(raw);
 
-  const frontmatter = data as LabFrontmatter;
+  const frontmatter = data as CraftFrontmatter;
 
   return {
     slug: slugify(filename),
@@ -54,7 +54,7 @@ function parseFile(filename: string): LabComponent {
   };
 }
 
-export function getAllLabComponents(): LabMeta[] {
+export function getAllCraftComponents(): CraftMeta[] {
   const filenames = getAllFilenames();
   const components = filenames.map((filename) => {
     const comp = parseFile(filename);
@@ -65,13 +65,13 @@ export function getAllLabComponents(): LabMeta[] {
   return components.sort((a, b) => a.title.localeCompare(b.title));
 }
 
-export function getLabComponentBySlug(slug: string): LabComponent | null {
+export function getCraftComponentBySlug(slug: string): CraftComponent | null {
   const filenames = getAllFilenames();
   const filename = filenames.find((f) => slugify(f) === slug);
   if (!filename) return null;
   return parseFile(filename);
 }
 
-export function getAllLabSlugs(): string[] {
+export function getAllCraftSlugs(): string[] {
   return getAllFilenames().map(slugify);
 }

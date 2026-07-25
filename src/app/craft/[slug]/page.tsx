@@ -1,13 +1,13 @@
-import { getAllLabSlugs, getLabComponentBySlug } from "@/lib/lab";
-import { getComponentSource } from "@/components/lab/registry/sources";
+import { getAllCraftSlugs, getCraftComponentBySlug } from "@/lib/craft";
+import { getComponentSource } from "@/components/craft/registry/sources";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { labMdxComponents } from "@/components/lab/mdx/labMdxComponents";
-import { ComponentPreview } from "@/components/lab/ComponentPreview";
-import { InstallSection } from "@/components/lab/InstallSection";
-import { ManualInstall } from "@/components/lab/ManualInstall";
-import { CodeBlock } from "@/components/lab/CodeBlock";
+import { craftMdxComponents } from "@/components/craft/mdx/craftMdxComponents";
+import { ComponentPreview } from "@/components/craft/ComponentPreview";
+import { InstallSection } from "@/components/craft/InstallSection";
+import { ManualInstall } from "@/components/craft/ManualInstall";
+import { CodeBlock } from "@/components/craft/CodeBlock";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { Metadata } from "next";
 
@@ -16,16 +16,16 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllLabSlugs().map((slug) => ({ slug }));
+  return getAllCraftSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const component = getLabComponentBySlug(params.slug);
+  const component = getCraftComponentBySlug(params.slug);
   if (!component) return {};
 
-  const url = `${siteConfig.url}/lab/${component.slug}`;
+  const url = `${siteConfig.url}/craft/${component.slug}`;
   const ogImageUrl = `${url}/opengraph-image`;
 
   return {
@@ -80,8 +80,8 @@ const prettyCodeOptions = {
   },
 };
 
-export default async function LabComponentPage({ params }: PageProps) {
-  const component = getLabComponentBySlug(params.slug);
+export default async function CraftComponentPage({ params }: PageProps) {
+  const component = getCraftComponentBySlug(params.slug);
 
   if (!component) {
     notFound();
@@ -169,7 +169,7 @@ export default async function LabComponentPage({ params }: PageProps) {
         <div className="writing-content mt-12">
           <MDXRemote
             source={component.content}
-            components={labMdxComponents}
+            components={craftMdxComponents}
             options={{
               mdxOptions: {
                 rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],

@@ -4,7 +4,7 @@ import { CodeFile } from "./CodeFile";
 import { Callout } from "./Callout";
 import { PropsTable, PropRow } from "./PropsTable";
 
-export const labMdxComponents: MDXComponents = {
+export const craftMdxComponents: MDXComponents = {
   ...blogComponents,
   CodeFile,
   Callout,

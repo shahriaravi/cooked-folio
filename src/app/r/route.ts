@@ -1,4 +1,4 @@
-import { getAllLabComponents } from "@/lib/lab";
+import { getAllCraftComponents } from "@/lib/craft";
 import { siteConfig } from "@/lib/site-config";
 import { NextResponse } from "next/server";
 
@@ -10,18 +10,18 @@ function toKebabCase(str: string): string {
 }
 
 export async function GET() {
-  const components = getAllLabComponents();
+  const components = getAllCraftComponents();
 
   const registry = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
-    name: "shahriar-avi-lab",
+    name: "yoavi",
     homepage: siteConfig.url,
     items: components.map((c) => ({
       name: toKebabCase(c.component),
       type: "registry:ui" as const,
       title: c.title,
       description: c.description,
-      url: `${siteConfig.url}/r/${c.slug}`,
+      url: `${siteConfig.url}/r/${c.slug}.json`,
     })),
   };
 

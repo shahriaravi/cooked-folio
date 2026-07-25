@@ -37,19 +37,21 @@ const personJsonLd = {
     "https://github.com/shahriaravi",
     "https://shahriaravi.me",
   ],
-  jobTitle: "Software Engineer",
+  jobTitle: "Design Engineer",
   description:
-    "Shahriar Avi is a software engineer, indie developer, and founder of Byontriq. Building Mate — a wallet tracker app.",
+    "Shahriar Avi is a design engineer and founder of Byontriq. Building apps, websites, and extensions with obsessive attention to detail.",
   knowsAbout: [
-    "Software Engineering",
+    "Design Engineering",
+    "Product Engineering",
     "Web Development",
     "TypeScript",
     "Next.js",
     "React",
     "Product Design",
+    "Micro Interactions",
     "Indie Development",
     "Mobile Applications",
-    "Wallet Tracker",
+    "Browser Extensions",
   ],
   nationality: "Bangladeshi",
   worksFor: {
@@ -57,18 +59,7 @@ const personJsonLd = {
     name: "Byontriq",
     url: "https://byontriq.dev",
     description:
-      "Software company founded by Shahriar Avi, building Mate wallet tracker app.",
-  },
-  owns: {
-    "@type": "SoftwareApplication",
-    name: "Mate",
-    description: "A wallet tracker app built by Shahriar Avi via Byontriq.",
-    applicationCategory: "FinanceApplication",
-    operatingSystem: "iOS, Android",
-    author: {
-      "@type": "Person",
-      name: "Shahriar Avi",
-    },
+      "Software studio founded by Shahriar Avi, building apps, websites, and extensions.",
   },
 };
 
@@ -79,7 +70,7 @@ const websiteJsonLd = {
   alternateName: ["avi.portfolio", "shahriaravi.me"],
   url: siteConfig.url,
   description:
-    "Personal portfolio of Shahriar Avi — software engineer, indie developer, and founder of Byontriq.",
+    "Personal portfolio of Shahriar Avi, design engineer and founder of Byontriq.",
   author: {
     "@type": "Person",
     name: "Shahriar Avi",

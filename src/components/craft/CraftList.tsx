@@ -1,14 +1,14 @@
 "use client";
 
-import type { LabMeta } from "@/lib/lab";
+import type { CraftMeta } from "@/lib/craft";
 import { useRouter } from "next/navigation";
 import { getRegistryComponent } from "./registry";
 
-interface LabListProps {
-  components: LabMeta[];
+interface CraftListProps {
+  components: CraftMeta[];
 }
 
-export function LabList({ components }: LabListProps) {
+export function CraftList({ components }: CraftListProps) {
   const router = useRouter();
 
   if (components.length === 0) {
@@ -29,10 +29,10 @@ export function LabList({ components }: LabListProps) {
         return (
           <a
             key={component.slug}
-            href={`/lab/${component.slug}`}
+            href={`/craft/${component.slug}`}
             onClick={(e) => {
               e.preventDefault();
-              router.push(`/lab/${component.slug}`);
+              router.push(`/craft/${component.slug}`);
             }}
             data-cuelume-hover="tick"
             data-cuelume-press

@@ -19,7 +19,7 @@ export function Hero() {
             style={{ borderRadius: "22px" }}
           >
             <Image
-              src="/avatar/avatar-full.png"
+              src="/avatar/avatar.jpg"
               alt="Shahriar Avi"
               fill
               className="object-cover"
@@ -50,8 +50,7 @@ export function Hero() {
             color: "hsl(var(--muted-foreground))",
           }}
         >
-          Hey, I&apos;m Avi and I just love building things. Currently building
-          at{" "}
+          Hey, I&apos;m Avi, a design engineer and founder of{" "}
           <a
             href="https://byontriq.dev"
             target="_blank"
@@ -63,8 +62,9 @@ export function Hero() {
           >
             @Byontriq
           </a>
-          . I make apps, websites and extensions, experiment a lot, break stuff
-          on purpose and ship what&apos;s actually useful.
+          . I ship apps, websites, and extensions, and I obsess over the
+          details most people skip. Currently taking on new projects if you
+          need something built with care.
         </p>
 
         <div className="mb-6">

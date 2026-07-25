@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getLabComponentBySlug } from "@/lib/lab";
+import { getCraftComponentBySlug } from "@/lib/craft";
 import fs from "fs";
 import path from "path";
 
@@ -25,7 +25,7 @@ export default async function Image({
 }: {
   params: { slug: string };
 }) {
-  const component = getLabComponentBySlug(params.slug);
+  const component = getCraftComponentBySlug(params.slug);
   const title = component?.title ?? "Component";
   const description = component?.description ?? "";
 
@@ -155,7 +155,7 @@ export default async function Image({
               letterSpacing: "-0.01em",
             }}
           >
-            shahriaravi.me/lab
+            shahriaravi.me/craft
           </div>
         </div>
       </div>

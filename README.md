@@ -137,7 +137,7 @@ Dynamic per-post preview cards using your background at `public/images/blog.png`
     public/
     ├─ fonts/                                 # Inter-Regular.ttf, Inter-Bold.ttf (for OG images)
     ├─ images/                                # blog.png (OG background)
-    └─ avatar/                                # avatar.png, avatar-full.png, avatar-fill.png
+    └─ avatar/                                # avatar.png, avatar.jpg, avatar-fill.png
 
 ---
 
@@ -188,11 +188,11 @@ Full explanation in `/writing/block-dark-mode-extensions`.
 
 Remove any `/donate` links from `src/lib/config.ts`.
 
-**Component Lab:**
+**Component Craft:**
 
-    rm -rf src/app/lab src/app/r src/components/lab src/content/lab src/lib/lab.ts src/lib/registry-source.ts
+    rm -rf src/app/craft src/app/r src/components/craft src/content/craft src/lib/craft.ts src/lib/registry-source.ts
 
-Then remove the `/lab` entry from `navLinks` in `src/components/layout/Navbar.tsx` and remove the `/lab` include from `experimental.outputFileTracingIncludes` in `next.config.js`.
+Then remove the `/craft` entry from `navLinks` in `src/components/layout/Navbar.tsx` and remove the `/craft` include from `experimental.outputFileTracingIncludes` in `next.config.js`.
 
 ---
 

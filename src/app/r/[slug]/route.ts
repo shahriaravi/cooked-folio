@@ -1,12 +1,12 @@
 import { buildRegistryItem } from "@/lib/registry-source";
 import { NextResponse } from "next/server";
 
-interface RouteParams {
-  params: { slug: string };
-}
-
-export async function GET(_request: Request, { params }: RouteParams) {
-  const item = buildRegistryItem(params.slug);
+export async function GET(
+  _request: Request,
+  { params }: { params: { slug: string } }
+) {
+  const cleanSlug = params.slug.replace(/\.json$/, "");
+  const item = buildRegistryItem(cleanSlug);
 
   if (!item) {
     return NextResponse.json(

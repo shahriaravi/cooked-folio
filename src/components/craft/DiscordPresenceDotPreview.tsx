@@ -48,7 +48,7 @@ interface DiscordPresenceDotPreviewProps {
 }
 
 export default function DiscordPresenceDotPreview({
-  avatarSrc = "/avatar/avatar-full.png",
+  avatarSrc = "/avatar/avatar.jpg",
 }: DiscordPresenceDotPreviewProps) {
   const [selected, setSelected] = useState<DiscordPresence>("live");
   const [liveStatus, setLiveStatus] =
@@ -88,7 +88,7 @@ export default function DiscordPresenceDotPreview({
   const isIdle = activeStatus === "idle";
 
   const options: { value: DiscordPresence; label: string }[] = [
-    { value: "live", label: `Live (currently ${STATUS_MAP[liveStatus].displayName})` },
+    { value: "live", label: `(currently ${STATUS_MAP[liveStatus].displayName})` },
     { value: "online", label: "Online" },
     { value: "idle", label: "Idle" },
     { value: "dnd", label: "Do Not Disturb" },

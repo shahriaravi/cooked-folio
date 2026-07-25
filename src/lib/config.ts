@@ -87,14 +87,14 @@ export const STACK = [
 ];
 
 export const EXPERIENCE: ExperienceItem[] = [
-  {
-    company: "Byontriq",
-    role: "Founder & SWE",
-    date: "2025 — Present",
-    description:
-      "Building Byontriq from the ground up. Designing the product, writing the code, shipping the site, and answering support in between deploys. It's chaotic, and I love every part of it.",
-    logo: "/images/companies/byontriq.jpeg",
-  },
+{
+  company: "Byontriq",
+  role: "Founder & Design Engineer",
+  date: "2025 — Present",
+  description:
+    "Founded and building Byontriq end to end. I design the products, write the code, ship the sites, and answer support tickets between deploys. Every pixel and interaction is mine.",
+  logo: "/images/companies/byontriq.jpeg",
+},
   {
     company: "EXEAIO",
     role: "Project Manager",

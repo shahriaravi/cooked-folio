@@ -1,5 +1,5 @@
-import { getComponentSource } from "@/components/lab/registry/sources";
-import { getLabComponentBySlug } from "@/lib/lab";
+import { getComponentSource } from "@/components/craft/registry/sources";
+import { getCraftComponentBySlug } from "@/lib/craft";
 
 export interface RegistryFile {
   path: string;
@@ -34,7 +34,7 @@ function toKebabCase(str: string): string {
 }
 
 export function buildRegistryItem(slug: string): RegistryItem | null {
-  const component = getLabComponentBySlug(slug);
+  const component = getCraftComponentBySlug(slug);
   if (!component) return null;
 
   const componentName = component.component;
