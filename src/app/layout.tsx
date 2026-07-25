@@ -1,7 +1,6 @@
 import "./globals.css";
 
 import { Providers } from "@/components/layout/Providers";
-import { InitialSplash } from "@/components/common/InitialSplash";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 import { SiteFooterWrapper } from "@/components/layout/SiteFooterWrapper";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
@@ -110,11 +109,9 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-[100dvh] flex-col font-sans bg-background text-foreground antialiased selection:bg-primary/20">
         <Providers>
-          <InitialSplash>
             <NavbarWrapper />
             <div className="flex-1">{children}</div>
             <SiteFooterWrapper />
-          </InitialSplash>
         </Providers>
         <Analytics />
       </body>

@@ -78,8 +78,8 @@ function GeminiIcon() {
 
 const targets: AITarget[] = [
   {
-    id: "markdown",
-    label: "Copy as Markdown",
+    id: "prompt",
+    label: "Copy Prompt",
     icon: <Copy className="h-3.5 w-3.5" strokeWidth={2.25} />,
     brandColor: "text-muted-foreground",
     action: "copy",
@@ -176,7 +176,7 @@ export function CopyForAI({ context }: CopyForAIProps) {
         onClick={handleCopy}
         data-cuelume-hover="tick"
         data-cuelume-press
-        aria-label={copied ? "Copied" : "Copy for AI"}
+        aria-label={copied ? "Copied" : "Copy prompt for AI"}
         className="inline-flex items-center gap-1.5 rounded-l-md px-3 py-1.5 font-mono uppercase tracking-[0.12em] font-semibold transition-colors"
         style={{ fontSize: "11px", lineHeight: "1" }}
       >

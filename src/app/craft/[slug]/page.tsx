@@ -7,6 +7,7 @@ import { craftMdxComponents } from "@/components/craft/mdx/craftMdxComponents";
 import { ComponentPreview } from "@/components/craft/ComponentPreview";
 import { InstallSection } from "@/components/craft/InstallSection";
 import { ManualInstall } from "@/components/craft/ManualInstall";
+import { ApiReference } from "@/components/craft/ApiReference";
 import { CodeBlock } from "@/components/common/CodeBlock";
 import { CopyForAI } from "@/components/craft/CopyForAI";
 import { buildAIContext } from "@/lib/ai-context";
@@ -186,6 +187,11 @@ export default async function CraftComponentPage({ params }: PageProps) {
             }}
           />
         </div>
+
+        <ApiReference
+          componentName={component.component}
+          props={component.apiReference}
+        />
       </article>
     </main>
   );

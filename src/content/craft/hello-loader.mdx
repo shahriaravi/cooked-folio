@@ -9,6 +9,29 @@ tags:
   - loader
   - splash
   - animated
+apiReference:
+  - name: "greetings"
+    type: "string[]"
+    defaultValue: "5 languages"
+    description: "Array of strings to cycle through."
+  - name: "interval"
+    type: "number"
+    defaultValue: "250"
+    description: "How often to switch to the next greeting in milliseconds."
+  - name: "avatarSrc"
+    type: "string"
+    description: "URL to an avatar image displayed next to the greeting."
+  - name: "avatarAlt"
+    type: "string"
+    defaultValue: '"Loading"'
+    description: "Alt text for the avatar image."
+  - name: "fullScreen"
+    type: "boolean"
+    defaultValue: "true"
+    description: "When true, covers the entire viewport with a fixed overlay."
+  - name: "className"
+    type: "string"
+    description: "Additional Tailwind classes for the outer wrapper."
 ---
 
 ## About

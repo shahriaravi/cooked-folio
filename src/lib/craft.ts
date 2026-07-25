@@ -4,6 +4,14 @@ import path from "path";
 
 const CRAFT_DIR = path.join(process.cwd(), "src/content/craft");
 
+export interface ApiProp {
+  name: string;
+  type: string;
+  required?: boolean;
+  defaultValue?: string;
+  description?: string;
+}
+
 export interface CraftFrontmatter {
   title: string;
   description: string;
@@ -11,6 +19,7 @@ export interface CraftFrontmatter {
   dependencies?: string[];
   tags?: string[];
   order?: number;
+  apiReference?: ApiProp[];
 }
 
 export interface CraftMeta {
@@ -21,6 +30,7 @@ export interface CraftMeta {
   dependencies: string[];
   tags: string[];
   order: number;
+  apiReference: ApiProp[];
 }
 
 export interface CraftComponent extends CraftMeta {
@@ -53,6 +63,7 @@ function parseFile(filename: string): CraftComponent {
     dependencies: frontmatter.dependencies ?? [],
     tags: frontmatter.tags ?? [],
     order: frontmatter.order ?? 999,
+    apiReference: frontmatter.apiReference ?? [],
     content,
   };
 }
