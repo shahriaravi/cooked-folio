@@ -6,6 +6,7 @@ import { CornerDownLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
+  { href: "/lab", label: "/lab" },
   { href: "/writing", label: "/writing" },
   { href: "/contact", label: "/contact" },
 ];
@@ -13,6 +14,9 @@ const navLinks = [
 function getBackHref(pathname: string): string {
   if (pathname.startsWith("/writing/") && pathname !== "/writing") {
     return "/writing";
+  }
+  if (pathname.startsWith("/lab/") && pathname !== "/lab") {
+    return "/lab";
   }
   return "/";
 }

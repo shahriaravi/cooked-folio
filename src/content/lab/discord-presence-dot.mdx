@@ -1,0 +1,54 @@
+---
+title: "Discord Presence Dot"
+description: "Live Discord status indicator that polls Lanyard for online, idle, DND, or offline state."
+component: "DiscordPresenceDot"
+dependencies:
+  - react-icons
+tags:
+  - discord
+  - live
+  - social
+---
+
+## About
+
+A tiny live status dot that shows your real Discord presence. Uses [Lanyard](https://github.com/Phineas/lanyard) — a free service that exposes Discord status via a REST API. Just pass your Discord user ID and it takes care of polling, updating, and rendering.
+
+Colors follow Discord conventions:
+
+- Green for online
+- Yellow moon icon for idle
+- Red for DND
+- Gray for offline
+
+Includes a subtle hover tooltip showing the current status in words.
+
+## Getting your Discord user ID
+
+You need your numeric Discord ID. To get it:
+
+1. Open Discord
+2. Go to User Settings → Advanced → enable Developer Mode
+3. Right-click your username anywhere and select "Copy User ID"
+
+## Joining Lanyard
+
+Lanyard only works for users who are members of their Discord server. Join here:
+
+<Callout type="info">
+  Join the [Lanyard Discord](https://discord.gg/lanyard) so the API can read your presence. Takes 5 seconds.
+</Callout>
+
+## Usage
+
+```tsx
+import DiscordPresenceDot from "@/components/discord-presence-dot";
+
+export default function Page() {
+  return (
+    <div>
+      <DiscordPresenceDot userId="521133907968491531" />
+      <DiscordPresenceDot userId="521133907968491531" size={20} showTooltip={false} />
+    </div>
+  );
+}

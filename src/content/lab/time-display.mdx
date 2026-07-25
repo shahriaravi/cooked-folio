@@ -1,0 +1,34 @@
+---
+title: "Time Display"
+description: "Live-updating clock with timezone support and clock icon."
+component: "TimeDisplay"
+dependencies:
+  - lucide-react
+tags:
+  - display
+  - live
+---
+
+## About
+
+A minimal live clock that updates every second, respects a specified timezone, and renders with a mono font that fits editorial layouts. Uses `Intl.DateTimeFormat` under the hood for accurate timezone conversion.
+
+Handles hydration safely by rendering an invisible placeholder on the server that matches the client's first render exactly.
+
+<Callout type="tip">
+  Set the timezone prop to any valid IANA timezone like America/New_York, Europe/London, or Asia/Tokyo. The label auto-derives from the last segment.
+</Callout>
+
+## Usage
+
+```tsx
+import TimeDisplay from "@/components/time-display";
+
+export default function Page() {
+  return (
+    <div>
+      <TimeDisplay timezone="Asia/Dhaka" />
+      <TimeDisplay timezone="Europe/Berlin" showLabel={false} />
+    </div>
+  );
+}

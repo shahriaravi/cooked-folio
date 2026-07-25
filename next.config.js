@@ -20,6 +20,7 @@ const nextConfig = {
         "./public/fonts/Inter-Regular.ttf",
         "./public/fonts/Inter-Bold.ttf",
          "./src/content/writing/**/*.mdx",
+          "./src/content/lab/**/*.mdx",
       ],
     },
   },

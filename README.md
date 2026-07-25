@@ -4,7 +4,7 @@
 
 A minimal, editorial portfolio built with **Next.js 14**, **Tailwind**, and **TypeScript**.
 <br/>
-Real-time Discord presence, Spotify now-playing, GitHub heatmap, MDX blog, and a chat-style contact form.
+Real-time Discord presence, Spotify now-playing, GitHub heatmap, MDX blog with syntax highlighting, dynamic OG images, and a chat-style contact form.
 
 <br/>
 
@@ -22,17 +22,18 @@ One-click deploy on Vercel:
 
 ## ✨ Features
 
-- **Discord presence** via Lanyard, with real status dot + current activity
+- **Discord presence** via Lanyard with real status dot + current activity
 - **Spotify now playing** with album art
 - **GitHub contributions heatmap**
-- **MDX blog** at `/writing` — auto reading time, share menu (X, Facebook, Discord, copy link), related posts
+- **MDX blog** at /writing — auto reading time, per-post dynamic OG images, share menu (X, Facebook, Discord, copy link), related posts, syntax highlighted code blocks with copy button
 - **Chat-style contact form** — sequential prompts, posts to Discord webhook
 - **Cal.com booking modal** embedded in homepage footer
 - **Dark/light theme** with instant swap
-- **Universal navbar + footer** with copyright and GitHub star link
-- **SEO-optimized** — full metadata, JSON-LD Person + WebSite schema, robots.txt, sitemap.xml
+- **Universal navbar + footer** — copyright and GitHub star link, hidden on donate routes
+- **SEO-optimized** — full metadata, JSON-LD Person + WebSite + BlogPosting schema, robots.txt, dynamic sitemap
 - **AI crawler friendly** — GPTBot, ClaudeBot, Gemini, Perplexity explicitly allowed
-- Editorial typography (Inter + Geist Mono), squircle avatars, no unnecessary animations
+- **Dark mode extension blocker** — locks out Dark Reader, Night Eye, etc. so your theme stays yours
+- Editorial typography (Inter + Geist Mono), squircle avatars, no unnecessary animations, instant client-side navigation
 
 ---
 
@@ -42,7 +43,9 @@ One-click deploy on Vercel:
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Fonts:** Inter (body) + Geist Mono (meta/labels)
-- **Content:** MDX via `next-mdx-remote`, `gray-matter`, `reading-time`
+- **Content:** MDX via next-mdx-remote, gray-matter, reading-time
+- **Syntax highlighting:** rehype-pretty-code + shiki (github-dark-dimmed theme)
+- **OG images:** @vercel/og with bundled Inter fonts and per-post cards
 - **Icons:** lucide-react, react-icons
 - **Data:** SWR + async server components
 - **Analytics:** Vercel Analytics
@@ -53,14 +56,12 @@ One-click deploy on Vercel:
 
 ## 🚀 Getting Started
 
-```bash
-git clone https://github.com/shahriaravi/cooked-folio.git
-cd cooked-folio
-npm install
-npm run dev
-```
+    git clone https://github.com/shahriaravi/cooked-folio.git
+    cd cooked-folio
+    npm install
+    npm run dev
 
-Open `http://localhost:3000`.
+Open http://localhost:3000.
 
 ---
 
@@ -68,9 +69,7 @@ Open `http://localhost:3000`.
 
 Copy `.env.example` to `.env.local`:
 
-```bash
-cp .env.example .env.local
-```
+    cp .env.example .env.local
 
 | Variable | Description |
 | --- | --- |
@@ -91,60 +90,68 @@ cp .env.example .env.local
 Socials, stack, experience, education, projects, external links.
 
 **SEO** → `src/lib/site-config.ts`
-Metadata, keywords, JSON-LD schema, OpenGraph, Twitter cards.
+Metadata, keywords, JSON-LD schema, OpenGraph, Twitter cards. Every page defaults to `Shahriar Avi` as title unless overridden per-page.
 
 **Blog posts** → `src/content/writing/*.mdx`
 Filename becomes slug. Frontmatter is minimal:
 
-```mdx
----
-title: "Post Title"
-date: "2026-01-15"
----
-```
+    ---
+    title: "Post Title"
+    date: "2026-01-15"
+    ---
 
-Reading time, word count, and slug are auto-generated.
+Reading time, word count, slug, and per-post OG image all auto-generated.
+
+**OG images** → `src/app/writing/[slug]/opengraph-image.tsx`
+Dynamic per-post preview cards using your background at `public/images/blog.png`, avatar, post title, and reading time. Fonts bundled at `public/fonts/Inter-Regular.ttf` + `Inter-Bold.ttf`.
 
 ---
 
 ## 📂 Project Structure
 
-```text
-src/
-├─ app/
-│  ├─ api/                     # contact, donate, discord, spotify, github routes
-│  ├─ writing/                 # blog list + [slug] dynamic post pages
-│  ├─ contact/                 # chat-style form
-│  ├─ donate/                  # donation page + thanks
-│  ├─ layout.tsx               # root layout (Navbar, footer, JSON-LD, splash)
-│  ├─ sitemap.ts               # dynamic sitemap
-│  └─ page.tsx                 # homepage
-├─ components/
-│  ├─ common/                  # Container, ThemeToggle, InitialSplash, HelloLoader
-│  ├─ layout/                  # Hero, Navbar, HomeFooter, SiteFooter
-│  ├─ sections/                # Experience, Education, Projects, Stack
-│  ├─ integrations/            # Discord, Spotify, GitHub cards
-│  ├─ contact/                 # ContactForm
-│  ├─ donate/                  # DonateContent, DonateThanks
-│  ├─ writing/                 # WritingList, MdxComponents, ShareMenu, MorePosts
-│  └─ ui/                      # TimeDisplay, Folder, LogoLoop, PixelBlast
-├─ content/writing/            # MDX blog posts
-├─ hooks/                      # useDiscordPresence
-└─ lib/                        # config, site-config, writing, utils
-```
+    src/
+    ├─ app/
+    │  ├─ api/                                # contact, donate, discord, spotify, github routes
+    │  ├─ writing/
+    │  │  ├─ page.tsx                         # blog list
+    │  │  └─ [slug]/
+    │  │     ├─ page.tsx                      # dynamic post page (SSG)
+    │  │     └─ opengraph-image.tsx           # per-post OG image generator
+    │  ├─ contact/                            # chat-style form
+    │  ├─ donate/                             # donation page + thanks
+    │  ├─ layout.tsx                          # root: Providers, InitialSplash, NavbarWrapper, SiteFooterWrapper, JSON-LD, fonts
+    │  ├─ sitemap.ts                          # dynamic sitemap
+    │  └─ page.tsx                            # homepage
+    ├─ components/
+    │  ├─ common/                             # Container, ThemeToggle, InitialSplash, HelloLoader, CustomScrollArea
+    │  ├─ layout/                             # Hero, Navbar, NavbarWrapper, HomeFooter, SiteFooter, SiteFooterWrapper, Providers
+    │  ├─ sections/                           # Experience, Education, Projects, Stack
+    │  ├─ integrations/                       # Discord, Spotify, GitHub cards
+    │  ├─ contact/                            # ContactForm
+    │  ├─ donate/                             # DonateContent, DonateThanks
+    │  ├─ writing/                            # WritingList, MdxComponents, ShareMenu, MorePosts, CodeBlock, ArticleJsonLd
+    │  └─ ui/                                 # TimeDisplay, Folder, LogoLoop, PixelBlast
+    ├─ content/writing/                       # MDX blog posts
+    ├─ hooks/                                 # useDiscordPresence
+    └─ lib/                                   # config, site-config, writing, utils
+    public/
+    ├─ fonts/                                 # Inter-Regular.ttf, Inter-Bold.ttf (for OG images)
+    ├─ images/                                # blog.png (OG background)
+    └─ avatar/                                # avatar.png, avatar-full.png, avatar-fill.png
 
 ---
 
 ## 🎨 Design System
 
-- **Content width:** 640px column, centered
+- **Content width:** 44rem (704px) centered column
 - **Fonts:** Inter body, Geist Mono for meta/labels/dates
 - **Section overline:** `text-[11px] font-mono uppercase tracking-[0.14em]`
 - **Body copy:** `16px / 24px / 0.2px`
 - **Headings:** `22–28px semibold`, tight letter-spacing
 - **Avatars:** squircle with fixed px radius
 - **Cards:** `rounded-2xl` with subtle border + hover tint
-- **Interactions:** instant CSS transitions, no unnecessary animations
+- **Interactions:** instant CSS transitions, no page fade animations, no unnecessary pop-ins
+- **Sticky footer:** `flex min-h-[100dvh] flex-col` layout keeps footer at bottom on short pages
 
 ---
 
@@ -152,23 +159,40 @@ src/
 
 Add a new blog post by creating a `.mdx` file:
 
-```
-src/content/writing/my-new-post.mdx
-```
+    src/content/writing/my-new-post.mdx
 
-Filename becomes the URL slug (`/writing/my-new-post`). The list page, related posts, and metadata all update automatically on next build.
+Filename becomes the URL slug (`/writing/my-new-post`). The list page, related posts, sitemap, and per-post OG image all update automatically on next build.
+
+Code blocks support syntax highlighting when you specify a language after the opening backticks (tsx, ts, css, bash, powershell, python, and 100+ more via shiki). Every code block gets an always-visible copy button.
+
+---
+
+## 🔒 Dark Mode Extension Blocking
+
+The site actively blocks browser extensions like Dark Reader from overriding its theme, since it already ships proper dark mode. Handled via:
+
+- `<meta name="darkreader-lock" />` in the head
+- `darkreader-ignore` class + `data-darkreader-ignore` attribute on `<html>`
+- CSS reset for any `[data-darkreader-inline-*]` attributes
+- `color-scheme: only light/dark` locks
+
+Full explanation in `/writing/block-dark-mode-extensions`.
 
 ---
 
 ## 🗑️ Removing Optional Features
 
-**Donate page**:
+**Donate page:**
 
-```bash
-rm -rf src/app/donate src/app/api/donate src/components/donate
-```
+    rm -rf src/app/donate src/app/api/donate src/components/donate
 
 Remove any `/donate` links from `src/lib/config.ts`.
+
+**Component Lab:**
+
+    rm -rf src/app/lab src/app/r src/components/lab src/content/lab src/lib/lab.ts src/lib/registry-source.ts
+
+Then remove the `/lab` entry from `navLinks` in `src/components/layout/Navbar.tsx` and remove the `/lab` include from `experimental.outputFileTracingIncludes` in `next.config.js`.
 
 ---
 

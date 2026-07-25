@@ -1,0 +1,113 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { IoMdMoon } from "react-icons/io";
+
+export type DiscordPresence = "online" | "idle" | "dnd" | "offline";
+
+interface StatusConfig {
+  color: string;
+  label: string;
+}
+
+const STATUS_MAP: Record<DiscordPresence, StatusConfig> = {
+  online: {
+    color: "bg-green-500",
+    label: "Active now",
+  },
+  idle: {
+    color: "text-[#f0b232]",
+    label: "Idle",
+  },
+  dnd: {
+    color: "bg-red-500",
+    label: "DND",
+  },
+  offline: {
+    color: "bg-zinc-300 dark:bg-zinc-600",
+    label: "Touching grass 🌿",
+  },
+};
+
+interface DiscordPresenceDotProps {
+  userId: string;
+  size?: number;
+  pollInterval?: number;
+  showTooltip?: boolean;
+  className?: string;
+}
+
+export default function DiscordPresenceDot({
+  userId,
+  size = 14,
+  pollInterval = 15000,
+  showTooltip = true,
+  className = "",
+}: DiscordPresenceDotProps) {
+  const [status, setStatus] = useState<DiscordPresence>("offline");
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch(
+          `https://api.lanyard.rest/v1/users/${userId}`,
+          { cache: "no-store" }
+        );
+        if (!res.ok) throw new Error("failed");
+        const json = await res.json();
+        const next = json?.data?.discord_status as DiscordPresence;
+        if (
+          next === "online" ||
+          next === "idle" ||
+          next === "dnd" ||
+          next === "offline"
+        ) {
+          setStatus(next);
+        } else {
+          setStatus("offline");
+        }
+      } catch {
+        setStatus("offline");
+      }
+    };
+
+    fetchStatus();
+    const id = setInterval(fetchStatus, pollInterval);
+    return () => clearInterval(id);
+  }, [userId, pollInterval]);
+
+  const config = STATUS_MAP[status];
+  const isIdle = status === "idle";
+
+  const sizeStyle = {
+    width: `${size}px`,
+    height: `${size}px`,
+  };
+
+  return (
+    <div className="group relative inline-flex items-center justify-center">
+      {showTooltip && (
+        <div className="absolute -top-10 left-1/2 z-50 hidden -translate-x-1/2 whitespace-nowrap group-hover:block">
+          <div className="rounded-lg border border-black/10 bg-white px-3 py-1.5 text-[10px] font-bold text-black shadow-lg dark:border-white/10 dark:bg-black dark:text-white">
+            {config.label}
+          </div>
+          <div className="absolute -bottom-1 left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-black/10 bg-white dark:border-white/10 dark:bg-black" />
+        </div>
+      )}
+
+      {isIdle ? (
+        <div
+          className={`relative z-20 flex items-center justify-center rounded-full bg-white dark:bg-black -rotate-[15deg] ${config.color} ${className}`}
+          style={sizeStyle}
+        >
+          <IoMdMoon className="h-[85%] w-[85%]" />
+        </div>
+      ) : (
+        <div
+          className={`rounded-full ${config.color} ${className}`}
+          style={sizeStyle}
+        />
+      )}
+    </div>
+  );
+}

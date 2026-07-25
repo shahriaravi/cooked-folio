@@ -221,3 +221,28 @@
 .code-block [data-line] {
   padding: 0 4px;
 }
+
+.shiki-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  background-color: hsl(var(--card));
+}
+
+.shiki-wrapper pre {
+  margin: 0 !important;
+  padding: 16px !important;
+  padding-right: 48px !important;
+  background: transparent !important;
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  line-height: 22px !important;
+  min-width: max-content;
+}
+
+.shiki-wrapper pre code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  color: inherit !important;
+}
