@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
-import { CodeBlock } from "./CodeBlock";
+import { CodeBlock } from "@/components/common/CodeBlock";
 
 export const mdxComponents: MDXComponents = {
   h1: (props) => (

@@ -7,7 +7,7 @@ import { craftMdxComponents } from "@/components/craft/mdx/craftMdxComponents";
 import { ComponentPreview } from "@/components/craft/ComponentPreview";
 import { InstallSection } from "@/components/craft/InstallSection";
 import { ManualInstall } from "@/components/craft/ManualInstall";
-import { CodeBlock } from "@/components/craft/CodeBlock";
+import { CodeBlock } from "@/components/common/CodeBlock";
 import { CopyForAI } from "@/components/craft/CopyForAI";
 import { buildAIContext } from "@/lib/ai-context";
 import rehypePrettyCode from "rehype-pretty-code";

@@ -1,0 +1,31 @@
+---
+order: 3
+title: "Hello Loader"
+description: "Multilingual greeting splash screen. Cycles through hello in different languages with a smooth fade transition."
+component: "HelloLoader"
+dependencies:
+  - framer-motion
+tags:
+  - loader
+  - splash
+  - animated
+---
+
+## About
+
+A friendly splash loader that cycles through "hello" in different languages, animated with fade transitions. Perfect for first-visit splash screens, page load indicators, or any moment where you want to greet the user warmly.
+
+Ships with 5 languages by default (English, Bengali, Spanish, Hindi, French). Pass your own array to customize.
+
+<Callout type="tip">
+  Pair it with `sessionStorage` to only show it once per session, so returning visitors don't see the splash again. See the pattern below.
+</Callout>
+
+## Usage
+
+```tsx
+import HelloLoader from "@/components/hello-loader";
+
+export default function Page() {
+  return <HelloLoader avatarSrc="/avatar.png" />;
+}

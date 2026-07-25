@@ -1,6 +1,6 @@
 import { getComponentSource } from "./registry/sources";
 import { PackageManagerTabs } from "./PackageManagerTabs";
-import { CodeBlock } from "./CodeBlock";
+import { CodeBlock } from "@/components/common/CodeBlock";
 
 interface ManualInstallProps {
   componentName: string;

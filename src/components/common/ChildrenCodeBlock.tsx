@@ -4,11 +4,11 @@ import { Check, Copy } from "lucide-react";
 import { useRef, useState } from "react";
 import { play } from "cuelume";
 
-interface CodeBlockProps {
+interface ChildrenCodeBlockProps {
   children: React.ReactNode;
 }
 
-export function CodeBlock({ children }: CodeBlockProps) {
+export function ChildrenCodeBlock({ children }: ChildrenCodeBlockProps) {
   const preRef = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
 

@@ -1,6 +1,6 @@
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
+import path from "path";
 
 const CRAFT_DIR = path.join(process.cwd(), "src/content/craft");
 
@@ -10,6 +10,7 @@ export interface CraftFrontmatter {
   component: string;
   dependencies?: string[];
   tags?: string[];
+  order?: number;
 }
 
 export interface CraftMeta {
@@ -19,6 +20,7 @@ export interface CraftMeta {
   component: string;
   dependencies: string[];
   tags: string[];
+  order: number;
 }
 
 export interface CraftComponent extends CraftMeta {
@@ -50,6 +52,7 @@ function parseFile(filename: string): CraftComponent {
     component: frontmatter.component,
     dependencies: frontmatter.dependencies ?? [],
     tags: frontmatter.tags ?? [],
+    order: frontmatter.order ?? 999,
     content,
   };
 }
@@ -62,7 +65,10 @@ export function getAllCraftComponents(): CraftMeta[] {
     return meta;
   });
 
-  return components.sort((a, b) => a.title.localeCompare(b.title));
+  return components.sort((a, b) => {
+    if (a.order !== b.order) return a.order - b.order;
+    return a.title.localeCompare(b.title);
+  });
 }
 
 export function getCraftComponentBySlug(slug: string): CraftComponent | null {

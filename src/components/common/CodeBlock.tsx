@@ -1,20 +1,38 @@
-import { Copy } from "lucide-react";
 import { codeToHtml } from "shiki";
 import { CopyButton } from "./CopyButton";
+import { ChildrenCodeBlock } from "./ChildrenCodeBlock";
 
-interface CodeBlockProps {
-  code: string;
+interface BaseProps {
   language?: string;
   filename?: string;
   maxHeight?: number;
+  className?: string;
 }
 
-export async function CodeBlock({
-  code,
-  language = "tsx",
-  filename,
-  maxHeight = 400,
-}: CodeBlockProps) {
+interface StringCodeBlockProps extends BaseProps {
+  code: string;
+  children?: never;
+}
+
+interface ChildrenCodeBlockProps extends BaseProps {
+  code?: never;
+  children: React.ReactNode;
+}
+
+type CodeBlockProps = StringCodeBlockProps | ChildrenCodeBlockProps;
+
+export async function CodeBlock(props: CodeBlockProps) {
+  if ("children" in props && props.children !== undefined) {
+    return <ChildrenCodeBlock {...props} />;
+  }
+
+  const {
+    code = "",
+    language = "tsx",
+    filename,
+    maxHeight = 400,
+  } = props as StringCodeBlockProps;
+
   let html = "";
   try {
     html = await codeToHtml(code, {
