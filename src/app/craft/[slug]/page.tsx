@@ -8,6 +8,8 @@ import { ComponentPreview } from "@/components/craft/ComponentPreview";
 import { InstallSection } from "@/components/craft/InstallSection";
 import { ManualInstall } from "@/components/craft/ManualInstall";
 import { CodeBlock } from "@/components/craft/CodeBlock";
+import { CopyForAI } from "@/components/craft/CopyForAI";
+import { buildAIContext } from "@/lib/ai-context";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { Metadata } from "next";
 
@@ -88,6 +90,7 @@ export default async function CraftComponentPage({ params }: PageProps) {
   }
 
   const source = getComponentSource(component.component);
+  const aiContext = buildAIContext(component);
 
   const previewCodeBlock = (
     <CodeBlock code={source} language="tsx" maxHeight={500} />
@@ -132,29 +135,35 @@ export default async function CraftComponentPage({ params }: PageProps) {
           {component.description}
         </p>
 
-        {component.dependencies.length > 0 && (
-          <div className="mb-10 flex flex-wrap items-center gap-2">
-            <span
-              className="font-mono uppercase tracking-[0.12em] text-muted-foreground/70"
-              style={{ fontSize: "10px", lineHeight: "1" }}
-            >
-              deps
-            </span>
-            {component.dependencies.map((dep) => (
+        <div className="mb-10 flex flex-wrap items-center justify-between gap-3">
+          {component.dependencies.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-2">
               <span
-                key={dep}
-                className="rounded-[4px] border border-border/60 bg-secondary/40 px-2 py-1 font-mono text-muted-foreground"
-                style={{
-                  fontSize: "11px",
-                  lineHeight: "1",
-                  letterSpacing: "0.02em",
-                }}
+                className="font-mono uppercase tracking-[0.12em] text-muted-foreground/70"
+                style={{ fontSize: "10px", lineHeight: "1" }}
               >
-                {dep}
+                deps
               </span>
-            ))}
-          </div>
-        )}
+              {component.dependencies.map((dep) => (
+                <span
+                  key={dep}
+                  className="rounded-[4px] border border-border/60 bg-secondary/40 px-2 py-1 font-mono text-muted-foreground"
+                  style={{
+                    fontSize: "11px",
+                    lineHeight: "1",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {dep}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div />
+          )}
+
+          <CopyForAI context={aiContext} />
+        </div>
 
         <ComponentPreview
           componentName={component.component}
