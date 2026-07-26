@@ -59,43 +59,43 @@ html.light {
       Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-.light {
-  color-scheme: light;
+  .light {
+    color-scheme: light;
 
-  --background: 220 20% 94%;
-  --foreground: 226 45% 12%;
+    --background: 220 20% 94%;
+    --foreground: 226 45% 12%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 226 45% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 226 45% 12%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 226 45% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 226 45% 12%;
 
-  --primary: 215 90% 48%;
-  --primary-foreground: 210 40% 98%;
+    --primary: 215 90% 48%;
+    --primary-foreground: 210 40% 98%;
 
-  --secondary: 220 15% 90%;
-  --secondary-foreground: 226 45% 20%;
+    --secondary: 220 15% 90%;
+    --secondary-foreground: 226 45% 20%;
 
-  --muted: 220 15% 90%;
-  --muted-foreground: 226 15% 40%;
+    --muted: 220 15% 90%;
+    --muted-foreground: 226 15% 40%;
 
-  --accent: 220 15% 90%;
-  --accent-foreground: 226 45% 12%;
+    --accent: 220 15% 90%;
+    --accent-foreground: 226 45% 12%;
 
-  --destructive: 0 75% 55%;
-  --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 40% 98%;
 
-  --success: 150 75% 38%;
-  --success-foreground: 210 40% 98%;
+    --success: 150 75% 38%;
+    --success-foreground: 210 40% 98%;
 
-  --warning: 35 90% 48%;
-  --warning-foreground: 226 45% 12%;
+    --warning: 35 90% 48%;
+    --warning-foreground: 226 45% 12%;
 
-  --border: 220 15% 75%;
-  --input: 220 15% 75%;
-  --ring: 215 90% 48%;
-}
+    --border: 220 15% 75%;
+    --input: 220 15% 75%;
+    --ring: 215 90% 48%;
+  }
 
   .dark {
     color-scheme: dark;
@@ -162,17 +162,18 @@ html.light {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.2);
-    border-radius: 3px;
+    background: hsl(var(--muted-foreground) / 0.5);
+    border-radius: 9999px;
+    min-height: 40px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary));
+    background: hsl(var(--muted-foreground) / 0.8);
   }
 
   html {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.5) transparent;
   }
 }
 
@@ -196,6 +197,14 @@ html.light {
   html.light .bg-card {
     box-shadow: 0 1px 3px hsl(226 30% 20% / 0.06),
       0 1px 2px hsl(226 30% 20% / 0.04);
+  }
+
+  html.light .border-border\/40 {
+    border-color: hsl(var(--border) / 0.7);
+  }
+
+  html.light .border-border\/60 {
+    border-color: hsl(var(--border) / 0.85);
   }
 
   [data-darkreader-inline-bgcolor],

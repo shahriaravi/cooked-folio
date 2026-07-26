@@ -57,8 +57,8 @@ export default async function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          alignItems: "center",
+          justifyContent: "center",
           padding: "80px",
           backgroundImage: bgBase64 ? `url(${bgBase64})` : undefined,
           backgroundColor: "#0a1024",
@@ -83,17 +83,17 @@ export default async function Image() {
             position: "relative",
             display: "flex",
             alignItems: "center",
-            gap: "32px",
+            gap: "48px",
             zIndex: 10,
           }}
         >
           {avatarBase64 && (
             <img
               src={avatarBase64}
-              width={120}
-              height={120}
+              width={220}
+              height={220}
               style={{
-                borderRadius: "32px",
+                borderRadius: "56px",
               }}
               alt=""
             />
@@ -102,16 +102,16 @@ export default async function Image() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "12px",
+              gap: "16px",
             }}
           >
             <div
               style={{
                 color: "#ffffff",
-                fontSize: "82px",
+                fontSize: "104px",
                 fontWeight: 700,
                 lineHeight: 1,
-                letterSpacing: "-0.02em",
+                letterSpacing: "-0.03em",
               }}
             >
               Shahriar Avi
@@ -119,44 +119,14 @@ export default async function Image() {
             <div
               style={{
                 color: "rgba(180, 200, 255, 0.85)",
-                fontSize: "30px",
+                fontSize: "42px",
                 fontWeight: 500,
-                lineHeight: 1.2,
-                letterSpacing: "-0.005em",
+                lineHeight: 1,
+                letterSpacing: "-0.01em",
               }}
             >
               Design Engineer
             </div>
-          </div>
-        </div>
-
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            zIndex: 10,
-          }}
-        >
-          <div
-            style={{
-              color: "rgba(255,255,255,0.55)",
-              fontSize: "22px",
-              fontWeight: 400,
-              lineHeight: 1.4,
-            }}
-          >
-            Breaking things, building stuff.
-          </div>
-          <div
-            style={{
-              color: "rgba(255,255,255,0.4)",
-              fontSize: "20px",
-              fontWeight: 500,
-            }}
-          >
-            shahriaravi.me
           </div>
         </div>
       </div>

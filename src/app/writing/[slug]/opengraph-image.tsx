@@ -20,6 +20,14 @@ function loadAsset(relPath: string): Buffer | null {
   }
 }
 
+function formatReadingTime(readingTime: string): string {
+  if (!readingTime) return "";
+  const match = readingTime.match(/(\d+)\s*m/i);
+  if (!match) return readingTime;
+  const minutes = parseInt(match[1], 10);
+  return `${minutes} min read`;
+}
+
 export default async function Image({
   params,
 }: {
@@ -28,6 +36,7 @@ export default async function Image({
   const post = getPostBySlug(params.slug);
   const title = post?.title ?? "Shahriar Avi";
   const readingTime = post?.readingTime ?? "";
+  const formattedReadingTime = formatReadingTime(readingTime);
 
   const bgBuffer = loadAsset("images/og-bg.png");
   const avatarBuffer = loadAsset("avatar/avatar.png");
@@ -107,8 +116,9 @@ export default async function Image({
           style={{
             position: "relative",
             display: "flex",
-            flexDirection: "column",
-            gap: "20px",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "24px",
             zIndex: 10,
           }}
         >
@@ -142,7 +152,7 @@ export default async function Image({
             </div>
           </div>
 
-          {readingTime && (
+          {formattedReadingTime && (
             <div
               style={{
                 display: "flex",
@@ -153,7 +163,7 @@ export default async function Image({
                 textTransform: "uppercase",
               }}
             >
-              {readingTime} read
+              {formattedReadingTime}
             </div>
           )}
         </div>

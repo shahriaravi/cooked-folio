@@ -1,13 +1,13 @@
 import "./globals.css";
 
-import { Providers } from "@/components/layout/Providers";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
+import { Providers } from "@/components/layout/Providers";
 import { SiteFooterWrapper } from "@/components/layout/SiteFooterWrapper";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
-import { GeistMono } from "geist/font/mono";
-import { Inter } from "next/font/google";
-import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { GeistMono } from "geist/font/mono";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,10 +91,19 @@ const themeInitScript = `
     var theme = stored === 'light' ? 'light' : 'dark';
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
-    document.documentElement.style.colorScheme = theme;
+    if (theme === 'light') {
+      document.documentElement.style.colorScheme = 'light';
+      document.documentElement.style.backgroundColor = '#eef1f5';
+    } else {
+      document.documentElement.style.colorScheme = 'dark';
+      document.documentElement.style.backgroundColor = '#0a1024';
+    }
+    document.documentElement.setAttribute('data-theme-ready', 'true');
   } catch (e) {
     document.documentElement.classList.add('dark');
     document.documentElement.style.colorScheme = 'dark';
+    document.documentElement.style.backgroundColor = '#0a1024';
+    document.documentElement.setAttribute('data-theme-ready', 'true');
   }
 })();
 `;
@@ -110,7 +119,6 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${GeistMono.variable} darkreader-ignore`}
       data-darkreader-ignore=""
-      style={{ colorScheme: "dark", backgroundColor: "#0a1024" }}
     >
       <head>
         <meta name="darkreader-lock" />

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaGamepad } from "react-icons/fa";
 
 export interface Activity {
   isActive: boolean;
@@ -92,13 +91,27 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
 
   return (
     <section className="mb-10">
-      <h2 className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
-        activity
-      </h2>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+          activity
+        </h2>
+        {data.startTimestamp && (
+          <span
+            className="font-mono text-emerald-500 dark:text-emerald-400 tabular-nums"
+            style={{
+              fontSize: "11px",
+              lineHeight: "1",
+              letterSpacing: "0.06em",
+            }}
+          >
+            {elapsedTime}
+          </span>
+        )}
+      </div>
 
-      <div className="flex flex-wrap items-center gap-3 text-muted-foreground">
+      <div className="flex items-center gap-4">
         {data.largeImage && (
-          <div className="relative h-9 w-9 md:h-10 md:w-10 flex-shrink-0 overflow-hidden rounded-lg border border-white/10">
+          <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border border-border/60">
             <Image
               src={data.largeImage}
               alt=""
@@ -110,71 +123,41 @@ export function ActivitySection({ initialActivity }: ActivitySectionProps) {
         )}
 
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              {activity.activityType === "PLAYING" ? "playing" : "activity"}
-            </span>
-            {data.startTimestamp && (
-              <span
-                className="inline-flex items-center gap-1 font-mono text-emerald-400"
-                style={{
-                  fontSize: "11px",
-                  lineHeight: "1",
-                  letterSpacing: "0.06em",
-                }}
-              >
-                <FaGamepad className="h-3 w-3" />
-                {elapsedTime}
-              </span>
-            )}
-          </div>
+          <p
+            className="truncate font-semibold text-foreground"
+            style={{
+              fontSize: "15px",
+              lineHeight: "22px",
+              letterSpacing: "0.1px",
+            }}
+          >
+            {data.name}
+          </p>
 
-          <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-            <span
-              className="max-w-[160px] truncate font-semibold text-foreground md:max-w-xs"
-              style={{ fontSize: "15px", lineHeight: "22px" }}
+          {(data.details || data.state) && (
+            <p
+              className="truncate text-muted-foreground"
+              style={{
+                fontSize: "13px",
+                lineHeight: "20px",
+                letterSpacing: "0.1px",
+              }}
             >
-              {data.name}
-            </span>
-            {data.details && (
-              <span
-                className="max-w-[220px] truncate text-muted-foreground md:max-w-sm"
-                style={{
-                  fontSize: "14px",
-                  lineHeight: "22px",
-                  letterSpacing: "0.1px",
-                }}
-              >
-                – {data.details}
-              </span>
-            )}
-            {data.state && !data.details && (
-              <span
-                className="max-w-[220px] truncate text-muted-foreground md:max-w-sm"
-                style={{
-                  fontSize: "14px",
-                  lineHeight: "22px",
-                  letterSpacing: "0.1px",
-                }}
-              >
-                – {data.state}
-              </span>
-            )}
-          </div>
+              {data.details || data.state}
+            </p>
+          )}
 
           {data.workspace && (
-            <div className="mt-1.5">
-              <span
-                className="font-mono text-muted-foreground/70"
-                style={{
-                  fontSize: "11px",
-                  lineHeight: "1",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                project: {data.workspace}
-              </span>
-            </div>
+            <p
+              className="mt-1 font-mono text-muted-foreground/60 truncate"
+              style={{
+                fontSize: "11px",
+                lineHeight: "1.4",
+                letterSpacing: "0.06em",
+              }}
+            >
+              {data.workspace}
+            </p>
           )}
         </div>
       </div>
