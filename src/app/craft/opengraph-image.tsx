@@ -29,7 +29,7 @@ export default async function Image() {
     ? `data:image/png;base64,${bgBuffer.toString("base64")}`
     : "";
   const avatarBase64 = avatarBuffer
-    ? `data:image/jpeg;base64,${avatarBuffer.toString("base64")}`
+    ? `data:image/png;base64,${avatarBuffer.toString("base64")}`
     : "";
 
   const fonts = [];
