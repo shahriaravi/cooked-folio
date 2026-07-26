@@ -1,0 +1,250 @@
+---
+title: "Add Sound Feedback to Your Site with Cuelume"
+date: "2026-07-26"
+---
+
+Most websites feel visually finished but sonically empty. You click a button and get nothing back. You hover a link and get nothing back. It's fine, but it's not memorable.
+
+Adding subtle interaction sounds changes that. Not annoying pings, but quiet ticks, soft chimes, small confirmations that make your site feel considered. The kind of thing you notice when it's missing.
+
+The problem: doing this well means dealing with the Web Audio API, managing an `AudioContext`, designing envelopes so sounds don't feel harsh, handling browser autoplay policies, and either shipping audio files that bloat your bundle or building a synthesis engine yourself.
+
+Or, you can use **Cuelume**.
+
+## What is Cuelume
+
+[Cuelume](https://cuelume-site.pages.dev/) is a curated sound palette for the web. Fourteen carefully designed interaction sounds, synthesized live with the Web Audio API. No audio files. Zero runtime dependencies. Under a few KB total.
+
+Built by [Danila](https://github.com/Danilaa1). Open source, MIT licensed.
+
+The pitch is important: it's a **sound palette, not an audio engine**. That distinction matters. You don't need to design sounds, tune envelopes, or think about waveforms. You get fourteen production-ready sounds curated to work together as a set, mapped to standard interaction patterns.
+
+Add an attribute. Call `bind()`. Done.
+
+## Why it matters
+
+Sound design in UI is one of those things people don't notice until they experience it right. A soft click on hover, a warm chime on success, a gentle pop when a menu opens. Each interaction gets a tiny audio confirmation that says "yes, that worked."
+
+Good product companies get this. iOS has it everywhere. Linear has it. Notion has it. Most personal sites don't, because doing it well used to be hard.
+
+Cuelume makes it easy enough that there's no excuse.
+
+## Installation
+
+```bash
+npm install cuelume
+```
+
+Cuelume is ESM-only, which means modern bundlers like Next.js, Vite, and Astro handle it natively. You can't use it with legacy CommonJS `require()`.
+
+Server-side imports are safe. Sound playback only runs in the browser.
+
+## Basic usage
+
+Two ways to use it: **declarative** through data attributes, or **imperative** through a `play()` function.
+
+### Declarative approach
+
+Add attributes to any element, call `bind()` once, and Cuelume wires everything up automatically.
+
+```tsx
+<button data-cuelume-press data-cuelume-release>Save</button>
+<a data-cuelume-hover="tick">Docs</a>
+<button data-cuelume-toggle>Dark mode</button>
+```
+
+Then in your app entry point:
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+import { bind } from "cuelume";
+
+export function CuelumeProvider({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    bind();
+  }, []);
+
+  return <>{children}</>;
+}
+```
+
+Wrap your app in that provider once. Every element with a `data-cuelume-*` attribute plays sound on the corresponding interaction.
+
+The four attributes map to interactions like this:
+
+| Attribute | Fires on | Default sound |
+| --- | --- | --- |
+| `data-cuelume-hover` | `pointerenter` | chime |
+| `data-cuelume-press` | `pointerdown` | press |
+| `data-cuelume-release` | `pointerup` | release |
+| `data-cuelume-toggle` | `click` | toggle |
+
+Leave the attribute value empty to use the default, or set it to any sound name to override.
+
+### Imperative approach
+
+For programmatic control, import `play` and fire it whenever you want:
+
+```tsx
+import { play } from "cuelume";
+
+async function handleSubmit() {
+  try {
+    await submitForm();
+    play("success");
+  } catch {
+    play("error");
+  }
+}
+```
+
+I use this in my contact form so the success sound only fires when the message actually delivers, not just when the button is clicked.
+
+You can also fire sounds after any async action:
+
+```tsx
+import { play } from "cuelume";
+
+await navigator.clipboard.writeText(text);
+play("success");
+```
+
+### User preference
+
+If your app has a "sound on/off" setting, Cuelume gives you the API:
+
+```tsx
+import { setEnabled } from "cuelume";
+
+setEnabled(false);
+setEnabled(true);
+```
+
+Cuelume itself doesn't persist this. Your app owns the preference and just calls `setEnabled` when it changes.
+
+## The fourteen sounds
+
+Each sound has a specific character and a suggested use.
+
+**Interaction sounds:**
+
+- **`tick`** crisp instant tick, perfect for nav and menu hovers
+- **`chime`** soft two-note ascending bell, the default hover sound
+- **`press`** dull muted knock, for pointer down
+- **`release`** brighter springy tick, for pointer up
+- **`toggle`** mechanical click-clack, for switches and tabs
+
+**Feedback sounds:**
+
+- **`success`** warm three-note confirmation, for successful actions
+- **`error`** soft knock and descending refusal, for recoverable errors
+- **`loading`** brief rising shimmer, when work starts
+- **`ready`** focus tick with a harmonic bloom, when content loads
+
+**Ambient sounds:**
+
+- **`bloom`** warm slow swell, for reveals and expansions
+- **`droplet`** single note gliding down, for dismissals
+- **`whisper`** breathy quiet swell, for dense lists
+- **`sparkle`** quick four-note twinkle, for playful accents
+- **`page`** papery flick with a glass tick, for pages and carousels
+
+The whole set is designed to work together. Mixing them doesn't feel chaotic because they share a common sonic language.
+
+## Where to use it
+
+Not every interaction needs a sound. Overdoing it turns your site into a noisy toy. Here's my rule:
+
+**Play sounds for:**
+- Copy-to-clipboard actions
+- Form submissions (success and error)
+- Toggle state changes
+- Menu open and close
+- Notification arrivals
+- Confirmations
+
+**Skip sounds for:**
+- Page scrolling
+- Repeated actions (typing into an input)
+- Any interaction on a mobile browser
+
+Cuelume respects browser autoplay policies out of the box. Sounds only play after the user has interacted with the page. No rude surprises on load.
+
+Cuelume also throttles hover sounds globally to one every 150ms, so sweeping the cursor across a menu doesn't machine-gun ticks at the user. Small detail, huge impact on feel.
+
+## Volume control
+
+Cuelume doesn't expose a public volume API yet, but you can patch the master output at runtime by intercepting `AudioContext.createGain`:
+
+```tsx
+useEffect(() => {
+  bind();
+
+  const originalCreateGain = AudioContext.prototype.createGain;
+
+  (AudioContext.prototype as any).createGain = function () {
+    const gainNode = originalCreateGain.call(this);
+    const originalConnect = gainNode.connect.bind(gainNode);
+
+    (gainNode as any).connect = function (
+      destination: AudioNode | AudioParam,
+      ...args: any[]
+    ) {
+      if (destination === this.context.destination) {
+        gainNode.gain.value = 0.8;
+      }
+      return (originalConnect as any)(destination, ...args);
+    };
+
+    return gainNode;
+  };
+}, []);
+```
+
+This normalizes every sound to the same peak output regardless of what the recipe baked in. Change `0.8` to whatever feels right. I use `0.8` on this site.
+
+Without this patch, some sounds feel louder than others because their recipes have different `masterGain` values. Normalizing fixes that.
+
+## Framework support
+
+Cuelume works anywhere HTML does. The `bind()` call uses event delegation, so it keeps working when components mount, unmount, or routes change.
+
+**React:**
+
+```tsx
+useEffect(() => {
+  bind();
+}, []);
+```
+
+**Astro (with view transitions):**
+
+```ts
+import { bind } from "cuelume";
+bind();
+```
+
+**Vue, Solid, Svelte, plain HTML:** same pattern. Call `bind()` once after the DOM is ready.
+
+## Real world example
+
+Every interaction on this site uses Cuelume:
+
+- Hovering navbar links plays `tick`
+- Clicking a copy button plays `chime`
+- Sending a contact form plays `success`
+- Failed clipboard access plays `error`
+- The theme toggle plays `press`
+- Book-a-call button plays `press` on click
+
+Users don't consciously notice most of it. But they feel it. The site feels alive, responsive, considered. Same reason iOS keyboards feel better than Android ones. The audio feedback loop is closed.
+
+## Should you use it
+
+If your site has any interactive UI beyond scrolling and reading, yes. It takes about twenty minutes to add and makes your site feel like something a real team built, not just another Next.js starter.
+
+The rule for good sound design: **you shouldn't notice it while it's happening. You should notice it's missing when you turn it off.**
+
+Full credit for making this possible goes to [Danila](https://github.com/Danilaa1). If you use Cuelume and love it, drop him a star on [GitHub](https://github.com/Danilaa1/cuelume).

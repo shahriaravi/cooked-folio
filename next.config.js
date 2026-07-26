@@ -12,18 +12,29 @@ const nextConfig = {
     formats: ["image/webp"],
   },
 
-  experimental: {
-    outputFileTracingIncludes: {
-      "/writing/[slug]/opengraph-image": [
-        "./public/images/blog.png",
-        "./public/avatar/avatar.png",
-        "./public/fonts/Inter-Regular.ttf",
-        "./public/fonts/Inter-Bold.ttf",
-         "./src/content/writing/**/*.mdx",
-          "./src/content/craft/**/*.mdx",
-      ],
-    },
+ experimental: {
+  outputFileTracingIncludes: {
+    "/writing/[slug]/opengraph-image": [
+      "./public/images/blog.png",
+      "./public/avatar/avatar.jpg",
+      "./public/fonts/Inter-Regular.ttf",
+      "./public/fonts/Inter-Bold.ttf",
+      "./src/content/writing/**/*.mdx",
+    ],
+    "/craft/opengraph-image": [
+      "./public/images/blog.png",
+      "./public/avatar/avatar.jpg",
+      "./public/fonts/Inter-Regular.ttf",
+      "./public/fonts/Inter-Bold.ttf",
+    ],
+    "/playground/opengraph-image": [
+      "./public/images/blog.png",
+      "./public/avatar/avatar.jpg",
+      "./public/fonts/Inter-Regular.ttf",
+      "./public/fonts/Inter-Bold.ttf",
+    ],
   },
+},
 
   reactStrictMode: true,
 };

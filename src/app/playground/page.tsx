@@ -1,23 +1,21 @@
-import { CraftList } from "@/components/craft/CraftList";
-import { getAllCraftComponents } from "@/lib/craft";
+import { PlaygroundList } from "@/components/playground/PlaygroundList";
+import { playgroundRegistry } from "@/components/playground/registry";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
 
 export const metadata = constructMetadata({
-  canonicalUrl: `${siteConfig.url}/craft`,
+  canonicalUrl: `${siteConfig.url}/playground`,
   other: {
-    "og:image": `${siteConfig.url}/craft/opengraph-image`,
-    "twitter:image": `${siteConfig.url}/craft/opengraph-image`,
+    "og:image": `${siteConfig.url}/playground/opengraph-image`,
+    "twitter:image": `${siteConfig.url}/playground/opengraph-image`,
   },
 });
 
-export default function CraftPage() {
-  const components = getAllCraftComponents();
-
+export default function PlaygroundPage() {
   return (
     <main className="mx-auto w-full max-w-[44rem] px-6 pb-10 md:pb-16">
       <section>
         <h2 className="mb-5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-          craft
+          playground
         </h2>
 
         <p
@@ -28,10 +26,10 @@ export default function CraftPage() {
             letterSpacing: "0.1px",
           }}
         >
-          Live previews of components I built. Use the ones you like.
+          Interactive component playground. Tweak controls, watch it change live.
         </p>
 
-        <CraftList components={components} />
+        <PlaygroundList configs={playgroundRegistry} />
       </section>
     </main>
   );

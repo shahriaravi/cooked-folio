@@ -49,7 +49,7 @@ export function ShareMenu({ title, slug }: ShareMenuProps) {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      play("success");
+      play("press");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       play("error");

@@ -1,18 +1,16 @@
-import dynamic from "next/dynamic";
 import { createElement } from "react";
+import TimeDisplay from "./TimeDisplay";
+import DiscordPresenceDotPreview from "../preview/DiscordPresenceDotPreview";
+import HelloLoader from "./HelloLoader";
 
 export const componentRegistry = {
-  TimeDisplay: dynamic(() => import("./TimeDisplay")),
-  DiscordPresenceDot: dynamic(() => import("../preview/DiscordPresenceDotPreview")),
-  HelloLoader: dynamic(() =>
-    import("./HelloLoader").then((mod) => ({
-      default: () =>
-        createElement(mod.default, {
-          fullScreen: false,
-          interval: 900,
-        }),
-    }))
-  ),
+  TimeDisplay,
+  DiscordPresenceDot: DiscordPresenceDotPreview,
+  HelloLoader: () =>
+    createElement(HelloLoader, {
+      fullScreen: false,
+      interval: 900,
+    }),
 };
 
 export function getRegistryComponent(name: string) {

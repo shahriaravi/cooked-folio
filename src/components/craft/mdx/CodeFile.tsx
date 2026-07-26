@@ -22,7 +22,7 @@ export function CodeFile({
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-      play("success");
+      play("press");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       play("error");

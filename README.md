@@ -24,12 +24,12 @@ One-click deploy on Vercel:
 
 - **Discord presence** via Lanyard with real status dot + current activity
 - **Spotify now playing** with album art
-- **GitHub contributions heatmap**
+- **GitHub contributions heatmap** + live star count badge in footer
 - **MDX blog** at /writing — auto reading time, per-post dynamic OG images, share menu (X, Facebook, Discord, copy link), related posts, syntax highlighted code blocks with copy button
 - **Chat-style contact form** — sequential prompts, posts to Discord webhook
 - **Cal.com booking modal** embedded in homepage footer
+- **Sound feedback** via Cuelume — hover ticks, press sounds, success chimes on every interaction
 - **Dark/light theme** with instant swap
-- **Universal navbar + footer** — copyright and GitHub star link, hidden on donate routes
 - **SEO-optimized** — full metadata, JSON-LD Person + WebSite + BlogPosting schema, robots.txt, dynamic sitemap
 - **AI crawler friendly** — GPTBot, ClaudeBot, Gemini, Perplexity explicitly allowed
 - **Dark mode extension blocker** — locks out Dark Reader, Night Eye, etc. so your theme stays yours
@@ -117,19 +117,31 @@ Dynamic per-post preview cards using your background at `public/images/blog.png`
     │  │  └─ [slug]/
     │  │     ├─ page.tsx                      # dynamic post page (SSG)
     │  │     └─ opengraph-image.tsx           # per-post OG image generator
+    │  ├─ playground/
+    │  │  ├─ page.tsx                         # playground list (grid of previews)
+    │  │  └─ [slug]/
+    │  │     └─ page.tsx                      # per-component customizer page
     │  ├─ contact/                            # chat-style form
     │  ├─ donate/                             # donation page + thanks
-    │  ├─ layout.tsx                          # root: Providers, InitialSplash, NavbarWrapper, SiteFooterWrapper, JSON-LD, fonts
+    │  ├─ layout.tsx                          # root: Providers, NavbarWrapper, SiteFooterWrapper, JSON-LD, fonts
     │  ├─ sitemap.ts                          # dynamic sitemap
     │  └─ page.tsx                            # homepage
     ├─ components/
-    │  ├─ common/                             # Container, ThemeToggle, InitialSplash, HelloLoader, CustomScrollArea
+    │  ├─ common/                             # Container, ThemeToggle, CodeBlock, CopyButton, CustomScrollArea
     │  ├─ layout/                             # Hero, Navbar, NavbarWrapper, HomeFooter, SiteFooter, SiteFooterWrapper, Providers
-    │  ├─ sections/                           # Experience, Education, Projects, Stack
+    │  ├─ sections/                           # Experience, Education, Projects, Stack, PlaygroundSection
     │  ├─ integrations/                       # Discord, Spotify, GitHub cards
     │  ├─ contact/                            # ContactForm
     │  ├─ donate/                             # DonateContent, DonateThanks
-    │  ├─ writing/                            # WritingList, MdxComponents, ShareMenu, MorePosts, CodeBlock, ArticleJsonLd
+    │  ├─ writing/                            # WritingList, MdxComponents, ShareMenu, MorePosts, ArticleJsonLd
+    │  ├─ playground/
+    │  │  ├─ Controls/                        # Text, Number, Slider, Color, Select, MultiSelect, Toggle
+    │  │  ├─ showcases/                       # InputBox, Button, ToggleShowcase
+    │  │  ├─ PlaygroundLayout.tsx             # preview area + controls grid
+    │  │  ├─ PlaygroundList.tsx               # grid of playground previews
+    │  │  ├─ usePlaygroundState.ts            # URL param sync hook
+    │  │  ├─ registry.tsx                     # slug → showcase + control config
+    │  │  └─ types.ts                         # control type definitions
     │  └─ ui/                                 # TimeDisplay, Folder, LogoLoop, PixelBlast
     ├─ content/writing/                       # MDX blog posts
     ├─ hooks/                                 # useDiscordPresence
@@ -152,6 +164,7 @@ Dynamic per-post preview cards using your background at `public/images/blog.png`
 - **Cards:** `rounded-2xl` with subtle border + hover tint
 - **Interactions:** instant CSS transitions, no page fade animations, no unnecessary pop-ins
 - **Sticky footer:** `flex min-h-[100dvh] flex-col` layout keeps footer at bottom on short pages
+- **Sound design:** Cuelume for tactile audio feedback on hover, press, success, error
 
 ---
 
@@ -188,7 +201,13 @@ Full explanation in `/writing/block-dark-mode-extensions`.
 
 Remove any `/donate` links from `src/lib/config.ts`.
 
-**Component Craft:**
+**Playground:**
+
+    rm -rf src/app/playground src/components/playground
+
+Then remove the `<PlaygroundSection />` import and usage from `src/app/page.tsx`, delete `src/components/sections/PlaygroundSection.tsx`, and remove the `/playground` case from `getBackHref` in `src/components/layout/Navbar.tsx`.
+
+**Component Craft** (if you added your own local `/craft` registry):
 
     rm -rf src/app/craft src/app/r src/components/craft src/content/craft src/lib/craft.ts src/lib/registry-source.ts
 

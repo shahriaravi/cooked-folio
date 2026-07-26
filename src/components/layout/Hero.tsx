@@ -57,10 +57,18 @@ export function Hero() {
             rel="noopener noreferrer"
             data-cuelume-hover="tick"
             data-cuelume-press
-            className="font-semibold transition-colors duration-200 hover:text-primary"
+            className="inline-flex items-baseline gap-1.5 font-semibold transition-colors duration-200 hover:text-primary align-baseline"
             style={{ color: "hsl(var(--foreground))" }}
           >
-            @Byontriq
+            Byontriq
+            <span className="relative inline-block h-[18px] w-[18px] translate-y-[4px] overflow-hidden rounded-[4px] ring-1 ring-border/40">
+              <Image
+                src="/images/companies/byontriq.jpeg"
+                alt="Byontriq"
+                fill
+                className="object-cover"
+              />
+            </span>
           </a>
           . I ship apps, websites, and extensions, and I obsess over the
           details most people skip. Currently taking on new projects if you

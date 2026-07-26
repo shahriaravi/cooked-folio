@@ -59,7 +59,7 @@ export default function DonateContent() {
   const copyText = async (text: string, key: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedKey(key);
-    play("success");
+    play("press");
     setTimeout(() => setCopiedKey(null), 2000);
   };
 

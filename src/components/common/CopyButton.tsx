@@ -11,7 +11,7 @@ export function CopyButton({ text }: { text: string }) {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      play("success");
+      play("press");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       play("error");

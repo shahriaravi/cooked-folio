@@ -127,7 +127,7 @@ export function CopyForAI({ context }: CopyForAIProps) {
     try {
       await navigator.clipboard.writeText(context);
       setCopied(true);
-      play("success");
+      play("press");
       setTimeout(() => setCopied(false), 1800);
     } catch {
       play("error");

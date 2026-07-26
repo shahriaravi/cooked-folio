@@ -138,7 +138,7 @@ export function PackageManagerTabs({
     try {
       await navigator.clipboard.writeText(command);
       setCopied(true);
-      play("success");
+      play("press");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       play("error");

@@ -16,7 +16,7 @@ export function HomeFooter() {
   const copyEmail = async () => {
     await navigator.clipboard.writeText(email);
     setCopied(true);
-    play("success");
+    play("press");
     setTimeout(() => setCopied(false), 2000);
   };
 

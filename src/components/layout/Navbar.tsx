@@ -18,6 +18,9 @@ function getBackHref(pathname: string): string {
   if (pathname.startsWith("/craft/") && pathname !== "/craft") {
     return "/craft";
   }
+  if (pathname.startsWith("/playground/") && pathname !== "/playground") {
+    return "/playground";
+  }
   return "/";
 }
 

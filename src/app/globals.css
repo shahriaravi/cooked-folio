@@ -246,3 +246,64 @@
   font-size: inherit !important;
   color: inherit !important;
 }
+
+.playground-slider {
+  outline: none;
+}
+
+.playground-slider::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+  border: none;
+}
+
+.playground-slider::-moz-range-track {
+  height: 100%;
+  background: transparent;
+  border: none;
+}
+
+.playground-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: hsl(45 25% 92%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease;
+  margin-top: 0;
+}
+
+.playground-slider::-webkit-slider-thumb:hover {
+  transform: scaleY(1.1);
+}
+
+.playground-slider::-webkit-slider-thumb:active {
+  transform: scaleY(1.15);
+}
+
+.playground-slider::-moz-range-thumb {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: hsl(45 25% 92%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease;
+}
+
+.playground-slider::-moz-range-thumb:hover {
+  transform: scaleY(1.1);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
