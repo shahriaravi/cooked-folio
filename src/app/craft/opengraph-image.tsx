@@ -20,8 +20,8 @@ function loadAsset(relPath: string): Buffer | null {
 }
 
 export default async function Image() {
-  const bgBuffer = loadAsset("images/blog.png");
-  const avatarBuffer = loadAsset("avatar/avatar.jpg");
+  const bgBuffer = loadAsset("images/og-bg.png");
+  const avatarBuffer = loadAsset("avatar/avatar.png");
   const fontRegular = loadAsset("fonts/Inter-Regular.ttf");
   const fontBold = loadAsset("fonts/Inter-Bold.ttf");
 

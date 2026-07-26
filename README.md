@@ -103,7 +103,7 @@ Filename becomes slug. Frontmatter is minimal:
 Reading time, word count, slug, and per-post OG image all auto-generated.
 
 **OG images** → `src/app/writing/[slug]/opengraph-image.tsx`
-Dynamic per-post preview cards using your background at `public/images/blog.png`, avatar, post title, and reading time. Fonts bundled at `public/fonts/Inter-Regular.ttf` + `Inter-Bold.ttf`.
+Dynamic per-post preview cards using your background at `public/images/og-bg.png`, avatar, post title, and reading time. Fonts bundled at `public/fonts/Inter-Regular.ttf` + `Inter-Bold.ttf`.
 
 ---
 
@@ -148,7 +148,7 @@ Dynamic per-post preview cards using your background at `public/images/blog.png`
     └─ lib/                                   # config, site-config, writing, utils
     public/
     ├─ fonts/                                 # Inter-Regular.ttf, Inter-Bold.ttf (for OG images)
-    ├─ images/                                # blog.png (OG background)
+    ├─ images/                                # og-bg.png (OG background)
     └─ avatar/                                # avatar.png, avatar.jpg, avatar-fill.png
 
 ---

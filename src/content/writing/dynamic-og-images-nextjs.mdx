@@ -99,7 +99,7 @@ Locally everything worked. Deployed. Production log:
 
 ```
 ENOENT: no such file or directory
-open '/var/task/public/images/blog.png'
+open '/var/task/public/images/og-bg.png'
 ```
 
 Vercel serverless functions don't include `public/` files by default. Even though they're accessible at your site URL, `fs.readFileSync('public/...')` fails because those files aren't bundled into the function's file system.
@@ -115,7 +115,7 @@ I added this to my config:
 ```js
 outputFileTracingIncludes: {
   "/writing/[slug]/opengraph-image": [
-    "./public/images/blog.png",
+    "./public/images/og-bg.png",
     "./public/fonts/Inter-Regular.ttf",
   ],
 }
@@ -136,7 +136,7 @@ That syntax is for Next.js 15. On Next.js 14, the option lives under `experiment
 experimental: {
   outputFileTracingIncludes: {
     "/writing/[slug]/opengraph-image": [
-      "./public/images/blog.png",
+      "./public/images/og-bg.png",
       "./public/fonts/Inter-Regular.ttf",
     ],
   },
@@ -157,7 +157,7 @@ The reason: `getPostBySlug` reads `.mdx` files from `src/content/writing/`. Same
 experimental: {
   outputFileTracingIncludes: {
     "/writing/[slug]/opengraph-image": [
-      "./public/images/blog.png",
+      "./public/images/og-bg.png",
       "./public/avatar/avatar.png",
       "./public/fonts/Inter-Regular.ttf",
       "./public/fonts/Inter-Bold.ttf",
@@ -198,7 +198,7 @@ Don't rely on Google Fonts CDN. It changes.
 experimental: {
   outputFileTracingIncludes: {
     "/writing/[slug]/opengraph-image": [
-      "./public/images/blog.png",
+      "./public/images/og-bg.png",
       "./public/avatar/avatar.png",
       "./public/fonts/Inter-Regular.ttf",
       "./public/fonts/Inter-Bold.ttf",
@@ -235,7 +235,7 @@ export default async function Image({ params }) {
   const title = post?.title ?? "Shahriar Avi";
   const readingTime = post?.readingTime ?? "";
 
-  const bgBuffer = loadAsset("images/blog.png");
+  const bgBuffer = loadAsset("images/og-bg.png");
   const avatarBuffer = loadAsset("avatar/avatar.png");
   const fontRegular = loadAsset("fonts/Inter-Regular.ttf");
   const fontBold = loadAsset("fonts/Inter-Bold.ttf");

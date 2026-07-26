@@ -29,7 +29,7 @@ export default async function Image({
   const title = post?.title ?? "Shahriar Avi";
   const readingTime = post?.readingTime ?? "";
 
-  const bgBuffer = loadAsset("images/blog.png");
+  const bgBuffer = loadAsset("images/og-bg.png");
   const avatarBuffer = loadAsset("avatar/avatar.png");
   const fontRegular = loadAsset("fonts/Inter-Regular.ttf");
   const fontBold = loadAsset("fonts/Inter-Bold.ttf");
