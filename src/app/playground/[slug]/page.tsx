@@ -5,6 +5,7 @@ import {
 import { PlaygroundLayout } from "@/components/playground/PlaygroundLayout";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -35,7 +36,9 @@ export default function PlaygroundComponentPage({ params }: PageProps) {
 
   return (
     <main className="mx-auto w-full max-w-[44rem] px-6 pb-10 md:pb-16">
-      <PlaygroundLayout config={config} />
+      <Suspense fallback={null}>
+        <PlaygroundLayout config={config} />
+      </Suspense>
     </main>
   );
 }

@@ -12,8 +12,20 @@ const nextConfig = {
     formats: ["image/webp"],
   },
 
- experimental: {
+experimental: {
   outputFileTracingIncludes: {
+    "/opengraph-image": [
+      "./public/images/blog.png",
+      "./public/avatar/avatar.jpg",
+      "./public/fonts/Inter-Regular.ttf",
+      "./public/fonts/Inter-Bold.ttf",
+    ],
+    "/writing/opengraph-image": [
+      "./public/images/blog.png",
+      "./public/avatar/avatar.jpg",
+      "./public/fonts/Inter-Regular.ttf",
+      "./public/fonts/Inter-Bold.ttf",
+    ],
     "/writing/[slug]/opengraph-image": [
       "./public/images/blog.png",
       "./public/avatar/avatar.jpg",

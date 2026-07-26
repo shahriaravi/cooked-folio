@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { useEffect, useRef } from "react";
 import { bind } from "cuelume";
 
-const TARGET_GAIN = 1.5;
+const TARGET_GAIN = 1.2;
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const patchedRef = useRef(false);

@@ -1,10 +1,66 @@
+html {
+  background-color: #0a1024;
+  color-scheme: dark;
+}
+
+html.light {
+  background-color: #f8fafc;
+  color-scheme: light;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    color-scheme: only light;
+    color-scheme: dark;
+
+    --background: 226 51% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 226 45% 13%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 226 45% 13%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 100% 60%;
+    --primary-foreground: 226 51% 8%;
+
+    --secondary: 226 35% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 226 35% 18%;
+    --muted-foreground: 226 20% 70%;
+
+    --accent: 226 35% 18%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 150 70% 45%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 35 90% 45%;
+    --warning-foreground: 222 47% 11%;
+
+    --border: 226 35% 18%;
+    --input: 226 35% 18%;
+    --ring: 210 100% 60%;
+
+    --radius: 0.5rem;
+    --radius-lg: 1.75rem;
+
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+      Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .light {
+    color-scheme: light;
 
     --background: 220 30% 97%;
     --foreground: 226 50% 10%;
@@ -39,18 +95,10 @@
     --border: 220 20% 90%;
     --input: 220 20% 90%;
     --ring: 215 100% 50%;
-
-    --radius: 0.5rem;
-    --radius-lg: 1.75rem;
-
-    --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
-      Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
   .dark {
-    color-scheme: only dark;
+    color-scheme: dark;
 
     --background: 226 51% 8%;
     --foreground: 210 40% 98%;
@@ -117,12 +165,12 @@
   }
 
   html {
-    background-color: hsl(var(--background)) !important;
+    background-color: hsl(var(--background));
   }
 
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground overflow-x-hidden;
-    background-color: hsl(var(--background)) !important;
+    background-color: hsl(var(--background));
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
     letter-spacing: -0.005em;

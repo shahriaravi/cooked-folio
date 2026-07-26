@@ -30,7 +30,7 @@ const personJsonLd = {
   name: "Shahriar Avi",
   alternateName: ["Avi", "shahriaravi", "shahriaravi_"],
   url: siteConfig.url,
-  image: `${siteConfig.url}/avatar/avatar.png`,
+  image: `${siteConfig.url}/avatar/avatar.jpg`,
   sameAs: [
     "https://twitter.com/shahriaravi_",
     "https://github.com/shahriaravi",
@@ -84,6 +84,21 @@ const websiteJsonLd = {
   },
 };
 
+const themeInitScript = `
+(function() {
+  try {
+    var stored = localStorage.getItem('theme');
+    var theme = stored === 'light' ? 'light' : 'dark';
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+    document.documentElement.style.colorScheme = theme;
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+    document.documentElement.style.colorScheme = 'dark';
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -95,9 +110,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${GeistMono.variable} darkreader-ignore`}
       data-darkreader-ignore=""
+      style={{ colorScheme: "dark", backgroundColor: "#0a1024" }}
     >
       <head>
         <meta name="darkreader-lock" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -107,11 +124,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="flex min-h-[100dvh] flex-col font-sans bg-background text-foreground antialiased selection:bg-primary/20">
+      <body
+        suppressHydrationWarning
+        className="flex min-h-[100dvh] flex-col font-sans bg-background text-foreground antialiased selection:bg-primary/20"
+      >
         <Providers>
-            <NavbarWrapper />
-            <div className="flex-1">{children}</div>
-            <SiteFooterWrapper />
+          <NavbarWrapper />
+          <div className="flex-1">{children}</div>
+          <SiteFooterWrapper />
         </Providers>
         <Analytics />
       </body>

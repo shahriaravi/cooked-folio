@@ -4,6 +4,10 @@ import { constructMetadata, siteConfig } from "@/lib/site-config";
 
 export const metadata = constructMetadata({
   canonicalUrl: `${siteConfig.url}/writing`,
+  other: {
+    "og:image": `${siteConfig.url}/writing/opengraph-image`,
+    "twitter:image": `${siteConfig.url}/writing/opengraph-image`,
+  },
 });
 
 export default function WritingPage() {

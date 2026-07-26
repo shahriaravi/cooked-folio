@@ -18,7 +18,7 @@ export async function GET() {
 
 ## About
 
-Shahriar Avi is a design engineer based in Bangladesh who builds products end to end. Ships apps, websites, browser extensions, and reusable UI components. Currently available for freelance projects.
+Shahriar Avi is a design engineer who builds products end to end. Ships apps, websites, browser extensions, and reusable UI components. Currently available for freelance projects.
 
 ## Craft components
 

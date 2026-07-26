@@ -32,21 +32,34 @@ export default function ThemeToggle({
     return <div className="h-4 w-4" />;
   }
 
+  const isDark = resolvedTheme === "dark";
+
   return (
     <button
       {...rest}
       onClick={toggleTheme}
       className={cn(
-        "inline-flex items-center justify-center text-muted-foreground transition-colors hover:text-foreground",
+        "relative inline-flex h-5 w-5 items-center justify-center overflow-hidden text-muted-foreground transition-colors hover:text-foreground",
         className
       )}
       aria-label="Toggle theme"
     >
-      {resolvedTheme === "dark" ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
+      <Sun
+        className={cn(
+          "absolute h-4 w-4 transition-all duration-500",
+          isDark
+            ? "rotate-0 scale-100 opacity-100"
+            : "-rotate-180 scale-0 opacity-0"
+        )}
+      />
+      <Moon
+        className={cn(
+          "absolute h-4 w-4 transition-all duration-500",
+          !isDark
+            ? "rotate-0 scale-100 opacity-100"
+            : "rotate-180 scale-0 opacity-0"
+        )}
+      />
     </button>
   );
 }
