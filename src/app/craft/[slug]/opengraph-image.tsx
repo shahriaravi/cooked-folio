@@ -3,6 +3,8 @@ import { getCraftComponentBySlug } from "@/lib/craft";
 import fs from "fs";
 import path from "path";
 
+export const revalidate = 3600;
+
 export const runtime = "nodejs";
 export const contentType = "image/png";
 export const size = {
