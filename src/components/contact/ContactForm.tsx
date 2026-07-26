@@ -3,7 +3,7 @@
 import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import { play } from "cuelume";
-import { Loader2, Mail, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -156,8 +156,6 @@ export default function ContactForm() {
   };
 
   const submitForm = async (data: typeof formData) => {
-    setBotTyping(true);
-    play("loading");
     scrollToBottom();
     try {
       const res = await fetch("/api/contact", {
@@ -176,11 +174,10 @@ export default function ContactForm() {
               "message received. i'll get back to you soon. thanks for reaching out ✌️",
           },
         ]);
-        setBotTyping(false);
         setStep("done");
         play("success");
         scrollToBottom();
-      }, 1200);
+      }, 30);
     } catch {
       setTimeout(() => {
         setBubbles((prev) => [
@@ -192,11 +189,10 @@ export default function ContactForm() {
               "something went wrong on my end. try again, or just email me directly.",
           },
         ]);
-        setBotTyping(false);
         setStep("email");
         play("error");
         scrollToBottom();
-      }, 1000);
+      }, 30);
     }
   };
 
@@ -399,18 +395,6 @@ export default function ContactForm() {
               * {error}
             </p>
           </div>
-        </div>
-      )}
-
-      {step === "sending" && (
-        <div className="mt-6 flex items-center justify-center gap-2 text-muted-foreground">
-          <Loader2 className="h-4 w-4 animate-spin" />
-          <span
-            className="font-mono uppercase tracking-[0.12em]"
-            style={{ fontSize: "11px" }}
-          >
-            sending your message...
-          </span>
         </div>
       )}
 

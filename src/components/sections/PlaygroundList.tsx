@@ -1,7 +1,6 @@
 "use client";
 
 import { playgroundRegistry } from "@/components/playground/registry";
-import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export function PlaygroundList() {
@@ -31,7 +30,7 @@ export function PlaygroundList() {
         {featured.map((config) => {
           const { Component } = config;
           const defaultProps = Object.fromEntries(
-            config.controls.map((c) => [c.key, c.default])
+            config.controls.map((c) => [c.key, c.default]),
           );
 
           return (
@@ -80,10 +79,6 @@ export function PlaygroundList() {
           style={{ fontSize: "11px", lineHeight: "1" }}
         >
           <span>See more</span>
-          <ArrowRight
-            className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
-            strokeWidth={2.25}
-          />
         </a>
       </div>
     </section>

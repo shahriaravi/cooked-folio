@@ -18,7 +18,7 @@ export function ChildrenCodeBlock({ children }: ChildrenCodeBlockProps) {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      play("chime");
+      play("release");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       play("error");
