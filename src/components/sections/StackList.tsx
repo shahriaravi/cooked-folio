@@ -7,7 +7,11 @@ export function StackList() {
   const items = STACK.map((tech) => {
     const Icon = tech.icon;
     return {
-      node: <Icon style={{ color: tech.color }} />,
+      node: (
+        <span className="text-foreground inline-flex">
+          <Icon style={{ color: tech.color }} />
+        </span>
+      ),
       title: tech.name,
     };
   });
@@ -39,14 +43,15 @@ export function StackList() {
         {STACK.map((tech) => {
           const Icon = tech.icon;
           return (
-            <div key={tech.name} className="group relative flex items-center justify-center">
+            <div
+              key={tech.name}
+              className="group relative flex items-center justify-center text-foreground"
+            >
               <Icon
                 className="h-8 w-8 transition-transform duration-200 group-hover:scale-110"
                 style={{ color: tech.color }}
               />
-              <span
-                className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-background opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-              >
+              <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-background opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                 {tech.name}
               </span>
             </div>

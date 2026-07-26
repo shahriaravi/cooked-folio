@@ -207,7 +207,7 @@ export function PackageManagerTabs({
         >
           <code>
             <span className="mr-2 text-muted-foreground/60">$</span>
-            <span className="text-emerald-300">{command}</span>
+            <span className="text-emerald-500 dark:text-emerald-300">{command}</span>
           </code>
         </pre>
       </div>

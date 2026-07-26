@@ -6,7 +6,7 @@ import { EducationList } from "@/components/sections/EducationList";
 import { StackList } from "@/components/sections/StackList";
 import { ProjectList } from "@/components/sections/ProjectList";
 import { PlaygroundList } from "@/components/sections/PlaygroundList";
-import { GithubActivityCard } from "@/components/integrations/GithubActivityCard";
+import { GithubHeatmap } from "@/components/integrations/GithubHeatmap";
 import { HomeFooter } from "@/components/layout/HomeFooter";
 import { constructMetadata, siteConfig } from "@/lib/site-config";
 
@@ -26,7 +26,7 @@ export default function Home() {
       <ProjectList />
       <StackList />
       <PlaygroundList />
-      <GithubActivityCard />
+      <GithubHeatmap />
       <HomeFooter />
     </Container>
   );

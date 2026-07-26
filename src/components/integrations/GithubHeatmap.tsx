@@ -39,7 +39,7 @@ const formatElapsedTime = (start: number): string => {
   return `${minutes}m`;
 };
 
-export function GithubActivityCard() {
+export function GithubHeatmap() {
   const { data: calendar, error } = useSWR<Calendar>(
     "/api/github/contributions",
     fetcher
@@ -54,7 +54,7 @@ export function GithubActivityCard() {
     return (
       <section className="mb-6">
         <h2 className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
-          github activity
+          github heatmap
         </h2>
         <p
           className="text-muted-foreground"
@@ -72,12 +72,20 @@ export function GithubActivityCard() {
   const max = Math.max(...days.map((d) => d.contributionCount || 0));
 
   const getIntensityClass = (count: number) => {
-    if (count === 0) return "bg-muted/30";
+    if (count === 0) {
+      return "bg-neutral-200 dark:bg-neutral-800";
+    }
     const ratio = count / max;
-    if (ratio < 0.25) return "bg-emerald-900";
-    if (ratio < 0.5) return "bg-emerald-700";
-    if (ratio < 0.75) return "bg-emerald-500";
-    return "bg-emerald-400";
+    if (ratio < 0.25) {
+      return "bg-emerald-200 dark:bg-emerald-900";
+    }
+    if (ratio < 0.5) {
+      return "bg-emerald-400 dark:bg-emerald-700";
+    }
+    if (ratio < 0.75) {
+      return "bg-emerald-500 dark:bg-emerald-500";
+    }
+    return "bg-emerald-600 dark:bg-emerald-400";
   };
 
   const hasActivity = activity && activity.isActive && activity.data;
@@ -89,7 +97,7 @@ export function GithubActivityCard() {
   return (
     <section className="mb-0 w-full">
       <h2 className="mb-3 pl-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground md:pl-0">
-        github activity
+        github heatmap
       </h2>
 
       <div className="mb-4 flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-2">
@@ -118,7 +126,7 @@ export function GithubActivityCard() {
                 <>
                   {" • "}
                   <span
-                    className="font-mono text-emerald-400"
+                    className="font-mono text-emerald-600 dark:text-emerald-400"
                     style={{ fontSize: "12px", letterSpacing: "0.06em" }}
                   >
                     {elapsed}
@@ -159,20 +167,10 @@ export function GithubActivityCard() {
             Less
           </span>
           <div className="flex gap-1">
-            {[0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className={`h-2.5 w-2.5 rounded-[2px] ${
-                  i === 0
-                    ? "bg-muted/30"
-                    : i === 1
-                    ? "bg-emerald-900"
-                    : i === 2
-                    ? "bg-emerald-700"
-                    : "bg-emerald-500"
-                }`}
-              />
-            ))}
+            <div className="h-2.5 w-2.5 rounded-[2px] bg-neutral-200 dark:bg-neutral-800" />
+            <div className="h-2.5 w-2.5 rounded-[2px] bg-emerald-200 dark:bg-emerald-900" />
+            <div className="h-2.5 w-2.5 rounded-[2px] bg-emerald-400 dark:bg-emerald-700" />
+            <div className="h-2.5 w-2.5 rounded-[2px] bg-emerald-600 dark:bg-emerald-400" />
           </div>
           <span
             className="font-mono uppercase tracking-[0.12em]"

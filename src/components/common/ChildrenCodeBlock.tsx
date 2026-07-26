@@ -18,7 +18,7 @@ export function ChildrenCodeBlock({ children }: ChildrenCodeBlockProps) {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      play("press");
+      play("chime");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       play("error");
@@ -26,7 +26,7 @@ export function ChildrenCodeBlock({ children }: ChildrenCodeBlockProps) {
   };
 
   return (
-    <div className="relative mb-6">
+    <div className="shiki-wrapper relative mb-6 overflow-auto rounded-xl border border-border/60 bg-card">
       <button
         onClick={handleCopy}
         data-cuelume-hover="tick"
@@ -43,7 +43,7 @@ export function ChildrenCodeBlock({ children }: ChildrenCodeBlockProps) {
 
       <pre
         ref={preRef}
-        className="code-block overflow-x-auto rounded-xl border border-border/60 p-4 pr-12 font-mono text-[13.5px] leading-[22px]"
+        className="overflow-x-auto p-4 pr-12 font-mono text-[13.5px] leading-[22px]"
       >
         {children}
       </pre>

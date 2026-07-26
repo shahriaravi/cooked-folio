@@ -38,7 +38,7 @@ export function CraftList({ components }: CraftListProps) {
             data-cuelume-press
             className="group flex flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-colors hover:border-primary/40"
           >
-            <div className="flex h-[170px] items-center justify-center overflow-hidden bg-background/40 p-5">
+            <div className="flex h-[170px] items-center justify-center overflow-hidden bg-background/60 p-5">
               {Component ? (
                 <Component />
               ) : (

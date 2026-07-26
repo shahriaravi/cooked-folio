@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Moon, Sun, X } from "lucide-react";
+import { play } from "cuelume";
 
 interface ToggleShowcaseProps {
   size: "sm" | "md" | "lg";
@@ -60,6 +61,7 @@ export default function ToggleShowcase({
 
   const handleToggle = () => {
     if (disabled) return;
+    play("toggle");
     setIsOn((prev) => !prev);
   };
 
@@ -67,6 +69,7 @@ export default function ToggleShowcase({
     <button
       onClick={handleToggle}
       disabled={disabled}
+      data-cuelume-hover="tick"
       style={{
         position: "relative",
         width: `${trackWidth}px`,
@@ -151,10 +154,10 @@ export default function ToggleShowcase({
 
   const LabelElement = (
     <span
+      className="text-foreground"
       style={{
         fontSize: s.fontSize,
         lineHeight: "1.2",
-        color: "hsl(var(--foreground))",
         fontFamily: "inherit",
         fontWeight: 500,
         letterSpacing: "0.1px",

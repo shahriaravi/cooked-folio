@@ -75,8 +75,11 @@ export async function generateMetadata({
 }
 
 const prettyCodeOptions = {
-  theme: "github-dark-dimmed",
-  keepBackground: true,
+  theme: {
+    dark: "github-dark-dimmed",
+    light: "github-light",
+  },
+  keepBackground: false,
   defaultLang: {
     block: "plaintext",
     inline: "plaintext",

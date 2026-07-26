@@ -4,7 +4,7 @@ html {
 }
 
 html.light {
-  background-color: #f8fafc;
+  background-color: #eef1f5;
   color-scheme: light;
 }
 
@@ -59,43 +59,43 @@ html.light {
       Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .light {
-    color-scheme: light;
+.light {
+  color-scheme: light;
 
-    --background: 220 30% 97%;
-    --foreground: 226 50% 10%;
+  --background: 220 20% 94%;
+  --foreground: 226 45% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 226 50% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 226 45% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 226 50% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 226 45% 12%;
 
-    --primary: 215 100% 50%;
-    --primary-foreground: 210 40% 98%;
+  --primary: 215 90% 48%;
+  --primary-foreground: 210 40% 98%;
 
-    --secondary: 220 25% 94%;
-    --secondary-foreground: 226 50% 10%;
+  --secondary: 220 15% 90%;
+  --secondary-foreground: 226 45% 20%;
 
-    --muted: 220 25% 94%;
-    --muted-foreground: 226 30% 50%;
+  --muted: 220 15% 90%;
+  --muted-foreground: 226 15% 40%;
 
-    --accent: 220 25% 94%;
-    --accent-foreground: 226 50% 10%;
+  --accent: 220 15% 90%;
+  --accent-foreground: 226 45% 12%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 210 40% 98%;
 
-    --success: 150 90% 35%;
-    --success-foreground: 210 40% 98%;
+  --success: 150 75% 38%;
+  --success-foreground: 210 40% 98%;
 
-    --warning: 35 95% 50%;
-    --warning-foreground: 210 40% 98%;
+  --warning: 35 90% 48%;
+  --warning-foreground: 226 45% 12%;
 
-    --border: 220 20% 90%;
-    --input: 220 20% 90%;
-    --ring: 215 100% 50%;
-  }
+  --border: 220 15% 75%;
+  --input: 220 15% 75%;
+  --ring: 215 90% 48%;
+}
 
   .dark {
     color-scheme: dark;
@@ -135,6 +135,23 @@ html.light {
     --ring: 210 100% 60%;
   }
 
+  ::selection {
+    background-color: hsl(var(--primary) / 0.25);
+    color: hsl(var(--foreground));
+  }
+
+  ::-moz-selection {
+    background-color: hsl(var(--primary) / 0.25);
+    color: hsl(var(--foreground));
+  }
+
+  .tabular-nums,
+  time,
+  [data-tabular],
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -169,11 +186,16 @@ html.light {
   }
 
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground overflow-x-hidden;
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
     background-color: hsl(var(--background));
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
     letter-spacing: -0.005em;
+  }
+
+  html.light .bg-card {
+    box-shadow: 0 1px 3px hsl(226 30% 20% / 0.06),
+      0 1px 2px hsl(226 30% 20% / 0.04);
   }
 
   [data-darkreader-inline-bgcolor],
@@ -295,6 +317,20 @@ html.light {
   color: inherit !important;
 }
 
+html:not(.light) .shiki-wrapper span[style*="--shiki-dark"] {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style, normal) !important;
+  font-weight: var(--shiki-dark-font-weight, normal) !important;
+  text-decoration: var(--shiki-dark-text-decoration, none) !important;
+}
+
+html.light .shiki-wrapper span[style*="--shiki-light"] {
+  color: var(--shiki-light) !important;
+  font-style: var(--shiki-light-font-style, normal) !important;
+  font-weight: var(--shiki-light-font-weight, normal) !important;
+  text-decoration: var(--shiki-light-text-decoration, none) !important;
+}
+
 .playground-slider {
   outline: none;
 }
@@ -345,6 +381,16 @@ html.light {
 
 .playground-slider::-moz-range-thumb:hover {
   transform: scaleY(1.1);
+}
+
+html.light .playground-slider::-webkit-slider-thumb {
+  background: hsl(226 45% 25%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+html.light .playground-slider::-moz-range-thumb {
+  background: hsl(226 45% 25%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes spin {

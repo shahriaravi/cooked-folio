@@ -73,8 +73,8 @@ export default function InputBox({
               width: s.iconSize,
               height: s.iconSize,
               marginRight: "8px",
-              color: "currentColor",
-              opacity: 0.4,
+              color: textColor,
+              opacity: 0.5,
               flexShrink: 0,
             }}
             strokeWidth={2}

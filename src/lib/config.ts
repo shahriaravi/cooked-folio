@@ -51,37 +51,37 @@ export const SOCIALS = [
     platform: "facebook",
     url: "https://facebook.com/shahriaravi",
     icon: SiFacebook,
-    color: "#1877F2",
+    color: "currentColor",
   },
-   {
+  {
     platform: "github",
     url: "https://github.com/shahriaravi",
     icon: SiGithub,
-    color: "#ffffff",
+    color: "currentColor",
   },
-   {
+  {
     platform: "x",
     url: "https://x.com/shahriaravi_",
     icon: SiX,
-    color: "#ffffff",
+    color: "currentColor",
   },
   {
     platform: "linkedin",
     url: "https://linkedin.com/in/shahriaravi",
     icon: FaLinkedin,
-    color: "#0A66C2",
+    color: "currentColor",
   },
 ];
 
 export const STACK = [
-  { name: "Arc", icon: SiArc, color: "#FFFFFF" },
+  { name: "Arc", icon: SiArc, color: "currentColor" },
   { name: "Excalidraw", icon: SiExcalidraw, color: "#6965DB" },
   { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
   { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-  { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
-  { name: "shadcn/ui", icon: SiShadcnui, color: "#FFFFFF" },
+  { name: "Next.js", icon: SiNextdotjs, color: "currentColor" },
+  { name: "shadcn/ui", icon: SiShadcnui, color: "currentColor" },
   { name: "React/Native", icon: SiReact, color: "#61DAFB" },
-  { name: "Expo", icon: SiExpo, color: "#FFFFFF" },
+  { name: "Expo", icon: SiExpo, color: "currentColor" },
   { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
   { name: "TailwindCSS", icon: SiTailwindcss, color: "#06B6D4" },
 ];

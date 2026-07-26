@@ -37,7 +37,7 @@ export function PlaygroundList({ configs }: PlaygroundListProps) {
             data-cuelume-press
             className="group flex flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-colors hover:border-primary/40"
           >
-            <div className="flex h-[170px] items-center justify-center overflow-hidden bg-background/40 p-5">
+            <div className="flex h-[170px] items-center justify-center overflow-hidden bg-background/60 p-5">
               <Component
                 {...Object.fromEntries(
                   config.controls.map((c) => [c.key, c.default])
@@ -50,7 +50,7 @@ export function PlaygroundList({ configs }: PlaygroundListProps) {
                 className="truncate font-semibold text-foreground transition-colors group-hover:text-primary"
                 style={{
                   fontSize: "13px",
-                  lineHeight: "18px",
+                  lineHeight: "20px",
                   letterSpacing: "0.1px",
                 }}
               >

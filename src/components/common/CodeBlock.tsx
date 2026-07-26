@@ -1,6 +1,6 @@
 import { codeToHtml } from "shiki";
-import { CopyButton } from "./CopyButton";
 import { ChildrenCodeBlock } from "./ChildrenCodeBlock";
+import { CopyButton } from "./CopyButton";
 
 interface BaseProps {
   language?: string;
@@ -37,7 +37,10 @@ export async function CodeBlock(props: CodeBlockProps) {
   try {
     html = await codeToHtml(code, {
       lang: language,
-      theme: "github-dark-dimmed",
+      themes: {
+        dark: "github-dark-dimmed",
+        light: "github-light",
+      },
     });
   } catch {
     html = `<pre><code>${code

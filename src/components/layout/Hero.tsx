@@ -35,19 +35,17 @@ export function Hero() {
         </div>
 
         <h1
-          className="mb-5 text-[22px] font-semibold leading-none tracking-tight"
-          style={{ color: "hsl(var(--foreground))" }}
+          className="mb-5 text-[22px] font-semibold leading-none tracking-tight text-foreground"
         >
           Shahriar Avi
         </h1>
 
         <p
-          className="mb-6"
+          className="mb-6 text-muted-foreground"
           style={{
             fontSize: "16px",
             lineHeight: "24px",
             letterSpacing: "0.2px",
-            color: "hsl(var(--muted-foreground))",
           }}
         >
           Hey, I&apos;m Avi, a design engineer and founder of{" "}
@@ -57,8 +55,7 @@ export function Hero() {
             rel="noopener noreferrer"
             data-cuelume-hover="tick"
             data-cuelume-press
-            className="inline-flex items-baseline gap-1.5 font-semibold transition-colors duration-200 hover:text-primary align-baseline"
-            style={{ color: "hsl(var(--foreground))" }}
+            className="inline-flex items-baseline gap-1.5 font-semibold text-foreground transition-colors duration-200 hover:text-primary align-baseline"
           >
             Byontriq
             <span className="relative inline-block h-[18px] w-[18px] translate-y-[4px] overflow-hidden rounded-[4px] ring-1 ring-border/40">
@@ -87,18 +84,16 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.platform}
-              className="transition-colors duration-200"
-              style={{ color: "hsl(var(--muted-foreground))" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "hsl(var(--foreground))")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "hsl(var(--muted-foreground))")
-              }
+              className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
               <social.icon
                 className="h-[17px] w-[17px]"
-                style={{ color: "inherit" }}
+                style={{
+                  color:
+                    social.color === "currentColor"
+                      ? "currentColor"
+                      : social.color,
+                }}
               />
             </a>
           ))}
@@ -107,17 +102,12 @@ export function Hero() {
             href={DISCORD_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-[14px] transition-colors duration-200"
-            style={{ color: "hsl(var(--muted-foreground))" }}
+            className="group inline-flex items-center gap-2 text-[14px] text-muted-foreground transition-colors duration-200"
           >
             <SiDiscord
-              className="h-[17px] w-[17px] transition-colors duration-200"
-              style={{ color: "hsl(var(--primary) / 0.7)" }}
+              className="h-[17px] w-[17px] text-primary/70 transition-colors duration-200"
             />
-            <span
-              className="font-semibold transition-colors duration-200 group-hover:text-primary"
-              style={{ color: "hsl(var(--foreground) / 0.8)" }}
-            >
+            <span className="font-semibold text-foreground/80 transition-colors duration-200 group-hover:text-primary">
               join community
             </span>
           </a>
