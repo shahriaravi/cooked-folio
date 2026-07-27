@@ -1,9 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { PackageManagerTabs } from "./PackageManagerTabs";
-import { play } from "cuelume";
 
 interface CommandInstallProps {
   componentName: string;
@@ -24,32 +24,40 @@ export function CommandInstall({ componentName }: CommandInstallProps) {
         packages={`shadcn@latest add @yoavi/${slug}`}
       />
 
-      <button
-        onClick={() => {
-          setShowSetup((prev) => !prev);
-          play("press");
-        }}
-        data-cuelume-hover="tick"
-        className={`mt-6 inline-flex items-center gap-1.5 self-start rounded-md border px-2.5 py-1.5 font-mono uppercase tracking-[0.12em] transition-colors ${
-          showSetup
-            ? "border-primary/40 bg-primary/[0.08] text-foreground"
-            : "border-border/60 bg-secondary/30 text-muted-foreground hover:border-primary/30 hover:bg-primary/[0.04] hover:text-foreground"
-        }`}
-        style={{ fontSize: "11px", lineHeight: "1" }}
-      >
-        <ChevronDown
-          className={`h-3 w-3 transition-transform ${
-            showSetup ? "rotate-180" : ""
-          }`}
-          strokeWidth={2.5}
-        />
-        First time using @yoavi?
-      </button>
+      <div className="mt-6 self-start">
+        <Button
+          variant="chip"
+          size="xs"
+          iconLeft={
+            <ChevronDown
+              className={`transition-transform duration-200 motion-reduce:transition-none ${
+                showSetup ? "rotate-180" : ""
+              }`}
+              strokeWidth={2.5}
+            />
+          }
+          onClick={() => setShowSetup((prev) => !prev)}
+          aria-expanded={showSetup}
+          aria-controls="yoavi-setup-panel"
+          className={
+            showSetup
+              ? "border-primary/40 bg-primary/[0.08] text-foreground hover:border-primary/50 hover:bg-primary/[0.1]"
+              : ""
+          }
+        >
+          First time using @yoavi?
+        </Button>
+      </div>
 
       {showSetup && (
-        <div className="mt-3 rounded-xl border border-border/40 bg-secondary/20 p-4">
+        <div
+          id="yoavi-setup-panel"
+          role="region"
+          aria-label="Setup instructions"
+          className="mt-3 rounded-2xl border border-border/40 bg-secondary/20 p-4"
+        >
           <p
-            className="mb-3 text-muted-foreground"
+            className="mb-3 text-pretty text-muted-foreground"
             style={{
               fontSize: "13px",
               lineHeight: "20px",
@@ -57,14 +65,14 @@ export function CommandInstall({ componentName }: CommandInstallProps) {
             }}
           >
             Add this to your project&apos;s{" "}
-            <code className="rounded bg-secondary/60 px-1.5 py-0.5 font-mono text-[12px] text-foreground">
+            <code className="whitespace-nowrap rounded-[6px] bg-secondary/60 px-1.5 py-0.5 font-mono text-[12px] text-foreground">
               components.json
             </code>
             :
           </p>
 
           <pre
-            className="overflow-x-auto rounded-lg border border-border/60 bg-card p-3 font-mono text-[12px] leading-[18px]"
+            className="overflow-x-auto rounded-xl border border-border/60 bg-card p-4 font-mono text-[12px] leading-[18px]"
             style={{ maxWidth: "100%" }}
           >
             <code>{`{

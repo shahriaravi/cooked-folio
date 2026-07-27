@@ -1,6 +1,7 @@
 "use client";
 
 import DiscordPresenceDot from "@/components/integrations/DiscordPresenceDot";
+import { Button } from "@/components/ui/Button";
 import { useDiscordPresence } from "@/hooks/useDiscordPresence";
 import { play } from "cuelume";
 import { Mail, Send } from "lucide-react";
@@ -203,6 +204,8 @@ export default function ContactForm() {
     }
   };
 
+  const isSendDisabled = !inputValue.trim() && step !== "email";
+
   return (
     <main className="layout-container !pt-0">
       <div className="mb-10 flex items-center gap-3">
@@ -261,7 +264,7 @@ export default function ContactForm() {
                   />
                 </div>
                 <div
-                  className="rounded-2xl rounded-bl-md border border-border/50 bg-card/50 px-3.5 py-2.5 text-foreground/90 backdrop-blur-sm"
+                  className="text-pretty rounded-2xl rounded-bl-md border border-border/50 bg-card/50 px-3.5 py-2.5 text-foreground/90 backdrop-blur-sm"
                   style={{
                     fontSize: "15px",
                     lineHeight: "22px",
@@ -273,7 +276,7 @@ export default function ContactForm() {
               </div>
             ) : (
               <div
-                className="max-w-[80%] rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5 text-primary-foreground shadow-sm"
+                className="max-w-[80%] text-pretty rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5 text-primary-foreground shadow-sm"
                 style={{
                   fontSize: "15px",
                   lineHeight: "22px",
@@ -297,9 +300,9 @@ export default function ContactForm() {
               />
             </div>
             <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-border/50 bg-card/50 px-3.5 py-3 backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:0ms]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:150ms]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:300ms]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:0ms] motion-reduce:animate-none" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:150ms] motion-reduce:animate-none" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:300ms] motion-reduce:animate-none" />
             </div>
           </div>
         )}
@@ -309,9 +312,9 @@ export default function ContactForm() {
 
       {step !== "done" && step !== "sending" && (
         <div className="sticky bottom-4 mt-4">
-          <div className="flex items-end gap-2 rounded-2xl border border-border/60 bg-background p-2">
+          <div className="flex items-end gap-2 rounded-2xl border border-border/60 bg-background p-1.5">
             {step === "message" ? (
-              <div className="flex min-h-[38px] flex-1 items-end px-2 py-2">
+              <div className="flex min-h-[38px] flex-1 items-end px-2.5 py-2">
                 <textarea
                   ref={textareaRef}
                   value={inputValue}
@@ -337,7 +340,7 @@ export default function ContactForm() {
                 />
               </div>
             ) : (
-              <div className="flex h-[38px] flex-1 items-center px-2">
+              <div className="flex h-[38px] flex-1 items-center px-2.5">
                 {step === "email" && (
                   <Mail className="mr-2 h-4 w-4 shrink-0 text-muted-foreground/40" />
                 )}
@@ -364,28 +367,29 @@ export default function ContactForm() {
               </div>
             )}
 
-            <button
+            <Button
+              variant="primary"
+              size="sm"
+              iconOnly={<Send strokeWidth={2.25} />}
               onClick={validateAndProceed}
-              disabled={!inputValue.trim() && step !== "email"}
-              data-cuelume-hover
-              data-cuelume-press
-              data-cuelume-release
-              className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 active:scale-95 disabled:opacity-30 disabled:hover:bg-primary"
-              aria-label="send"
-            >
-              <Send className="h-[15px] w-[15px]" />
-            </button>
+              disabled={isSendDisabled}
+              ariaLabel="Send message"
+              soundOnPress="press"
+              className="h-[38px] w-[38px] rounded-[14px]"
+            />
           </div>
 
           <div
-            className="overflow-hidden transition-all duration-200 ease-out"
+            className="overflow-hidden transition-all duration-200 ease-out motion-reduce:transition-none"
             style={{
               maxHeight: error ? "36px" : "0px",
               opacity: error ? 1 : 0,
             }}
           >
             <p
-              className="mt-2 pl-3 text-red-400/90"
+              className="mt-2 pl-3 text-pretty text-red-400/90"
+              role="alert"
+              aria-live="polite"
               style={{
                 fontSize: "12px",
                 lineHeight: "16px",

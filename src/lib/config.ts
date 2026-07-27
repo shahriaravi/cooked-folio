@@ -22,6 +22,8 @@ export interface ExperienceItem {
   date: string;
   description: string;
   logo: string;
+  nda?: boolean;
+  textLogo?: string;
 }
 
 export interface EducationItem {
@@ -95,6 +97,16 @@ export const EXPERIENCE: ExperienceItem[] = [
     "Founded and building Byontriq end to end. I design the products, write the code, ship the sites, and answer support tickets between deploys. Every pixel and interaction is mine.",
   logo: "/images/companies/byontriq.jpeg",
 },
+ {
+    company: "NDA Signed",
+    role: "Design Engineer",
+    date: "2025 — 2026",
+    description:
+      "Worked on a stealth project. Details under NDA. Building interfaces, systems, and experiences I can't talk about publicly;(",
+    logo: "",
+    textLogo: "D",
+    nda: true,
+  },
   {
     company: "EXEAIO",
     role: "Project Manager",

@@ -94,7 +94,7 @@ function Step({
       </div>
       <div className="min-w-0 flex-1 pt-0.5">
         <h3
-          className="mb-3 font-semibold text-foreground"
+          className="mb-3 text-balance font-semibold text-foreground"
           style={{
             fontSize: "15px",
             lineHeight: "22px",

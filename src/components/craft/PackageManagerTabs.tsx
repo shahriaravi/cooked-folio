@@ -1,7 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
 import { Check, Copy } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { play } from "cuelume";
 import { SiPnpm, SiYarn, SiBun } from "react-icons/si";
 
@@ -128,11 +129,13 @@ export function PackageManagerTabs({
     type === "dlx" ? "shadcn" : "npm"
   );
   const [copied, setCopied] = useState(false);
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const command = buildCommand(manager, type, packages);
-  const visibleManagers = type === "install"
-    ? managers.filter((m) => m.id !== "shadcn")
-    : managers;
+  const visibleManagers =
+    type === "install"
+      ? managers.filter((m) => m.id !== "shadcn")
+      : managers;
 
   const handleCopy = async () => {
     try {
@@ -145,28 +148,70 @@ export function PackageManagerTabs({
     }
   };
 
+  const handleTabKeyDown = (e: React.KeyboardEvent, index: number) => {
+    let nextIndex: number | null = null;
+
+    if (e.key === "ArrowRight") {
+      nextIndex = (index + 1) % visibleManagers.length;
+    } else if (e.key === "ArrowLeft") {
+      nextIndex = (index - 1 + visibleManagers.length) % visibleManagers.length;
+    } else if (e.key === "Home") {
+      nextIndex = 0;
+    } else if (e.key === "End") {
+      nextIndex = visibleManagers.length - 1;
+    }
+
+    if (nextIndex !== null) {
+      e.preventDefault();
+      const nextManager = visibleManagers[nextIndex];
+      setManager(nextManager.id);
+      play("press");
+      requestAnimationFrame(() => {
+        tabRefs.current[nextManager.id]?.focus();
+      });
+    }
+  };
+
   return (
     <div className="min-w-0 overflow-hidden rounded-xl border border-border/60 bg-card">
-      <div className="flex items-center justify-between border-b border-border/60 bg-secondary/30 px-2 py-1.5">
-        <div className="flex items-center gap-1 overflow-x-auto">
-          {visibleManagers.map((m) => {
+      <div className="flex items-center justify-between border-b border-border/60 bg-secondary/30 px-1.5 py-1.5">
+        <div
+          role="tablist"
+          aria-label="Package manager"
+          className="flex items-center gap-1 overflow-x-auto scrollbar-hide"
+        >
+          {visibleManagers.map((m, index) => {
             const isActive = manager === m.id;
             return (
               <button
                 key={m.id}
+                ref={(el) => {
+                  tabRefs.current[m.id] = el;
+                }}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls="pm-command-panel"
+                tabIndex={isActive ? 0 : -1}
                 onClick={() => {
                   setManager(m.id);
                   play("press");
                 }}
+                onKeyDown={(e) => handleTabKeyDown(e, index)}
                 data-cuelume-hover="tick"
-                className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono lowercase tracking-[0.02em] transition-colors ${
+                className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-[10px] px-2 py-1 font-mono lowercase tracking-[0.02em] outline-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-primary/40 motion-reduce:transition-none ${
                   isActive
                     ? "bg-card text-foreground shadow-sm"
                     : "text-muted-foreground/70 hover:text-foreground"
                 }`}
                 style={{ fontSize: "12px", lineHeight: "1" }}
               >
-                {m.icon}
+                <span
+                  className="inline-flex h-[11px] w-[11px] shrink-0 items-center justify-center"
+                  aria-hidden="true"
+                >
+                  {m.icon}
+                </span>
                 <span className={isActive ? "font-semibold" : ""}>
                   {m.label}
                 </span>
@@ -175,29 +220,34 @@ export function PackageManagerTabs({
           })}
         </div>
 
-        <button
+        <Button
+          variant="ghost"
+          size="xs"
+          iconLeft={
+            copied ? (
+              <Check className="text-emerald-400" strokeWidth={2.5} />
+            ) : (
+              <Copy strokeWidth={2.5} />
+            )
+          }
           onClick={handleCopy}
-          data-cuelume-hover="tick"
-          data-cuelume-press
-          aria-label="Copy command"
-          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono uppercase tracking-[0.12em] text-muted-foreground/70 transition-colors hover:text-foreground"
-          style={{ fontSize: "11px", lineHeight: "1" }}
+          ariaLabel={copied ? "Command copied" : "Copy command"}
+          soundOnPress={false}
+          className="font-mono uppercase tracking-[0.12em]"
         >
-          {copied ? (
-            <>
-              <Check className="h-3 w-3 text-emerald-400" strokeWidth={2.5} />
-              Copied
-            </>
-          ) : (
-            <>
-              <Copy className="h-3 w-3" strokeWidth={2.5} />
-              Copy
-            </>
-          )}
-        </button>
+          <span
+            aria-live="polite"
+            style={{ fontSize: "11px", lineHeight: "1" }}
+          >
+            {copied ? "Copied" : "Copy"}
+          </span>
+        </Button>
       </div>
 
       <div
+        id="pm-command-panel"
+        role="tabpanel"
+        aria-label={`${manager} command`}
         className="overflow-x-auto px-4 py-3"
         style={{ maxWidth: "100%" }}
       >
@@ -206,8 +256,12 @@ export function PackageManagerTabs({
           style={{ margin: 0 }}
         >
           <code>
-            <span className="mr-2 text-muted-foreground/60">$</span>
-            <span className="text-emerald-500 dark:text-emerald-300">{command}</span>
+            <span className="mr-2 select-none text-muted-foreground/60">
+              $
+            </span>
+            <span className="text-emerald-500 dark:text-emerald-300">
+              {command}
+            </span>
           </code>
         </pre>
       </div>

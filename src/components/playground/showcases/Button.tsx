@@ -15,23 +15,24 @@ import {
 import { useState } from "react";
 
 interface ButtonProps {
-  label: string;
-  variant: "solid" | "outline" | "ghost" | "soft";
-  size: "sm" | "md" | "lg" | "xl";
-  radius: number;
-  background: string;
-  foreground: string;
-  borderColor: string;
-  borderWidth: number;
-  fontWeight: number;
-  letterSpacing: number;
-  icon: string;
-  iconPosition: "left" | "right";
-  fullWidth: boolean;
-  disabled: boolean;
-  loading: boolean;
-  glow: boolean;
-  uppercase: boolean;
+  label?: string;
+  variant?: "solid" | "outline" | "ghost" | "soft";
+  size?: "sm" | "md" | "lg" | "xl";
+  radius?: number;
+  background?: string;
+  foreground?: string;
+  borderColor?: string;
+  borderWidth?: number;
+  fontWeight?: number;
+  letterSpacing?: number;
+  icon?: string;
+  iconPosition?: "left" | "right";
+  fullWidth?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  glow?: boolean;
+  uppercase?: boolean;
+  compact?: boolean;
 }
 
 const iconMap: Record<string, React.ComponentType<any>> = {
@@ -73,28 +74,56 @@ const sizeMap = {
 };
 
 export default function Button({
-  label,
-  variant,
-  size,
-  radius,
-  background,
-  foreground,
-  borderColor,
-  borderWidth,
-  fontWeight,
-  letterSpacing,
-  icon,
-  iconPosition,
-  fullWidth,
-  disabled,
-  loading,
-  glow,
-  uppercase,
+  label = "Continue",
+  variant = "solid",
+  size = "md",
+  radius = 8,
+  background = "#3b82f6",
+  foreground = "#ffffff",
+  borderColor = "#3b82f6",
+  borderWidth = 1,
+  fontWeight = 500,
+  letterSpacing = 0,
+  icon = "arrow",
+  iconPosition = "right",
+  fullWidth = false,
+  disabled = false,
+  loading = false,
+  glow = false,
+  uppercase = false,
+  compact = false,
 }: ButtonProps) {
-  const s = sizeMap[size];
+  const s = sizeMap[size] ?? sizeMap.md;
   const [hovered, setHovered] = useState(false);
 
   const Icon = iconMap[icon] ?? null;
+
+  if (compact) {
+    return (
+      <div aria-hidden="true">
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "7px",
+            padding: "8px 14px",
+            fontSize: "12px",
+            lineHeight: "1",
+            fontWeight: 500,
+            borderRadius: "8px",
+            backgroundColor: "#3b82f6",
+            color: "#ffffff",
+            border: "1px solid #3b82f6",
+            fontFamily: "inherit",
+          }}
+        >
+          <span>Continue</span>
+          <ArrowRight style={{ width: "12px", height: "12px" }} strokeWidth={2.25} />
+        </div>
+      </div>
+    );
+  }
 
   const getVariantStyles = () => {
     const base = {

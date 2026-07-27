@@ -118,7 +118,7 @@ export default async function CraftComponentPage({ params }: PageProps) {
         </div>
 
         <h1
-          className="mb-4 font-semibold text-foreground"
+          className="mb-4 text-balance font-semibold text-foreground"
           style={{
             fontSize: "clamp(26px, 4vw, 32px)",
             lineHeight: "1.2",
@@ -129,7 +129,7 @@ export default async function CraftComponentPage({ params }: PageProps) {
         </h1>
 
         <p
-          className="mb-8 text-muted-foreground"
+          className="mb-8 text-pretty text-muted-foreground"
           style={{
             fontSize: "16px",
             lineHeight: "24px",
@@ -151,7 +151,7 @@ export default async function CraftComponentPage({ params }: PageProps) {
               {component.dependencies.map((dep) => (
                 <span
                   key={dep}
-                  className="rounded-[4px] border border-border/60 bg-secondary/40 px-2 py-1 font-mono text-muted-foreground"
+                  className="whitespace-nowrap rounded-[6px] border border-border/60 bg-secondary/40 px-2 py-1 font-mono text-muted-foreground"
                   style={{
                     fontSize: "11px",
                     lineHeight: "1",

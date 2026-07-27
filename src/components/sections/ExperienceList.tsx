@@ -38,15 +38,40 @@ export function ExperienceList() {
               >
                 <span>{job.role}</span>
                 <span className="font-normal text-muted-foreground">at</span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="relative inline-block h-[22px] w-[22px] overflow-hidden rounded-[4px] ring-1 ring-border/40">
-                    <Image
-                      src={job.logo}
-                      alt={job.company}
-                      fill
-                      className="object-cover"
-                    />
-                  </span>
+                <span
+                  className={
+                    job.nda
+                      ? "inline-flex select-none items-center gap-1.5 blur-[5px]"
+                      : "inline-flex items-center gap-1.5"
+                  }
+                  style={
+                    job.nda
+                      ? { textShadow: "0 0 8px rgba(0,0,0,0.3)" }
+                      : undefined
+                  }
+                >
+                  {job.textLogo ? (
+                    <span
+                      className="relative inline-flex h-[22px] w-[22px] items-center justify-center rounded-[4px] bg-primary/15 text-primary ring-1 ring-primary/30"
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: 700,
+                        lineHeight: "1",
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {job.textLogo}
+                    </span>
+                  ) : (
+                    <span className="relative inline-block h-[22px] w-[22px] overflow-hidden rounded-[4px] ring-1 ring-border/40">
+                      <Image
+                        src={job.logo}
+                        alt={job.company}
+                        fill
+                        className="object-cover"
+                      />
+                    </span>
+                  )}
                   <span>{job.company}</span>
                 </span>
               </h3>

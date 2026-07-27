@@ -13,7 +13,7 @@ export function PlaygroundList({ configs }: PlaygroundListProps) {
   if (configs.length === 0) {
     return (
       <p
-        className="text-muted-foreground"
+        className="text-pretty text-muted-foreground"
         style={{ fontSize: "15px", lineHeight: "22px" }}
       >
         No playgrounds yet. Come back soon.
@@ -35,19 +35,17 @@ export function PlaygroundList({ configs }: PlaygroundListProps) {
             }}
             data-cuelume-hover="tick"
             data-cuelume-press
-            className="group flex flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-colors hover:border-primary/40"
+            className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-colors hover:border-primary/40"
           >
-            <div className="flex h-[170px] items-center justify-center overflow-hidden bg-background/60 p-5">
-              <Component
-                {...Object.fromEntries(
-                  config.controls.map((c) => [c.key, c.default])
-                )}
-              />
+            <div className="flex h-[170px] items-center justify-center overflow-hidden bg-background/60 p-3">
+              <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-md">
+                <Component compact />
+              </div>
             </div>
 
-            <div className="border-t border-border/40 px-3.5 py-2.5">
+            <div className="border-t border-border/40 px-4 py-3">
               <span
-                className="truncate font-semibold text-foreground transition-colors group-hover:text-primary"
+                className="block truncate text-balance font-semibold text-foreground transition-colors group-hover:text-primary"
                 style={{
                   fontSize: "13px",
                   lineHeight: "20px",

@@ -5,20 +5,21 @@ import { Check, Moon, Sun, X } from "lucide-react";
 import { play } from "cuelume";
 
 interface ToggleShowcaseProps {
-  size: "sm" | "md" | "lg";
-  width: number;
-  radius: "full" | number;
-  onColor: string;
-  offColor: string;
-  thumbColor: string;
-  thumbShape: "circle" | "square" | "pill";
-  showIcons: boolean;
-  iconStyle: "check-x" | "sun-moon" | "none";
-  label: string;
-  showLabel: boolean;
-  labelPosition: "left" | "right";
-  disabled: boolean;
-  defaultOn: boolean;
+  size?: "sm" | "md" | "lg";
+  width?: number;
+  radius?: number;
+  onColor?: string;
+  offColor?: string;
+  thumbColor?: string;
+  thumbShape?: "circle" | "square" | "pill";
+  showIcons?: boolean;
+  iconStyle?: "check-x" | "sun-moon" | "none";
+  label?: string;
+  showLabel?: boolean;
+  labelPosition?: "left" | "right";
+  disabled?: boolean;
+  defaultOn?: boolean;
+  compact?: boolean;
 }
 
 const sizeMap = {
@@ -28,36 +29,72 @@ const sizeMap = {
 };
 
 export default function ToggleShowcase({
-  size,
-  width,
-  radius,
-  onColor,
-  offColor,
-  thumbColor,
-  thumbShape,
-  showIcons,
-  iconStyle,
-  label,
-  showLabel,
-  labelPosition,
-  disabled,
-  defaultOn,
+  size = "md",
+  width = 44,
+  radius = 999,
+  onColor = "#3b82f6",
+  offColor = "#3f3f46",
+  thumbColor = "#ffffff",
+  thumbShape = "circle",
+  showIcons = false,
+  iconStyle = "check-x",
+  label = "Enable notifications",
+  showLabel = true,
+  labelPosition = "left",
+  disabled = false,
+  defaultOn = false,
+  compact = false,
 }: ToggleShowcaseProps) {
+  const s = sizeMap[size] ?? sizeMap.md;
   const [isOn, setIsOn] = useState(defaultOn);
-  const s = sizeMap[size];
+
+  if (compact) {
+    const cTrackHeight = 24;
+    const cTrackWidth = 44;
+    const cThumbSize = 20;
+    const cThumbPadding = (cTrackHeight - cThumbSize) / 2;
+    const cMaxTranslate = cTrackWidth - cThumbSize - cThumbPadding * 2;
+
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: "relative",
+          width: `${cTrackWidth}px`,
+          height: `${cTrackHeight}px`,
+          borderRadius: `${cTrackHeight / 2}px`,
+          backgroundColor: "#3b82f6",
+        }}
+      >
+        <span
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: `${cThumbPadding}px`,
+            width: `${cThumbSize}px`,
+            height: `${cThumbSize}px`,
+            borderRadius: "50%",
+            backgroundColor: "#ffffff",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.25)",
+            transform: `translateY(-50%) translateX(${cMaxTranslate}px)`,
+          }}
+        />
+      </div>
+    );
+  }
 
   const trackHeight = s.height;
   const trackWidth = width;
   const thumbPadding = (trackHeight - s.thumbSize) / 2;
   const maxTranslate = trackWidth - s.thumbSize - thumbPadding * 2;
 
-  const trackRadius = radius === "full" ? trackHeight / 2 : radius;
+  const trackRadius = radius >= 999 ? trackHeight / 2 : radius;
   const thumbRadius =
     thumbShape === "circle"
       ? s.thumbSize / 2
       : thumbShape === "square"
-      ? 4
-      : s.thumbSize / 3;
+        ? 4
+        : s.thumbSize / 3;
 
   const handleToggle = () => {
     if (disabled) return;

@@ -36,6 +36,7 @@ export interface SliderControl extends BaseControl {
   max: number;
   step?: number;
   unit?: string;
+  ticks?: number[];
 }
 
 export interface ColorControl extends BaseControl {

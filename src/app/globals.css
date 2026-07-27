@@ -53,6 +53,25 @@ html.light {
     --radius: 0.5rem;
     --radius-lg: 1.75rem;
 
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-base: 10px;
+    --radius-l: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-3xl: 24px;
+    --radius-4xl: 32px;
+    --radius-squircle: 22px;
+
+    --pad-1: 2px;
+    --pad-2: 4px;
+    --pad-3: 6px;
+    --pad-4: 8px;
+    --pad-6: 12px;
+    --pad-8: 16px;
+    --pad-12: 24px;
+
     --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
       "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
@@ -133,6 +152,44 @@ html.light {
     --border: 226 35% 18%;
     --input: 226 35% 18%;
     --ring: 210 100% 60%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  blockquote,
+  figcaption,
+  dd,
+  dt {
+    text-wrap: pretty;
+  }
+
+  .writing-content p,
+  .writing-content li {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  code,
+  pre,
+  pre *,
+  table,
+  th,
+  td,
+  .tabular-nums,
+  [data-tabular],
+  .font-mono {
+    text-wrap: auto;
+    hyphens: manual;
+    -webkit-hyphens: manual;
   }
 
   ::selection {
@@ -250,6 +307,30 @@ html.light {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .text-wrap-auto {
+    text-wrap: auto;
+  }
+
+  .concentric-outer-md {
+    border-radius: calc(var(--radius-md) + var(--pad-4));
+  }
+
+  .concentric-outer-l {
+    border-radius: calc(var(--radius-md) + var(--pad-6));
+  }
+
+  .concentric-outer-xl {
+    border-radius: calc(var(--radius-md) + var(--pad-8));
+  }
 }
 
 .cal-embed-popup-wrapper {
@@ -338,68 +419,6 @@ html.light .shiki-wrapper span[style*="--shiki-light"] {
   font-style: var(--shiki-light-font-style, normal) !important;
   font-weight: var(--shiki-light-font-weight, normal) !important;
   text-decoration: var(--shiki-light-text-decoration, none) !important;
-}
-
-.playground-slider {
-  outline: none;
-}
-
-.playground-slider::-webkit-slider-runnable-track {
-  height: 100%;
-  background: transparent;
-  border: none;
-}
-
-.playground-slider::-moz-range-track {
-  height: 100%;
-  background: transparent;
-  border: none;
-}
-
-.playground-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 4px;
-  height: 18px;
-  border-radius: 2px;
-  background: hsl(45 25% 92%);
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  transition: transform 0.12s ease;
-  margin-top: 0;
-}
-
-.playground-slider::-webkit-slider-thumb:hover {
-  transform: scaleY(1.1);
-}
-
-.playground-slider::-webkit-slider-thumb:active {
-  transform: scaleY(1.15);
-}
-
-.playground-slider::-moz-range-thumb {
-  width: 4px;
-  height: 18px;
-  border-radius: 2px;
-  background: hsl(45 25% 92%);
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  transition: transform 0.12s ease;
-}
-
-.playground-slider::-moz-range-thumb:hover {
-  transform: scaleY(1.1);
-}
-
-html.light .playground-slider::-webkit-slider-thumb {
-  background: hsl(226 45% 25%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-html.light .playground-slider::-moz-range-thumb {
-  background: hsl(226 45% 25%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes spin {

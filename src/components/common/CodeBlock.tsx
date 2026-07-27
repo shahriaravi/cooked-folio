@@ -53,13 +53,15 @@ export async function CodeBlock(props: CodeBlockProps) {
     <div className="min-w-0">
       {filename && (
         <div
-          className="flex items-center gap-2 rounded-t-xl border border-b-0 border-border/60 bg-secondary/30 px-3 py-2"
+          className="flex items-center gap-2 rounded-t-2xl border border-b-0 border-border/60 bg-secondary/30 px-4 py-2.5"
           style={{ fontSize: "11px", lineHeight: "1" }}
         >
           <span className="font-mono uppercase tracking-[0.1em] text-muted-foreground/60">
             {language}
           </span>
-          <span className="font-mono text-muted-foreground">{filename}</span>
+          <span className="truncate font-mono text-muted-foreground">
+            {filename}
+          </span>
         </div>
       )}
 
@@ -67,7 +69,7 @@ export async function CodeBlock(props: CodeBlockProps) {
         <CopyButton text={code} />
         <div
           className={`shiki-wrapper overflow-auto border border-border/60 ${
-            filename ? "rounded-b-xl" : "rounded-xl"
+            filename ? "rounded-b-2xl" : "rounded-2xl"
           }`}
           style={{ maxWidth: "100%", maxHeight: `${maxHeight}px` }}
           dangerouslySetInnerHTML={{ __html: html }}

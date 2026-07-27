@@ -51,16 +51,19 @@ export function HomeFooter() {
   return (
     <>
       <div
-        className={`fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm transition-opacity duration-300 ${
+        role="status"
+        aria-live="polite"
+        aria-hidden={!isCalLoading}
+        className={`fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none ${
           isCalLoading
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="relative h-14 w-14 animate-spin">
+        <div className="relative h-14 w-14 animate-spin motion-reduce:animate-none">
           <Image
             src="/avatar/avatar.png"
-            alt="loading..."
+            alt="Loading Cal.com booking widget"
             fill
             className="object-contain"
             priority
@@ -69,7 +72,10 @@ export function HomeFooter() {
       </div>
 
       <footer className="relative mt-14 overflow-hidden pb-8 pt-8">
-        <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-0 opacity-30"
+        >
           <PixelBlast
             variant="square"
             pixelSize={4}
@@ -90,7 +96,7 @@ export function HomeFooter() {
         <div className="relative z-10 flex flex-col gap-8">
           <div className="flex flex-col gap-2">
             <h3
-              className="font-semibold text-foreground"
+              className="text-balance font-semibold text-foreground"
               style={{
                 fontSize: "17px",
                 lineHeight: "22px",
@@ -101,7 +107,7 @@ export function HomeFooter() {
             </h3>
 
             <p
-              className="max-w-[480px] text-muted-foreground"
+              className="max-w-[480px] text-pretty text-muted-foreground"
               style={{
                 fontSize: "14px",
                 lineHeight: "22px",
@@ -115,96 +121,107 @@ export function HomeFooter() {
 
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
             <button
+              type="button"
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
               data-cal-config='{"layout":"month_view","hideEventTypeDetails":true}'
               data-cuelume-hover
               data-cuelume-press
               data-cuelume-release
-              className="
-                group relative flex items-center overflow-hidden
-                h-10 w-fit pl-1.5 pr-4
-                rounded-lg
-                border border-border/60 bg-card/80 hover:bg-primary/5 hover:border-primary/40
-                shadow-sm
-                cursor-pointer
-                transition-all duration-300
-                active:scale-[0.97]
-              "
+              aria-label="Book a call with Avi"
+              className="group/book relative flex h-10 w-fit shrink-0 items-center overflow-hidden rounded-xl border border-border/60 bg-card/80 pl-1.5 pr-4 shadow-sm outline-none transition-[background-color,border-color,transform] duration-300 ease-out hover:border-primary/40 hover:bg-primary/[0.05] focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100"
             >
-              <div className="relative mr-2.5 h-7 w-7 shrink-0 overflow-hidden rounded-md">
+              <span className="relative mr-2.5 block h-7 w-7 shrink-0 overflow-hidden rounded-[10px]">
                 <Image
                   src="/avatar/avatar.png"
-                  alt="avi"
+                  alt=""
                   width={60}
                   height={60}
-                  className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-0"
+                  className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover/book:opacity-0 motion-reduce:transition-none"
                 />
                 <Image
                   src="/avatar/avatar-fill.png"
-                  alt="avi"
+                  alt=""
                   width={60}
                   height={60}
-                  className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+                  className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 ease-in-out group-hover/book:opacity-100 motion-reduce:transition-none"
                 />
-              </div>
+              </span>
 
-              <div className="flex items-center">
-                <div
-                  className="
-                    flex items-center gap-1 overflow-hidden whitespace-nowrap
-                    w-0 opacity-0 mr-0
-                    group-hover:w-auto group-hover:opacity-100 group-hover:mr-1.5
-                    transition-all duration-300 ease-out
-                  "
+              <span className="flex items-center">
+                <span
+                  aria-hidden="true"
+                  className="mr-0 flex w-0 items-center gap-1 overflow-hidden whitespace-nowrap opacity-0 transition-[width,opacity,margin] duration-300 ease-out group-hover/book:mr-1.5 group-hover/book:w-auto group-hover/book:opacity-100 motion-reduce:transition-none"
                 >
-                  <Plus className="h-3 w-3 text-primary" />
-                  <div className="flex h-4 items-center justify-center rounded-sm border border-border bg-background px-1">
+                  <Plus
+                    className="h-3 w-3 text-primary transition-transform duration-500 ease-out group-hover/book:rotate-90 motion-reduce:transition-none motion-reduce:group-hover/book:rotate-0"
+                    strokeWidth={2.5}
+                  />
+                  <span className="flex h-4 items-center justify-center rounded-[4px] border border-border bg-background px-1">
                     <span
                       className="font-mono uppercase tracking-[0.08em] text-foreground"
                       style={{ fontSize: "9px", lineHeight: "1" }}
                     >
                       You
                     </span>
-                  </div>
-                </div>
+                  </span>
+                </span>
                 <span
-                  className="font-semibold text-foreground transition-colors group-hover:text-primary"
+                  className="whitespace-nowrap font-semibold text-foreground transition-colors duration-200 group-hover/book:text-primary motion-reduce:transition-none"
                   style={{ fontSize: "13px", lineHeight: "18px" }}
                 >
                   Book a call
                 </span>
-              </div>
+              </span>
             </button>
           </div>
 
           <div
-            className="flex items-center text-muted-foreground"
+            className="flex flex-wrap items-center text-muted-foreground"
             style={{
               fontSize: "14px",
               lineHeight: "22px",
               letterSpacing: "0.1px",
             }}
           >
-            <span>email me at&nbsp;</span>
+            <span className="whitespace-nowrap">email me at&nbsp;</span>
             <button
+              type="button"
               onClick={copyEmail}
-              className="group inline-flex cursor-pointer items-center gap-0 transition-transform active:scale-[0.97]"
+              data-cuelume-hover="tick"
+              aria-label={
+                copied ? `${email} copied to clipboard` : `Copy ${email}`
+              }
+              className="group/email inline-flex cursor-pointer items-center gap-0 rounded-[6px] outline-none transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-4 focus-visible:ring-offset-background active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100"
             >
               <span
-                className={`inline-flex items-center overflow-hidden transition-all duration-300 ease-out ${
+                aria-hidden="true"
+                className={`relative inline-flex items-center justify-center overflow-hidden transition-[width,margin] duration-300 ease-out motion-reduce:transition-none ${
                   copied
-                    ? "mr-1.5 w-3.5"
-                    : "mr-0 w-0 group-hover:mr-1.5 group-hover:w-3.5"
+                    ? "mr-1.5 h-3.5 w-3.5"
+                    : "mr-0 h-0 w-0 group-hover/email:mr-1.5 group-hover/email:h-3.5 group-hover/email:w-3.5"
                 }`}
               >
-                {copied ? (
-                  <Check className="h-[12px] w-[12px] shrink-0 text-emerald-400" />
-                ) : (
-                  <Copy className="h-[12px] w-[12px] shrink-0 text-primary" />
-                )}
+                <Copy
+                  className={`absolute inset-0 h-full w-full text-primary transition-[opacity,transform,filter] duration-300 ease-out motion-reduce:transition-none ${
+                    copied
+                      ? "scale-50 opacity-0 blur-sm"
+                      : "scale-100 opacity-100 blur-0"
+                  }`}
+                  strokeWidth={2.5}
+                  aria-hidden="true"
+                />
+                <Check
+                  className={`absolute inset-0 h-full w-full text-emerald-400 transition-[opacity,transform,filter] duration-300 ease-out motion-reduce:transition-none ${
+                    copied
+                      ? "scale-100 opacity-100 blur-0"
+                      : "scale-50 opacity-0 blur-sm"
+                  }`}
+                  strokeWidth={2.5}
+                  aria-hidden="true"
+                />
               </span>
-              <span className="font-semibold text-foreground transition-colors duration-200 group-hover:text-primary">
+              <span className="whitespace-nowrap font-semibold text-foreground transition-colors duration-200 group-hover/email:text-primary motion-reduce:transition-none">
                 {email}
               </span>
             </button>

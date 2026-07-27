@@ -47,7 +47,7 @@ export function ApiReference({ componentName, props }: ApiReferenceProps) {
   return (
     <section className="mb-12">
       <h2
-        className="mb-5 font-semibold text-foreground"
+        className="mb-5 text-balance font-semibold text-foreground"
         style={{
           fontSize: "22px",
           lineHeight: "28px",
@@ -57,7 +57,7 @@ export function ApiReference({ componentName, props }: ApiReferenceProps) {
         API Reference
       </h2>
 
-      <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
         <div className="border-b border-border/60 bg-secondary/30 px-4 py-3">
           <span
             className="font-mono font-semibold text-foreground"
@@ -111,7 +111,7 @@ export function ApiReference({ componentName, props }: ApiReferenceProps) {
 
                 <span
                   className={cn(
-                    "font-mono",
+                    "truncate font-mono",
                     highlightType(prop.type)
                   )}
                   style={{ fontSize: "13px", lineHeight: "20px" }}
@@ -122,20 +122,20 @@ export function ApiReference({ componentName, props }: ApiReferenceProps) {
                 {hasDetails ? (
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-muted-foreground/60 transition-transform",
+                      "h-4 w-4 shrink-0 text-muted-foreground/60 transition-transform",
                       isOpen && "rotate-180"
                     )}
                     strokeWidth={2}
                   />
                 ) : (
-                  <span className="w-4" />
+                  <span className="w-4 shrink-0" />
                 )}
               </button>
 
               {isOpen && hasDetails && (
                 <div className="border-t border-border/40 bg-secondary/10 px-4 py-3">
                   {prop.defaultValue && (
-                    <div className="mb-2 flex gap-2">
+                    <div className="mb-2 flex items-center gap-2">
                       <span
                         className="font-mono uppercase tracking-[0.1em] text-muted-foreground/70"
                         style={{ fontSize: "10px", lineHeight: "18px" }}
@@ -143,7 +143,7 @@ export function ApiReference({ componentName, props }: ApiReferenceProps) {
                         default
                       </span>
                       <code
-                        className="rounded bg-secondary/60 px-1.5 py-0.5 font-mono text-foreground"
+                        className="rounded-[6px] bg-secondary/60 px-1.5 py-0.5 font-mono text-foreground"
                         style={{ fontSize: "12px" }}
                       >
                         {prop.defaultValue}
@@ -152,7 +152,7 @@ export function ApiReference({ componentName, props }: ApiReferenceProps) {
                   )}
                   {prop.description && (
                     <p
-                      className="text-foreground/85"
+                      className="text-pretty text-foreground/85"
                       style={{
                         fontSize: "13px",
                         lineHeight: "20px",

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
 import { Check, ChevronDown, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { play } from "cuelume";
@@ -122,6 +123,7 @@ export function CopyForAI({ context }: CopyForAIProps) {
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuItemsRef = useRef<Array<HTMLButtonElement | null>>([]);
 
   const handleCopy = async () => {
     try {
@@ -144,6 +146,24 @@ export function CopyForAI({ context }: CopyForAIProps) {
     setOpen(false);
   };
 
+  const handleMenuKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const next = (index + 1) % targets.length;
+      menuItemsRef.current[next]?.focus();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const prev = (index - 1 + targets.length) % targets.length;
+      menuItemsRef.current[prev]?.focus();
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      menuItemsRef.current[0]?.focus();
+    } else if (e.key === "End") {
+      e.preventDefault();
+      menuItemsRef.current[targets.length - 1]?.focus();
+    }
+  };
+
   useEffect(() => {
     if (!open) return;
 
@@ -160,6 +180,10 @@ export function CopyForAI({ context }: CopyForAIProps) {
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscape);
 
+    requestAnimationFrame(() => {
+      menuItemsRef.current[0]?.focus();
+    });
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
@@ -169,28 +193,30 @@ export function CopyForAI({ context }: CopyForAIProps) {
   return (
     <div
       ref={menuRef}
-      className="relative inline-flex items-center rounded-md border border-primary/50 bg-primary/10 text-primary transition-colors hover:border-primary hover:bg-primary/20"
+      className="relative inline-flex items-center rounded-[10px] border border-primary/50 bg-primary/10 text-primary transition-colors duration-200 motion-reduce:transition-none hover:border-primary hover:bg-primary/20"
     >
       <button
         type="button"
         onClick={handleCopy}
         data-cuelume-hover="tick"
-        data-cuelume-press
-        aria-label={copied ? "Copied" : "Copy prompt for AI"}
-        className="inline-flex items-center gap-1.5 rounded-l-md px-3 py-1.5 font-mono uppercase tracking-[0.12em] font-semibold transition-colors"
+        data-cuelume-press="press"
+        aria-label={copied ? "Copied prompt" : "Copy prompt for AI"}
+        className="inline-flex items-center gap-1.5 rounded-l-[9px] px-3 py-1.5 font-mono font-semibold uppercase tracking-[0.12em] outline-none transition-[transform,color] duration-150 focus-visible:ring-2 focus-visible:ring-primary/40 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
         style={{ fontSize: "11px", lineHeight: "1" }}
       >
-        {copied ? (
-          <>
-            <Check className="h-3 w-3 text-emerald-400" strokeWidth={2.5} />
-            Copied
-          </>
-        ) : (
-          <>
-            <Copy className="h-3 w-3" strokeWidth={2.5} />
-            Copy for AI
-          </>
-        )}
+        <span aria-live="polite" className="inline-flex items-center gap-1.5">
+          {copied ? (
+            <>
+              <Check className="h-3 w-3 text-emerald-400" strokeWidth={2.5} />
+              Copied
+            </>
+          ) : (
+            <>
+              <Copy className="h-3 w-3" strokeWidth={2.5} />
+              Copy for AI
+            </>
+          )}
+        </span>
       </button>
 
       <span
@@ -205,12 +231,14 @@ export function CopyForAI({ context }: CopyForAIProps) {
           play("press");
         }}
         data-cuelume-hover="tick"
-        aria-label="More AI options"
-        className="inline-flex items-center justify-center rounded-r-md px-2 py-1.5 transition-colors"
+        aria-label={open ? "Close AI options" : "More AI options"}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        className="inline-flex items-center justify-center rounded-r-[9px] px-2 py-1.5 outline-none transition-[transform,color] duration-150 focus-visible:ring-2 focus-visible:ring-primary/40 active:scale-[0.95] motion-reduce:transition-none motion-reduce:active:scale-100"
       >
         <ChevronDown
           className={cn(
-            "h-3 w-3 transition-transform",
+            "h-3 w-3 transition-transform duration-200 motion-reduce:transition-none",
             open && "rotate-180"
           )}
           strokeWidth={2.5}
@@ -219,29 +247,33 @@ export function CopyForAI({ context }: CopyForAIProps) {
 
       {open && (
         <div
-          className="absolute right-0 top-full z-50 mt-2 min-w-[200px] overflow-hidden rounded-lg border border-border/60 bg-card p-1 shadow-lg"
+          className="absolute right-0 top-full z-50 mt-2 min-w-[220px] overflow-hidden rounded-xl border border-border/60 bg-card p-1.5 shadow-lg"
           role="menu"
+          aria-label="AI target options"
         >
-          {targets.map((target) => (
-            <button
+          {targets.map((target, index) => (
+            <Button
               key={target.id}
-              type="button"
+              ref={(el) => {
+                menuItemsRef.current[index] = el as HTMLButtonElement | null;
+              }}
+              variant="ghost"
+              size="sm"
+              iconLeft={
+                <span className={cn("inline-flex", target.brandColor)}>
+                  {target.icon}
+                </span>
+              }
               onClick={() => handleTarget(target)}
-              data-cuelume-hover="tick"
+              onKeyDown={(e) => handleMenuKeyDown(e, index)}
+              soundOnHover="tick"
+              soundOnPress={false}
               role="menuitem"
-              className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-foreground transition-colors hover:bg-secondary/60"
-              style={{ fontSize: "13px", lineHeight: "1.2" }}
+              fullWidth
+              className="justify-start !text-foreground hover:!bg-secondary/60"
             >
-              <span
-                className={cn(
-                  "flex h-4 w-4 shrink-0 items-center justify-center",
-                  target.brandColor
-                )}
-              >
-                {target.icon}
-              </span>
-              <span>{target.label}</span>
-            </button>
+              <span className="whitespace-nowrap">{target.label}</span>
+            </Button>
           ))}
         </div>
       )}

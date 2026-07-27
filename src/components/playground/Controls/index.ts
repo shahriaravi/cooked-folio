@@ -1,7 +1,7 @@
-export { TextControl } from "./TextControl";
-export { NumberControl } from "./NumberControl";
-export { SliderControl } from "./SliderControl";
-export { ColorControl } from "./ColorControl";
-export { SelectControl } from "./SelectControl";
-export { MultiSelectControl } from "./MultiSelectControl";
-export { ToggleControl } from "./ToggleControl";
+export { TextControl } from "./Text";
+export { NumberControl } from "./Number";
+export { SliderControl } from "./Slider";
+export { ColorControl } from "./Color";
+export { SelectControl } from "./Select";
+export { MultiSelectControl } from "./MultiSelect";
+export { ToggleControl } from "./Toggle";

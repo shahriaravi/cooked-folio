@@ -4,16 +4,17 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 interface InputBoxProps {
-  placeholder: string;
-  size: "sm" | "md" | "lg";
-  radius: number;
-  borderWidth: number;
-  borderColor: string;
-  backgroundColor: string;
-  textColor: string;
-  showIcon: boolean;
-  disabled: boolean;
-  focusRing: boolean;
+  placeholder?: string;
+  size?: "sm" | "md" | "lg";
+  radius?: number;
+  borderWidth?: number;
+  borderColor?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  showIcon?: boolean;
+  disabled?: boolean;
+  focusRing?: boolean;
+  compact?: boolean;
 }
 
 const sizeMap = {
@@ -23,21 +24,66 @@ const sizeMap = {
 };
 
 export default function InputBox({
-  placeholder,
-  size,
-  radius,
-  borderWidth,
-  borderColor,
-  backgroundColor,
-  textColor,
-  showIcon,
-  disabled,
-  focusRing,
+  placeholder = "Type here...",
+  size = "md",
+  radius = 8,
+  borderWidth = 1,
+  borderColor = "#3f3f46",
+  backgroundColor = "#18181b",
+  textColor = "#fafafa",
+  showIcon = true,
+  disabled = false,
+  focusRing = true,
+  compact = false,
 }: InputBoxProps) {
-  const s = sizeMap[size];
+  const s = sizeMap[size] ?? sizeMap.md;
   const [focused, setFocused] = useState(false);
 
   const showRing = focusRing && focused && !disabled;
+
+  if (compact) {
+    return (
+      <div style={{ width: "100%", maxWidth: "140px" }} aria-hidden="true">
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            borderWidth: "1px",
+            borderStyle: "solid",
+            borderColor: "#3f3f46",
+            borderRadius: "8px",
+            backgroundColor: "#18181b",
+            padding: "8px 10px",
+          }}
+        >
+          <Search
+            style={{
+              width: "12px",
+              height: "12px",
+              marginRight: "6px",
+              color: "#fafafa",
+              opacity: 0.5,
+              flexShrink: 0,
+            }}
+            strokeWidth={2}
+          />
+          <span
+            style={{
+              flex: 1,
+              color: "#fafafa",
+              opacity: 0.5,
+              fontSize: "11px",
+              lineHeight: "1.4",
+              fontFamily: "inherit",
+            }}
+          >
+            Search…
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ width: "100%", maxWidth: "360px" }}>

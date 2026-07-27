@@ -26,13 +26,13 @@ export function ChildrenCodeBlock({ children }: ChildrenCodeBlockProps) {
   };
 
   return (
-    <div className="shiki-wrapper relative mb-6 overflow-auto rounded-xl border border-border/60 bg-card">
+    <div className="shiki-wrapper relative mb-6 overflow-auto rounded-2xl border border-border/60 bg-card">
       <button
         onClick={handleCopy}
         data-cuelume-hover="tick"
         data-cuelume-press
         aria-label="Copy code"
-        className="absolute right-3 top-3 z-10 inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground/70 transition-colors hover:text-foreground"
+        className="absolute right-3 top-3 z-10 inline-flex h-7 w-7 items-center justify-center rounded-[10px] bg-card/80 text-muted-foreground/70 backdrop-blur-sm transition-colors hover:bg-secondary/60 hover:text-foreground"
       >
         {copied ? (
           <Check className="h-3.5 w-3.5 text-emerald-400" />

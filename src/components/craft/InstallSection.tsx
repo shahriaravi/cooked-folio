@@ -20,7 +20,7 @@ export function InstallSection({
   return (
     <div className="mb-12">
       <h2
-        className="mb-5 font-semibold text-foreground"
+        className="mb-5 text-balance font-semibold text-foreground"
         style={{
           fontSize: "20px",
           lineHeight: "26px",

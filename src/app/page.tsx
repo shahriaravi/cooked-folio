@@ -5,7 +5,7 @@ import { ExperienceList } from "@/components/sections/ExperienceList";
 import { EducationList } from "@/components/sections/EducationList";
 import { StackList } from "@/components/sections/StackList";
 import { ProjectList } from "@/components/sections/ProjectList";
-import { PlaygroundList } from "@/components/sections/PlaygroundList";
+import { PlaygroundList } from "@/components/sections/PlaygroundSection";
 import { GithubHeatmap } from "@/components/integrations/GithubHeatmap";
 import { HomeFooter } from "@/components/layout/HomeFooter";
 import { constructMetadata, siteConfig } from "@/lib/site-config";

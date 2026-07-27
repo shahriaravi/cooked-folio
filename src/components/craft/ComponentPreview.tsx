@@ -55,17 +55,19 @@ export function ComponentPreview({
       </div>
 
       {tab === "preview" ? (
-        <div className="relative flex min-h-[240px] items-center justify-center rounded-xl border border-border/60 bg-card p-8">
-          {Component ? (
-            <Component />
-          ) : (
-            <span
-              className="font-mono uppercase tracking-[0.14em] text-muted-foreground/50"
-              style={{ fontSize: "11px", lineHeight: "1" }}
-            >
-              component not registered
-            </span>
-          )}
+        <div className="relative flex min-h-[240px] items-center justify-center rounded-2xl border border-border/60 bg-card p-6">
+          <div className="flex h-full w-full items-center justify-center">
+            {Component ? (
+              <Component />
+            ) : (
+              <span
+                className="font-mono uppercase tracking-[0.14em] text-muted-foreground/50"
+                style={{ fontSize: "11px", lineHeight: "1" }}
+              >
+                component not registered
+              </span>
+            )}
+          </div>
         </div>
       ) : (
         codeBlock

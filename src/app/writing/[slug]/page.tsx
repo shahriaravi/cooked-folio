@@ -135,18 +135,18 @@ export default async function PostPage({ params }: PageProps) {
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <span
-            className="font-mono uppercase tracking-[0.14em] text-primary"
+            className="whitespace-nowrap font-mono uppercase tracking-[0.14em] text-primary"
             style={{ fontSize: "11px", lineHeight: "1" }}
           >
             {formatFullDate(post.date)}
           </span>
 
           <div className="flex items-center gap-5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
               <AlignLeft className="h-3 w-3" strokeWidth={2.25} />
               {post.wordCount} words
             </span>
-            <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
               <Clock className="h-3 w-3" strokeWidth={2.25} />
               {post.readingTime}
             </span>
@@ -155,7 +155,7 @@ export default async function PostPage({ params }: PageProps) {
         </div>
 
         <h1
-          className="mb-10 font-semibold text-foreground"
+          className="mb-10 text-balance font-semibold text-foreground"
           style={{
             fontSize: "clamp(28px, 5vw, 34px)",
             lineHeight: "1.15",
