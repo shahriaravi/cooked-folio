@@ -95,7 +95,7 @@ export const EXPERIENCE: ExperienceItem[] = [
   date: "2025 — Present",
   description:
     "Founded and building Byontriq end to end. I design the products, write the code, ship the sites, and answer support tickets between deploys. Every pixel and interaction is mine.",
-  logo: "/images/companies/byontriq.jpeg",
+  logo: "/images/companies/byontriq-fill.png",
 },
  {
     company: "NDA Signed",
@@ -152,7 +152,7 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Private finance tracker app. No ads. Just beautiful design.",
     url: "https://mate.byontriq.dev",
     repo: "https://github.com/shahriaravi/MateApp",
-    image: "/images/projects/mate.png",
+    image: "/images/projects/mate-transparent.png",
   },
   {
     name: "cooked-folio",
@@ -174,7 +174,7 @@ export const PROJECTS: ProjectItem[] = [
     url: "https://byontriq.dev",
     repo: "",
     playstore: "https://play.google.com/store/apps/dev?id=6170259174823402335",
-    image: "/images/projects/byontriq.png",
+    image: "/images/projects/byontriq-blue.png",
   },
   {
     name: "nothing-vscode-theme",
