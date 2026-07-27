@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { PlaygroundControl } from "./types";
 
 function serializeValue(control: PlaygroundControl, value: any): string {
@@ -14,10 +14,7 @@ function serializeValue(control: PlaygroundControl, value: any): string {
   return String(value);
 }
 
-function deserializeValue(
-  control: PlaygroundControl,
-  raw: string
-): any {
+function deserializeValue(control: PlaygroundControl, raw: string): any {
   switch (control.type) {
     case "number":
     case "slider": {
@@ -43,8 +40,8 @@ function valuesEqual(control: PlaygroundControl, a: any, b: any): boolean {
 }
 
 export function usePlaygroundState(controls: PlaygroundControl[]) {
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const initialValues = Object.fromEntries(
     controls.map((c) => {
@@ -59,19 +56,37 @@ export function usePlaygroundState(controls: PlaygroundControl[]) {
   const [values, setValues] = useState<Record<string, any>>(initialValues);
 
   useEffect(() => {
-    const params = new URLSearchParams();
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
 
-    controls.forEach((control) => {
-      const currentValue = values[control.key];
-      if (!valuesEqual(control, currentValue, control.default)) {
-        params.set(control.key, serializeValue(control, currentValue));
+    debounceRef.current = setTimeout(() => {
+      try {
+        if (typeof window === "undefined") return;
+
+        const params = new URLSearchParams();
+
+        controls.forEach((control) => {
+          const currentValue = values[control.key];
+          if (!valuesEqual(control, currentValue, control.default)) {
+            params.set(control.key, serializeValue(control, currentValue));
+          }
+        });
+
+        const query = params.toString();
+        const newUrl = query
+          ? `${window.location.pathname}?${query}`
+          : window.location.pathname;
+
+        window.history.replaceState(null, "", newUrl);
+      } catch {}
+    }, 150);
+
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
       }
-    });
-
-    const query = params.toString();
-    const newUrl = query ? `?${query}` : window.location.pathname;
-
-    window.history.replaceState(null, "", newUrl);
+    };
   }, [values, controls]);
 
   const updateValue = useCallback((key: string, value: any) => {

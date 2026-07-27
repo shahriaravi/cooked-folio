@@ -74,12 +74,10 @@ Wrap your app in that provider once. Every element with a `data-cuelume-*` attri
 
 The four attributes map to interactions like this:
 
-| Attribute | Fires on | Default sound |
-| --- | --- | --- |
-| `data-cuelume-hover` | `pointerenter` | chime |
-| `data-cuelume-press` | `pointerdown` | press |
-| `data-cuelume-release` | `pointerup` | release |
-| `data-cuelume-toggle` | `click` | toggle |
+- **`data-cuelume-hover`** fires on pointerenter, plays chime by default
+- **`data-cuelume-press`** fires on pointerdown, plays press by default
+- **`data-cuelume-release`** fires on pointerup, plays release by default
+- **`data-cuelume-toggle`** fires on click, plays toggle by default
 
 Leave the attribute value empty to use the default, or set it to any sound name to override.
 

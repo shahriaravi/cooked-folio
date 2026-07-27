@@ -51,7 +51,8 @@ export function SliderControl({
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
           onMouseUp={() => play("press")}
-          className="playground-slider relative z-10 h-4 w-full cursor-pointer appearance-none bg-transparent"
+          onTouchEnd={() => play("press")}
+          className="playground-slider relative z-10 h-4 w-full cursor-pointer appearance-none bg-transparent touch-none"
         />
       </div>
 
