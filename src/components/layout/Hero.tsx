@@ -62,7 +62,7 @@ export function Hero() {
               className="relative inline-block h-[18px] w-[18px] translate-y-[4px] overflow-hidden rounded-[4px] ring-1 ring-border/40"
             >
               <Image
-                src="/images/companies/byontriq.png"
+                src="/images/companies/byontriq-fill.png"
                 alt=""
                 fill
                 className="object-cover"
