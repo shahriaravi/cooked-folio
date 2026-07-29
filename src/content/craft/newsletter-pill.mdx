@@ -1,0 +1,63 @@
+---
+order: 4
+title: "Newsletter Pill"
+description: "A morphing subscribe pill that transitions between CTA, email form, and success state with a shared layout animation and confetti burst."
+component: "NewsletterPill"
+dependencies:
+  - framer-motion
+  - lucide-react
+tags:
+  - form
+  - motion
+  - newsletter
+  - subscribe
+apiReference:
+  - name: "endpoint"
+    type: "string"
+    defaultValue: "/api/subscribe"
+    description: "API route that receives the POST request with the email payload."
+  - name: "ctaLabel"
+    type: "string"
+    defaultValue: "Notify Me"
+    description: "Text shown on the initial call-to-action pill."
+  - name: "submitLabel"
+    type: "string"
+    defaultValue: "Subscribe"
+    description: "Text shown on the submit button in the form state."
+  - name: "successMessage"
+    type: "string"
+    defaultValue: "You're in the club 🎉"
+    description: "Text shown after a successful subscription."
+  - name: "placeholder"
+    type: "string"
+    defaultValue: "your@email.com"
+    description: "Placeholder text for the email input."
+  - name: "onSubscribe"
+    type: "(email: string) => Promise<void> | void"
+    description: "Optional custom submit handler. If omitted, the component POSTs to the endpoint prop."
+  - name: "className"
+    type: "string"
+    description: "Additional Tailwind classes applied to the outer container."
+---
+
+## About
+
+A single pill that morphs through three states — call-to-action, email form, success — using Framer Motion's shared layout animation. No unmounting, no jarring transitions. The pill's size, shape, and position interpolate smoothly between states.
+
+<Callout type="info">
+  Concept originally by [Nitish Khagwal](https://x.com/nitishkmrk/status/2012775964887986629). This is a re-implementation inspired by his design, built from scratch with a few extra touches (accessibility, reduced-motion support, duplicate detection, error handling).
+</Callout>
+
+## How the morph works
+
+The magic is `LayoutGroup` + `layoutId`. Every state's outer container shares the same `layoutId="newsletter-pill"`. Framer Motion calculates the shape and size delta between states and interpolates position, size, and border-radius automatically.
+
+The bell icon and text also share their own `layoutId` values, so they visually transition from one state to the next instead of unmounting and remounting.
+
+```tsx
+<LayoutGroup>
+  <motion.button layoutId="newsletter-pill">
+    <motion.span layoutId="newsletter-icon"><Bell /></motion.span>
+    <motion.span layoutId="newsletter-text">Notify Me</motion.span>
+  </motion.button>
+</LayoutGroup>
