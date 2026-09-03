@@ -1,3 +1,4 @@
+
 import { EXPERIENCE } from "@/lib/config";
 import Image from "next/image";
 
@@ -38,18 +39,7 @@ export function ExperienceList() {
               >
                 <span>{job.role}</span>
                 <span className="font-normal text-muted-foreground">at</span>
-                <span
-                  className={
-                    job.nda
-                      ? "inline-flex select-none items-center gap-1.5 blur-[5px]"
-                      : "inline-flex items-center gap-1.5"
-                  }
-                  style={
-                    job.nda
-                      ? { textShadow: "0 0 8px rgba(0,0,0,0.3)" }
-                      : undefined
-                  }
-                >
+                <span className="inline-flex items-center gap-1.5">
                   {job.textLogo ? (
                     <span
                       className="relative inline-flex h-[22px] w-[22px] items-center justify-center rounded-[4px] bg-primary/15 text-primary ring-1 ring-primary/30"
