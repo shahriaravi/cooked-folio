@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Navbar } from "./Navbar";
 
-const HIDDEN_ROUTES = ["/donate", "/donate/thanks"];
+const HIDDEN_ROUTES = ["/donate" ];
 
 export function NavbarWrapper() {
   const pathname = usePathname();

@@ -74,7 +74,7 @@ Copy `.env.example` to `.env.local`:
 | Variable | Description |
 | --- | --- |
 | `NEXT_PUBLIC_URL` | Your live site URL |
-| `DISCORD_WEBHOOK_URL` | Discord webhook for contact/donate messages |
+| `DISCORD_WEBHOOK_URL` | Discord webhook for contact messages |
 | `NEXT_PUBLIC_DISCORD_USER_ID` | Your Discord User ID |
 | `SPOTIFY_CLIENT_ID` | Spotify app Client ID |
 | `SPOTIFY_CLIENT_SECRET` | Spotify app Client Secret |
@@ -111,37 +111,23 @@ Dynamic per-post preview cards using your background at `public/images/og-bg.png
 
     src/
     ├─ app/
-    │  ├─ api/                                # contact, donate, discord, spotify, github routes
+    │  ├─ api/                                # contact, discord, spotify, github routes
     │  ├─ writing/
     │  │  ├─ page.tsx                         # blog list
     │  │  └─ [slug]/
     │  │     ├─ page.tsx                      # dynamic post page (SSG)
     │  │     └─ opengraph-image.tsx           # per-post OG image generator
-    │  ├─ playground/
-    │  │  ├─ page.tsx                         # playground list (grid of previews)
-    │  │  └─ [slug]/
-    │  │     └─ page.tsx                      # per-component customizer page
     │  ├─ contact/                            # chat-style form
-    │  ├─ donate/                             # donation page + thanks
     │  ├─ layout.tsx                          # root: Providers, NavbarWrapper, SiteFooterWrapper, JSON-LD, fonts
     │  ├─ sitemap.ts                          # dynamic sitemap
     │  └─ page.tsx                            # homepage
     ├─ components/
     │  ├─ common/                             # Container, ThemeToggle, CodeBlock, CopyButton, CustomScrollArea
     │  ├─ layout/                             # Hero, Navbar, NavbarWrapper, HomeFooter, SiteFooter, SiteFooterWrapper, Providers
-    │  ├─ sections/                           # Experience, Education, Projects, Stack, PlaygroundSection
+    │  ├─ sections/                           # Experience, Education, Projects, Stack
     │  ├─ integrations/                       # Discord, Spotify, GitHub cards
     │  ├─ contact/                            # ContactForm
-    │  ├─ donate/                             # DonateContent, DonateThanks
     │  ├─ writing/                            # WritingList, MdxComponents, ShareMenu, MorePosts, ArticleJsonLd
-    │  ├─ playground/
-    │  │  ├─ Controls/                        # Text, Number, Slider, Color, Select, MultiSelect, Toggle
-    │  │  ├─ showcases/                       # InputBox, Button, ToggleShowcase
-    │  │  ├─ PlaygroundLayout.tsx             # preview area + controls grid
-    │  │  ├─ PlaygroundList.tsx               # grid of playground previews
-    │  │  ├─ usePlaygroundState.ts            # URL param sync hook
-    │  │  ├─ registry.tsx                     # slug → showcase + control config
-    │  │  └─ types.ts                         # control type definitions
     │  └─ ui/                                 # TimeDisplay, Folder, LogoLoop, PixelBlast
     ├─ content/writing/                       # MDX blog posts
     ├─ hooks/                                 # useDiscordPresence
@@ -149,7 +135,7 @@ Dynamic per-post preview cards using your background at `public/images/og-bg.png
     public/
     ├─ fonts/                                 # Inter-Regular.ttf, Inter-Bold.ttf (for OG images)
     ├─ images/                                # og-bg.png (OG background)
-    └─ avatar/                                # avatar.png, avatar.jpg, avatar-fill.png
+    └─ avatar/                                # avatar.png, luffy.png, avatar-fill.png
 
 ---
 
@@ -190,28 +176,6 @@ The site actively blocks browser extensions like Dark Reader from overriding its
 - `color-scheme: only light/dark` locks
 
 Full explanation in `/writing/block-dark-mode-extensions`.
-
----
-
-## 🗑️ Removing Optional Features
-
-**Donate page:**
-
-    rm -rf src/app/donate src/app/api/donate src/components/donate
-
-Remove any `/donate` links from `src/lib/config.ts`.
-
-**Playground:**
-
-    rm -rf src/app/playground src/components/playground
-
-Then remove the `<PlaygroundSection />` import and usage from `src/app/page.tsx`, delete `src/components/sections/PlaygroundSection.tsx`, and remove the `/playground` case from `getBackHref` in `src/components/layout/Navbar.tsx`.
-
-**Component Craft** (if you added your own local `/craft` registry):
-
-    rm -rf src/app/craft src/app/r src/components/craft src/content/craft src/lib/craft.ts src/lib/registry-source.ts
-
-Then remove the `/craft` entry from `navLinks` in `src/components/layout/Navbar.tsx` and remove the `/craft` include from `experimental.outputFileTracingIncludes` in `next.config.js`.
 
 ---
 

@@ -33,18 +33,6 @@ experimental: {
       "./public/fonts/Inter-Bold.ttf",
       "./src/content/writing/**/*.mdx",
     ],
-    "/craft/opengraph-image": [
-      "./public/images/og-bg.png",
-      "./public/avatar/avatar.png",
-      "./public/fonts/Inter-Regular.ttf",
-      "./public/fonts/Inter-Bold.ttf",
-    ],
-    "/playground/opengraph-image": [
-      "./public/images/og-bg.png",
-      "./public/avatar/avatar.png",
-      "./public/fonts/Inter-Regular.ttf",
-      "./public/fonts/Inter-Bold.ttf",
-    ],
   },
 },
 

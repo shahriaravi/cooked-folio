@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { SiteFooter } from "./SiteFooter";
 
-const HIDDEN_ROUTES = ["/donate", "/donate/thanks"];
+const HIDDEN_ROUTES = ["/donate"];
 
 export function SiteFooterWrapper() {
   const pathname = usePathname();

@@ -19,7 +19,7 @@ export function Hero() {
             style={{ borderRadius: "22px" }}
           >
             <Image
-              src="/avatar/avatar.jpg"
+              src="/avatar/luffy.png"
               alt="Shahriar Avi"
               fill
               className="object-cover"

@@ -2,7 +2,6 @@ import {
   SiArc,
   SiExcalidraw,
   SiExpo,
-  SiFacebook,
   SiGithub,
   SiJavascript,
   SiNextdotjs,
@@ -14,15 +13,12 @@ import {
   SiX,
 } from "react-icons/si";
 
-import { FaLinkedin } from 'react-icons/fa';
-
 export interface ExperienceItem {
   company: string;
   role: string;
   date: string;
   description: string;
   logo: string;
-  nda?: boolean;
   textLogo?: string;
 }
 
@@ -50,12 +46,6 @@ export const CAL_URL = "https://cal.com/shahriaravi/15m";
 
 export const SOCIALS = [
   {
-    platform: "facebook",
-    url: "https://facebook.com/shahriaravi",
-    icon: SiFacebook,
-    color: "currentColor",
-  },
-  {
     platform: "github",
     url: "https://github.com/shahriaravi",
     icon: SiGithub,
@@ -65,12 +55,6 @@ export const SOCIALS = [
     platform: "x",
     url: "https://x.com/shahriaravi_",
     icon: SiX,
-    color: "currentColor",
-  },
-  {
-    platform: "linkedin",
-    url: "https://linkedin.com/in/shahriaravi",
-    icon: FaLinkedin,
     color: "currentColor",
   },
 ];
@@ -97,16 +81,6 @@ export const EXPERIENCE: ExperienceItem[] = [
     "Founded and building Byontriq end to end. I design the products, write the code, ship the sites, and answer support tickets between deploys. Every pixel and interaction is mine.",
   logo: "/images/companies/byontriq-fill.png",
 },
- {
-    company: "NDA Signed",
-    role: "Design Engineer",
-    date: "2025 — 2026",
-    description:
-      "Worked on a stealth project. Details under NDA. Building interfaces, systems, and experiences I can't talk about publicly;(",
-    logo: "",
-    textLogo: "D",
-    nda: true,
-  },
   {
     company: "EXEAIO",
     role: "Project Manager",
@@ -123,14 +97,6 @@ export const EXPERIENCE: ExperienceItem[] = [
       "Handled live operations at a video game MNC. Kept servers healthy, managed community incidents, and worked closely with engineering to ship fixes without breaking the vibe of live matches.",
     logo: "/images/companies/ce.png",
   },
-  {
-    company: "GameExp",
-    role: "Editor",
-    date: "2022",
-    description:
-      "Wrote and edited long form gaming content across reviews, guides, and industry commentary. Learned that a good headline saves an okay article, and a bad one buries a great one.",
-    logo: "/images/companies/gxp.png",
-  },
 ];
 
 export const EDUCATION: EducationItem[] = [
@@ -141,7 +107,7 @@ export const EDUCATION: EducationItem[] = [
   },
   {
     institution: "Presidency University",
-    period: "Jan 2025 – Aug 2025",
+    period: "Jan 2025 - Aug 2025",
     logo: "/images/education/pu.webp",
   },
 ];
